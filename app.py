@@ -4,6 +4,7 @@ from flask_restful import Api
 from resources.recipes import RecipesList, Recipe
 from resources.user import User
 from resources.steps import Step
+from resources.comments import Comment
 
 from dbconfig import dbConfig
 
@@ -20,6 +21,7 @@ api.add_resource(RecipesList, '/recipes')
 api.add_resource(Recipe, '/recipe/<int:id>', '/recipe')
 api.add_resource(User, '/user/<int:id>')
 api.add_resource(Step, '/step/<int:id>', '/step')
+api.add_resource(Comment, '/comment/<int:id>', '/comment')
 db.init_app(app)
 if __name__ == '__main__':
     app.run()
