@@ -1,6 +1,11 @@
 from db import db
 import simplejson as json
 
+categories = db.Table('recipes_has_categories',
+                      db.Column('id', db.Integer, primary_key=True, ),
+                      db.Column('recipes_id', db.Integer, db.ForeignKey('recipes.id')),
+                      db.Column('categories_id', db.Integer, db.ForeignKey('categories.id')))
+
 
 class RecipeModel(db.Model):
     __tablename__ = 'recipes'
@@ -29,6 +34,10 @@ class RecipeModel(db.Model):
                                cascade="all, delete-orphan",
                                lazy='dynamic',
                                passive_deletes=True)
+
+    categories = db.relationship('CategoriesModel', secondary=categories,
+                                 backref=db.backref('categories', lazy='dynamic', cascade="all, delete-orphan",
+                                                    passive_deletes=True, single_parent=True,))
 
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
                  source, rating, ):
@@ -60,7 +69,8 @@ class RecipeModel(db.Model):
             'rating': json.dumps(self.rating),  # JSON encoder and decoder for DECIMAL number
             'steps': [steps.json() for steps in self.steps.all()],
             'time_added': self.time_added.isoformat(),
-            'comments': [comments.json() for comments in self.comments.all()]
+            'comments': [comments.json() for comments in self.comments.all()],
+            'categories': [category.json() for category in self.categories],
         }
 
     # Find recipe by ID
