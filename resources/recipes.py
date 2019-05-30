@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 
 from models.recipes import RecipeModel
+from models.categories import CategoriesModel
 
 
 class Recipe(Resource):
@@ -53,6 +54,10 @@ class Recipe(Resource):
                         type=float,
                         required=False,
                         )
+    parser.add_argument('category',
+                        type=dict,
+                        required=False,
+                        )
 
     @classmethod
     def get(cls, id):
@@ -64,7 +69,7 @@ class Recipe(Resource):
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
-
+        # print(data)
         recipe = RecipeModel(data['user_id'],
                              data['cuisine_id'],
                              data['name'],
@@ -75,9 +80,15 @@ class Recipe(Resource):
                              data['cook_time'],
                              data['level'],
                              data['source'],
-                             data['rating']
+                             data['rating'],
+                             data['category']
                              )
-        recipe.save_to_db()
+        category = CategoriesModel(data['category']['id'],
+                                   data['category']['name'],
+                                   data['category']['description']
+                                   )
+        print(category.json())
+        recipe.save_to_db(category)
 
         return {"message": "Recipe created successfully."}, 201
 

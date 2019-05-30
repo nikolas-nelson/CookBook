@@ -19,7 +19,7 @@ class UserModel(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'recipes': [recipes.json() for recipes in self.recipes.all()]
+            # 'recipes': [recipes.json() for recipes in self.recipes.all()]
         }
 
     @classmethod

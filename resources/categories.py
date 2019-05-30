@@ -20,11 +20,12 @@ class Category(Resource):
     def post(cls):
         data = cls.parser.parse_args()
 
-        step = CategoriesModel(
-                               data['name'],
-                               data['description']
-                               )
-        step.save_to_db()
+        category = CategoriesModel(
+            data['id'],
+            data['name'],
+            data['description']
+        )
+        category.save_to_db()
 
         return {"message": "Category created successfully."}, 201
 
@@ -57,3 +58,9 @@ class Category(Resource):
             return {'message': 'Category Not Found'}, 404
         category.delete_from_db()
         return {'message': 'Category deleted.'}, 200
+
+
+class CategoriesList(Resource):
+    @classmethod
+    def get(cls):
+        return {'categories': [category.json() for category in CategoriesModel.find_all()]}
