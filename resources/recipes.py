@@ -64,6 +64,9 @@ class Recipe(Resource):
     parser.add_argument('allergens',
                         action='append'
                         )
+    parser.add_argument('courses',
+                        action='append'
+                        )
 
     @classmethod
     def get(cls, id):
@@ -98,13 +101,20 @@ class Recipe(Resource):
             recipe.save_recipe_to_db(category)
 
         allergens = data['allergens']
-        print(allergens)
         for aller in allergens:
             allergens_json = ast.literal_eval(aller)
             allergen = AllergensModel(allergens_json['id'],
                                       allergens_json['name'],
                                       )
             recipe.save_allergen_to_db(allergen)
+
+        courses = data['courses']
+        for cour in courses:
+            courses_json = ast.literal_eval(cour)
+            course = AllergensModel(courses_json['id'],
+                                    courses_json['name'],
+                                    )
+            recipe.save_course_to_db(course)
 
         return {"message": "Recipe created successfully."}, 201
 
@@ -139,12 +149,21 @@ class Recipe(Resource):
 
         allergens = data['allergens']
         print(allergens)
+
         for aller in allergens:
             allergens_json = ast.literal_eval(aller)
             allergen = AllergensModel(allergens_json['id'],
                                       allergens_json['name'],
                                       )
             recipe.save_allergen_to_db(allergen)
+
+        courses = data['courses']
+        for cour in courses:
+            courses_json = ast.literal_eval(cour)
+            course = AllergensModel(courses_json['id'],
+                                    courses_json['name'],
+                                    )
+            recipe.save_course_to_db(course)
 
         return recipe.json()
 

@@ -5,6 +5,10 @@ from models.allergens import AllergensModel
 
 class Allergen(Resource):
     parser = reqparse.RequestParser()
+    parser.add_argument('id',
+                        type=int,
+                        required=False,
+                        )
     parser.add_argument('name',
                         type=str,
                         required=True,
@@ -15,7 +19,8 @@ class Allergen(Resource):
     def post(cls):
         data = cls.parser.parse_args()
         print(data)
-        allergens = AllergensModel(data['name'])
+        allergens = AllergensModel(data['id'],
+                                   data['name'])
         allergens.save_to_db()
 
         return {"message": "Allergen created successfully."}, 201

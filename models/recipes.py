@@ -36,6 +36,8 @@ class RecipeModel(db.Model):
 
     allergens = db.relationship('AllergensModel', secondary='recipes_has_allergens')
 
+    courses = db.relationship('CoursesModel', secondary='recipes_has_courses')
+
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
                  source, rating):
         self.user_id = user_id
@@ -68,6 +70,7 @@ class RecipeModel(db.Model):
             'comments': [comments.json() for comments in self.comments.all()],
             'user': self.user.json(),
             'allergens': [allergens.json() for allergens in self.allergens],
+            'courses': [courses.json() for courses in self.courses],
         }
 
     # Find recipe by ID
@@ -88,6 +91,11 @@ class RecipeModel(db.Model):
 
     def save_allergen_to_db(self, allergens):
         self.recipes_has_allergens.append(RecipeAllergens(id=None, recipes_id=self.id, allergens_id=allergens.id))
+        db.session.add(self)
+        db.session.commit()
+
+    def save_course_to_db(self, courses):
+        self.recipes_has_courses.append(RecipeCourses(id=None, recipes_id=self.id, courses_id=courses.id))
         db.session.add(self)
         db.session.commit()
 
@@ -133,3 +141,20 @@ class RecipeAllergens(db.Model):
         self.id = id
         self.recipes_id = recipes_id
         self.allergens_id = allergens_id
+
+
+class RecipeCourses(db.Model):
+    __tablename__ = 'recipes_has_courses'
+
+    id = db.Column(db.Integer, primary_key=True, )
+    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    courses_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", cascade="all, delete-orphan"))
+    courses = db.relationship("CoursesModel",
+                              backref=db.backref("recipes_has_courses", cascade="all, delete-orphan"))
+
+    def __init__(self, id, recipes_id, courses_id):
+        self.id = id
+        self.recipes_id = recipes_id
+        self.courses_id = courses_id
