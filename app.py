@@ -6,6 +6,7 @@ from resources.user import User
 from resources.steps import Step
 from resources.comments import Comment
 from resources.categories import Category, CategoriesList
+from resources.allergens import Allergen, AllergensList
 
 from dbconfig import dbConfig
 
@@ -25,6 +26,8 @@ api.add_resource(Step, '/step/<int:id>', '/step')
 api.add_resource(Comment, '/comment/<int:id>', '/comment')
 api.add_resource(Category, '/category/<int:id>', '/category')
 api.add_resource(CategoriesList, '/categories')
+api.add_resource(Allergen, '/allergen/<int:id>', '/allergen')
+api.add_resource(AllergensList, '/allergens')
 
 db.init_app(app)
 if __name__ == '__main__':

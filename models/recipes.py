@@ -2,23 +2,6 @@ from db import db
 import simplejson as json
 
 
-class RecipeCategory(db.Model):
-    __tablename__ = 'recipes_has_categories'
-
-    id = db.Column(db.Integer, primary_key=True, )
-    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
-    categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
-
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
-    categories = db.relationship("CategoriesModel",
-                                 backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
-
-    def __init__(self, id, recipes_id, categories_id):
-        self.id = id
-        self.recipes_id = recipes_id
-        self.categories_id = categories_id
-
-
 class RecipeModel(db.Model):
     __tablename__ = 'recipes'
 
@@ -51,8 +34,10 @@ class RecipeModel(db.Model):
 
     categories = db.relationship('CategoriesModel', secondary='recipes_has_categories')
 
+    allergens = db.relationship('AllergensModel', secondary='recipes_has_allergens')
+
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
-                 source, rating, alergens):
+                 source, rating):
         self.user_id = user_id
         self.cuisine_id = cuisine_id
         self.name = name
@@ -64,7 +49,6 @@ class RecipeModel(db.Model):
         self.level = level
         self.source = source
         self.rating = json.dumps(rating)
-        self.alergens = alergens
 
     # Return recipe as JSON object
     def json(self):
@@ -83,6 +67,7 @@ class RecipeModel(db.Model):
             'time_added': self.time_added.isoformat(),
             'comments': [comments.json() for comments in self.comments.all()],
             'user': self.user.json(),
+            'allergens': [allergens.json() for allergens in self.allergens],
         }
 
     # Find recipe by ID
@@ -96,10 +81,13 @@ class RecipeModel(db.Model):
         return cls.query.all()
 
     # Save recipe to db
-    def save_to_db(self, category):
-        print(self, category)
-
+    def save_recipe_to_db(self, category):
         self.recipes_has_categories.append(RecipeCategory(id=None, recipes_id=self.id, categories_id=category.id))
+        db.session.add(self)
+        db.session.commit()
+
+    def save_allergen_to_db(self, allergens):
+        self.recipes_has_allergens.append(RecipeAllergens(id=None, recipes_id=self.id, allergens_id=allergens.id))
         db.session.add(self)
         db.session.commit()
 
@@ -111,3 +99,37 @@ class RecipeModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+
+
+class RecipeCategory(db.Model):
+    __tablename__ = 'recipes_has_categories'
+
+    id = db.Column(db.Integer, primary_key=True, )
+    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
+    categories = db.relationship("CategoriesModel",
+                                 backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
+
+    def __init__(self, id, recipes_id, categories_id):
+        self.id = id
+        self.recipes_id = recipes_id
+        self.categories_id = categories_id
+
+
+class RecipeAllergens(db.Model):
+    __tablename__ = 'recipes_has_allergens'
+
+    id = db.Column(db.Integer, primary_key=True, )
+    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    allergens_id = db.Column(db.Integer, db.ForeignKey('allergens.id'))
+
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_allergens", cascade="all, delete-orphan"))
+    allergens = db.relationship("AllergensModel",
+                                backref=db.backref("recipes_has_allergens", cascade="all, delete-orphan"))
+
+    def __init__(self, id, recipes_id, allergens_id):
+        self.id = id
+        self.recipes_id = recipes_id
+        self.allergens_id = allergens_id

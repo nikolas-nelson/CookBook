@@ -1,7 +1,11 @@
 from flask_restful import Resource, reqparse
 
+import json
+import ast
+
 from models.recipes import RecipeModel
 from models.categories import CategoriesModel
+from models.allergens import AllergensModel
 
 
 class Recipe(Resource):
@@ -55,8 +59,10 @@ class Recipe(Resource):
                         required=False,
                         )
     parser.add_argument('category',
-                        type=dict,
-                        required=False,
+                        action='append'
+                        )
+    parser.add_argument('allergens',
+                        action='append'
                         )
 
     @classmethod
@@ -69,7 +75,7 @@ class Recipe(Resource):
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
-        # print(data)
+        print(data)
         recipe = RecipeModel(data['user_id'],
                              data['cuisine_id'],
                              data['name'],
@@ -80,15 +86,25 @@ class Recipe(Resource):
                              data['cook_time'],
                              data['level'],
                              data['source'],
-                             data['rating'],
-                             data['category']
+                             data['rating']
                              )
-        category = CategoriesModel(data['category']['id'],
-                                   data['category']['name'],
-                                   data['category']['description']
-                                   )
-        print(category.json())
-        recipe.save_to_db(category)
+        categories = data['category']
+        for cat in categories:
+            category_json = ast.literal_eval(cat)
+            category = CategoriesModel(category_json['id'],
+                                       category_json['name'],
+                                       category_json['description']
+                                       )
+            recipe.save_recipe_to_db(category)
+
+        allergens = data['allergens']
+        print(allergens)
+        for aller in allergens:
+            allergens_json = ast.literal_eval(aller)
+            allergen = AllergensModel(allergens_json['id'],
+                                      allergens_json['name'],
+                                      )
+            recipe.save_allergen_to_db(allergen)
 
         return {"message": "Recipe created successfully."}, 201
 
@@ -112,7 +128,23 @@ class Recipe(Resource):
         else:
             recipe = RecipeModel(**data)
 
-        recipe.save_to_db()
+        categories = data['category']
+        for cat in categories:
+            category_json = ast.literal_eval(cat)
+            category = CategoriesModel(category_json['id'],
+                                       category_json['name'],
+                                       category_json['description']
+                                       )
+            recipe.save_recipe_to_db(category)
+
+        allergens = data['allergens']
+        print(allergens)
+        for aller in allergens:
+            allergens_json = ast.literal_eval(aller)
+            allergen = AllergensModel(allergens_json['id'],
+                                      allergens_json['name'],
+                                      )
+            recipe.save_allergen_to_db(allergen)
 
         return recipe.json()
 
