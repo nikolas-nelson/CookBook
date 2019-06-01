@@ -8,7 +8,7 @@ class RecipeModel(db.Model):
     # create recipe table
     id = db.Column(db.Integer, primary_key=True, )
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    cuisine_id = db.Column(db.Integer)
+    cuisine_id = db.Column(db.Integer, db.ForeignKey('cuisine.id'))
     name = db.Column(db.String(150))
     description = db.Column(db.Text)
     image_path = db.Column(db.String(100))
@@ -37,6 +37,8 @@ class RecipeModel(db.Model):
     allergens = db.relationship('AllergensModel', secondary='recipes_has_allergens')
 
     courses = db.relationship('CoursesModel', secondary='recipes_has_courses')
+
+    cuisine = db.relationship('CuisineModel', backref='cuisine')
 
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
                  source, rating):
@@ -71,6 +73,7 @@ class RecipeModel(db.Model):
             'user': self.user.json(),
             'allergens': [allergens.json() for allergens in self.allergens],
             'courses': [courses.json() for courses in self.courses],
+            'cuisine': self.cuisine.json(),
         }
 
     # Find recipe by ID
