@@ -2,23 +2,29 @@ from db import db
 import simplejson as json
 
 
-class UpVotesModel(db.Model):
-    __tablename__ = 'upvotes'
+class IngredientsModel(db.Model):
+    __tablename__ = 'ingredients'
 
     id = db.Column(db.Integer, primary_key=True)
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
-    vote_score = db.Column(db.DECIMAL(3, 2))
+    amount = db.Column(db.DECIMAL(3, 2))
+    ingredient = db.Column(db.String)
+    measurement = db.Column(db.String)
 
-    def __init__(self, id, recipes_id, vote_score):
+    def __init__(self, id, recipes_id, amount, ingredient, measurement):
         self.id = id
         self.recipes_id = recipes_id
-        self.vote_score = vote_score
+        self.amount = amount
+        self.ingredient = ingredient
+        self.measurement = measurement
 
     def json(self):
         return {
             'id': self.id,
             'recipes_id': self.recipes_id,
-            'vote_score': json.dumps(self.vote_score),
+            'amount': json.dumps(self.amount),
+            'ingredient': self.ingredient,
+            'measurement': self.measurement,
         }
 
     @classmethod

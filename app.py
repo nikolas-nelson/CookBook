@@ -10,6 +10,7 @@ from resources.allergens import Allergen, AllergensList
 from resources.courses import Course, CoursesList
 from resources.cuisine import Cuisine, CuisineList
 from resources.upvotes import UpVote, UpVotesList
+from resources.ingredients import Ingredient, IngredientList
 
 from dbconfig import dbConfig
 
@@ -37,6 +38,8 @@ api.add_resource(Cuisine, '/cuisine/<int:id>', '/cuisine')
 api.add_resource(CuisineList, '/cuisines')
 api.add_resource(UpVote, '/upvote/<int:id>', '/upvote')
 api.add_resource(UpVotesList, '/upvotes')
+api.add_resource(Ingredient, '/ingredient/<int:id>', '/ingredient')
+api.add_resource(IngredientList, '/ingredients')
 
 db.init_app(app)
 if __name__ == '__main__':

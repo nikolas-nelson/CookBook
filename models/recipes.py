@@ -40,6 +40,10 @@ class RecipeModel(db.Model):
 
     cuisine = db.relationship('CuisineModel', backref='cuisine')
 
+    upvotes = db.relationship('UpVotesModel', backref='upvotes')
+
+    ingredients = db.relationship('IngredientsModel', backref='ingredients')
+
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
                  source, rating):
         self.user_id = user_id
@@ -74,6 +78,8 @@ class RecipeModel(db.Model):
             'allergens': [allergens.json() for allergens in self.allergens],
             'courses': [courses.json() for courses in self.courses],
             'cuisine': self.cuisine.json(),
+            'upvotes': [upvotes.json() for upvotes in self.upvotes],
+            'ingredients': [ingredients.json() for ingredients in self.ingredients],
         }
 
     # Find recipe by ID
