@@ -10,10 +10,9 @@ class UserModel(db.Model):
 
     recipes = db.relationship('RecipeModel', lazy='dynamic')
 
-    def __init__(self, name, password, recipes):
+    def __init__(self, name, password):
         self.name = name
         self.password = password
-        self.recipes = recipes
 
     def json(self):
         return {
@@ -23,8 +22,8 @@ class UserModel(db.Model):
         }
 
     @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+    def find_by_username(cls, name):
+        return cls.query.filter_by(name=name).first()
 
     @classmethod
     def find_by_id(cls, _id):
