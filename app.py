@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 from blacklist import BLACKLIST
 
@@ -96,6 +97,7 @@ def revoked_token_callback():
 
 
 # JWT configuration ends
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 api.add_resource(RecipesList, '/recipes')
 api.add_resource(Recipe, '/recipe/<int:id>', '/recipe')

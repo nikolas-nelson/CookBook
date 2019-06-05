@@ -61,6 +61,7 @@ class RecipeModel(db.Model):
     # Return recipe as JSON object
     def json(self):
         return {
+            'id': self.id,
             'name': self.name,
             'cuisine_id': self.cuisine_id,
             'description': self.description,
