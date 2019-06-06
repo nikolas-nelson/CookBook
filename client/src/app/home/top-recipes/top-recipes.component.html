@@ -5,9 +5,9 @@
     <h2>TOP Recipes</h2>
     <hr>
     <div class="spinner-border" role="status" *ngIf="loading">
-  <span class="sr-only">Loading...</span>
-</div>
-<!--    <p><ngb-progressbar value="50" ></ngb-progressbar></p>-->
+      <span class="sr-only">Loading...</span>
+    </div>
+    <!--    <p><ngb-progressbar value="50" ></ngb-progressbar></p>-->
     <div class="row" *ngIf="recipes && !loading">
       <div class="col-12 col-md-3" *ngFor="let recipe of recipes.recipes">
         <div class="card mb-3">

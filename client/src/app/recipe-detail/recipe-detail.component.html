@@ -1,11 +1,77 @@
 <div class="recipe-detail">
-  <div class="container">
-    <h1>{{recipe.name}}</h1>
-    <div class="row">
-      <div class="col-12 col-md-4">
-        <img src="" alt="">
+  <div class="container py-5">
+    <div class="spinner-border" role="status" *ngIf="loading">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row" *ngIf="recipe">
+      <div class="col-12 col-md-9">
+        <h1 class="text-left">{{recipe.name}}</h1>
+        <div class="d-flex justify-content-between">
+          <p class="text-muted">{{recipe.time_added | date: 'dd MMMM yyyy'}} by {{recipe.user.name}}
+            | {{recipe.comments.length}} comments</p>
+          <span class="align-self-center"><ngb-rating [rate]="3" max="5"></ngb-rating></span>
+        </div>
+        <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="img-fluid img-thumbnail" alt="">
+        <div class="row">
+          <div class="col-12 col-md-7 mt-4">
+            <h5><i class="far fa-book mr-2"></i> INTRO</h5>
+            <p>{{recipe.description}}</p>
+          </div>
+          <div class="col-12 col-md-5 mt-4">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title mb-0"><i class="fal fa-receipt"></i> Info</h5>
+              </div>
+              <div class="card-body">
+                <p><i class="far fa-clock"></i> Prep time : {{recipe.prep_time}} minutes</p>
+                <p><i class="far fa-clock"></i> Cooking time : {{recipe.cook_time}} minutes</p>
+                <p><i class="far fa-clock"></i> Total time : {{recipe.total_time}} minutes</p>
+                <p><i class="far fa-hat-chef"></i> Cuisine : {{recipe.cuisine.name}}</p>
+                <p><i class="far fa-graduation-cap"></i> Level : {{recipe.level}}</p>
+              </div>
+              <div class="card-footer bg-danger text-white" *ngIf="recipe.allergens.length > 0">
+                <p class="mb-0"><i class="far fa-info-circle"></i> Allergens:</p>
+                <p class="mb-0">
+                  <span *ngFor="let allergen of recipe.allergens">{{allergen.name}}, </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-12 col-md-6">
+            <div class="card mt-5 h-100">
+              <div class="card-header">
+                <h5 class="card-title"><i class="far fa-flask"></i> Ingredients</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-unstyled">
+                  <li *ngFor="let ingredient of recipe.ingredients">
+                    {{ingredient.amount | number: '1.0' }} {{ingredient.measurement}} of {{ingredient.ingredient}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="card mt-5 h-100">
+              <div class="card-header">
+                <h5 class="card-title"><i class="fal fa-clipboard-list"></i> Steps</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-unstyled">
+                  <li *ngFor="let step of recipe.steps" class="mb-2">
+                    <span class="badge badge-pill badge-info"><h5 class="mb-0 px-1">{{step.step_number}}</h5></span> {{step.instructions}}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="col-12 col-md-3 border mt-5">
 
+      </div>
     </div>
   </div>
 </div>

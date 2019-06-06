@@ -10,6 +10,7 @@ import {RecipeService} from "../recipe.service";
 export class RecipeDetailComponent implements OnInit {
 
   public recipe: any;
+  public loading = true;
 
   constructor(private route: ActivatedRoute, private recipeService: RecipeService) {
   }
@@ -18,6 +19,7 @@ export class RecipeDetailComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.recipeService.getRecipe(params.get('id')).subscribe(res => {
         this.recipe = res;
+        this.loading = false;
       })
     })
   }
