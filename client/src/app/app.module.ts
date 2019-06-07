@@ -10,6 +10,7 @@ import {TopRecipesComponent} from './home/top-recipes/top-recipes.component';
 import {FooterComponent} from './footer/footer.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {HttpClientModule} from "@angular/common/http";
+import { CommentModalComponent } from './recipe-detail/comment-modal/comment-modal.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
     HeroComponent,
     TopRecipesComponent,
     FooterComponent,
-    RecipeDetailComponent
+    RecipeDetailComponent,
+    CommentModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -28,7 +30,10 @@ import {HttpClientModule} from "@angular/common/http";
     NgbModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    CommentModalComponent
+  ]
 })
 export class AppModule {
 }

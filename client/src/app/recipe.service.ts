@@ -17,4 +17,16 @@ export class RecipeService {
   getRecipe(id) {
     return this.http.get(`${this.url}/recipe/` + id );
   }
+
+  getCategories() {
+    return this.http.get(`${this.url}/categories`);
+  }
+
+  getCuisines() {
+    return this.http.get(`${this.url}/cuisines`);
+  }
+
+  getCourses() {
+    return this.http.get(`${this.url}/courses`);
+  }
 }

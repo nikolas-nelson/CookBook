@@ -38,8 +38,8 @@
             </div>
           </div>
         </div>
-        <div class="row mb-5">
-          <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col-12 col-md-4">
             <div class="card mt-5 h-100">
               <div class="card-header">
                 <h5 class="card-title"><i class="far fa-flask"></i> Ingredients</h5>
@@ -53,7 +53,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-8">
             <div class="card mt-5 h-100">
               <div class="card-header">
                 <h5 class="card-title"><i class="fal fa-clipboard-list"></i> Steps</h5>
@@ -61,15 +61,91 @@
               <div class="card-body">
                 <ul class="list-unstyled">
                   <li *ngFor="let step of recipe.steps" class="mb-2">
-                    <span class="badge badge-pill badge-info"><h5 class="mb-0 px-1">{{step.step_number}}</h5></span> {{step.instructions}}
+                    <span class="badge badge-pill badge-info"><h5
+                      class="mb-0 px-1">{{step.step_number}}</h5></span> {{step.instructions}}
                   </li>
                 </ul>
               </div>
             </div>
           </div>
+          <div class="col-12 pt-5">
+            <div class="card mt-5">
+              <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title mb-0 align-self-center"><i class="fal fa-comments"></i> Comments</h5>
+                <button class="btn btn-sm btn-outline-dark" (click)="openAddComment()"><i class="far fa-plus"></i> Add
+                  your comment
+                </button>
+              </div>
+              <div class="card-body">
+
+                <div class="border p-3 bg-light mb-2" *ngFor="let comment of recipe.comments">
+                  <p class="">
+                    <small>{{comment.name}} | {{comment.email}}</small>
+                  </p>
+                  <p class="mb-0 font-italic">{{comment.comment}}</p>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
         </div>
+
+
       </div>
-      <div class="col-12 col-md-3 border mt-5">
+
+      <div class="col-12 col-md-3 mt-5">
+
+        <!--  Categories  -->
+
+        <div class="spinner-border" role="status" *ngIf="!categories">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card mb-3" *ngIf="categories">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Categories</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let category of categories.categories | slice:0:10; let i=index">{{category.name}}</li>
+              <li><a href="#">All categories</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!--   Cuisine    -->
+
+        <div class="spinner-border" role="status" *ngIf="!cuisines">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card mb-3" *ngIf="cuisines">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Cuisine</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let cuisin of cuisines.cuisine | slice:0:10; let i=index">{{cuisin.name}}</li>
+              <li><a href="#">All cuisines</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!--   Courses    -->
+
+        <div class="spinner-border" role="status" *ngIf="!courses">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div class="card mb-3" *ngIf="courses">
+          <div class="card-header">
+            <h5 class="card-title mb-0">Courses</h5>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mb-0">
+              <li *ngFor="let course of courses.courses | slice:0:10; let i=index">{{course.name}}</li>
+              <li><a href="#">All courses</a></li>
+            </ul>
+          </div>
+        </div>
 
       </div>
     </div>
