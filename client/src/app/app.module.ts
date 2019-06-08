@@ -12,6 +12,9 @@ import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {HttpClientModule} from "@angular/common/http";
 import { CommentModalComponent } from './recipe-detail/comment-modal/comment-modal.component';
 import { NewRecipeComponent } from './new-recipe/new-recipe.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CuisineComponent } from './cuisine/cuisine.component';
+import { CoursesComponent } from './courses/courses.component';
 
 
 @NgModule({
@@ -23,7 +26,10 @@ import { NewRecipeComponent } from './new-recipe/new-recipe.component';
     FooterComponent,
     RecipeDetailComponent,
     CommentModalComponent,
-    NewRecipeComponent
+    NewRecipeComponent,
+    CategoriesComponent,
+    CuisineComponent,
+    CoursesComponent
   ],
   imports: [
     HttpClientModule,

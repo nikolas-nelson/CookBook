@@ -54,10 +54,10 @@ class Recipe(Resource):
                         type=str,
                         required=False,
                         )
-    parser.add_argument('rating',
-                        type=float,
-                        required=False,
-                        )
+    # parser.add_argument('rating',
+    #                     type=float,
+    #                     required=False,
+    #                     )
     parser.add_argument('category',
                         action='append'
                         )
@@ -88,8 +88,7 @@ class Recipe(Resource):
                              data['prep_time'],
                              data['cook_time'],
                              data['level'],
-                             data['source'],
-                             data['rating']
+                             data['source']
                              )
         categories = data['category']
         for cat in categories:
@@ -134,7 +133,6 @@ class Recipe(Resource):
             recipe.cook_time = data['cook_time']
             recipe.level = data['level']
             recipe.source = data['source']
-            recipe.rating = data['rating']
         else:
             recipe = RecipeModel(**data)
 

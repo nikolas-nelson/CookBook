@@ -1,0 +1,23 @@
+<div class="categories">
+  <div class="container my-5">
+    <div class="spinner-border" role="status" *ngIf="loading">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-3 mb-5" *ngFor="let cuisine of cuisine.cuisine">
+        <div class="card h-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{cuisine.name}}</h5>
+          </div>
+          <img src="assets/img/todd-quackenbush-700-unsplash.jpg" class="img-fluid card-img-top" alt="">
+          <div class="card-body">
+            <p class="card-text">{{cuisine.description}}</p>
+          </div>
+          <div class="card-footer text-right">
+            <a class="btn btn-outline-primary">More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

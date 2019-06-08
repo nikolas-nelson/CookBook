@@ -42,6 +42,7 @@ jwt = JWTManager(app)
 and for each jwt protected endpoint, we can retrieve these claims via `get_jwt_claims()`
 """
 
+
 @jwt.user_claims_loader
 def add_claims_to_jwt(identity):
     if identity == 1:  # instead of hard-coding, we should read from a config file to get a list of admins instead
@@ -97,8 +98,9 @@ def revoked_token_callback():
 
 
 # JWT configuration ends
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/*": {"origins": "*"}})   # allowing Cross-Origin Resource Sharing
 
+# endpoints
 api.add_resource(RecipesList, '/recipes')
 api.add_resource(Recipe, '/recipe/<int:id>', '/recipe')
 api.add_resource(Step, '/step/<int:id>', '/step')

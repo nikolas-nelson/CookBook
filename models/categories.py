@@ -22,7 +22,7 @@ class CategoriesModel(db.Model):
             'id': self.id,
             'name': self.name,
             'description': self.description,
-            'recipes': [recipes.json() for recipes in self.recipes],
+            # 'recipes': [recipes.json() for recipes in self.recipes],
         }
 
     @classmethod

@@ -9,7 +9,7 @@
     </div>
     <!--    <p><ngb-progressbar value="50" ></ngb-progressbar></p>-->
     <div class="row" *ngIf="recipes && !loading">
-      <div class="col-12 col-md-3" *ngFor="let recipe of recipes.recipes">
+      <div class="col-12 col-md-3" *ngFor="let recipe of recipes.recipes | slice:0:12;">
         <div class="card mb-3">
           <div class="card-header">
             <h5 class="card-title mb-0">{{recipe.name}}</h5>

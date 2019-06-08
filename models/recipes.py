@@ -45,7 +45,7 @@ class RecipeModel(db.Model):
     ingredients = db.relationship('IngredientsModel', backref='ingredients')
 
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
-                 source, rating):
+                 source, ):
         self.user_id = user_id
         self.cuisine_id = cuisine_id
         self.name = name
@@ -56,7 +56,7 @@ class RecipeModel(db.Model):
         self.cook_time = cook_time
         self.level = level
         self.source = source
-        self.rating = json.dumps(rating)
+        # self.rating = json.dumps(rating)
 
     # Return recipe as JSON object
     def json(self):
@@ -91,7 +91,7 @@ class RecipeModel(db.Model):
     # Find all recipes
     @classmethod
     def find_all(cls):
-        return cls.query.all()
+        return cls.query.order_by(cls.rating.desc()).all()
 
     # Save recipe to db
     def save_recipe_to_db(self, category):
