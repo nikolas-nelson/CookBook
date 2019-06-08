@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 
@@ -9,13 +9,15 @@ export class RecipeService {
 
   url = 'http://127.0.0.1:5000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-   getRecipes() {
+  getRecipes() {
     return this.http.get(`${this.url}/recipes`);
   }
+
   getRecipe(id) {
-    return this.http.get(`${this.url}/recipe/` + id );
+    return this.http.get(`${this.url}/recipe/` + id);
   }
 
   getCategories() {
@@ -28,5 +30,9 @@ export class RecipeService {
 
   getCourses() {
     return this.http.get(`${this.url}/courses`);
+  }
+
+  getAllergens() {
+    return this.http.get(`${this.url}/allergens`);
   }
 }

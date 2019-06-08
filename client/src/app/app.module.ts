@@ -11,6 +11,7 @@ import {FooterComponent} from './footer/footer.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {HttpClientModule} from "@angular/common/http";
 import { CommentModalComponent } from './recipe-detail/comment-modal/comment-modal.component';
+import { NewRecipeComponent } from './new-recipe/new-recipe.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CommentModalComponent } from './recipe-detail/comment-modal/comment-mod
     TopRecipesComponent,
     FooterComponent,
     RecipeDetailComponent,
-    CommentModalComponent
+    CommentModalComponent,
+    NewRecipeComponent
   ],
   imports: [
     HttpClientModule,

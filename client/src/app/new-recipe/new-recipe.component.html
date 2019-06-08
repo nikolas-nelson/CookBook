@@ -1,0 +1,189 @@
+<div class="new-recipe">
+  <div class="container my-5">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title mb-0">Add new recipe</h3>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div class="form-group col-12 col-md-6">
+              <label for="recipeName">Recipe name</label>
+              <input type="text" class="form-control" id="recipeName" placeholder="Recipe name">
+            </div>
+            <div class="form-group col-12 col-md-6">
+              <label for="image">Add recipe image</label>
+              <input type="file" class="form-control-file" id="image">
+            </div>
+            <div class="form-group col-12 col-md-6">
+              <label for="recipeDescription">Recipe description</label>
+              <textarea class="form-control h-75" id="recipeDescription"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="row">
+                <div class="form-group col-12 col-md-6">
+                  <label for="prepTime">Prep time</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="prepTime" placeholder="Prep time">
+                    <div class="input-group-append">
+                      <div class="input-group-text">min</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label for="cookTime">Cook time</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="cookTime" placeholder="Cook time">
+                    <div class="input-group-append">
+                      <div class="input-group-text">min</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label class="my-1 mr-2" for="level">Difficulty level</label>
+                  <select class="custom-select my-1 mr-sm-2" id="level">
+                    <option selected>Choose...</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Hard">Hard</option>
+                    <option value="Very hard">Very hard</option>
+                  </select>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                  <label for="source">Source</label>
+                  <input type="text" class="form-control" id="source" placeholder="www.example.com">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                  <h5 class="card-title mb-0 align-self-center">Ingredients</h5>
+                  <button type="button" class="btn btn-outline-success"><i class="far fa-plus"></i> Add Ingredient
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-3">
+                      <label for="amount">Amount</label>
+                    </div>
+                    <div class="col-3">
+                      <label for="measurement">Measurement</label>
+                    </div>
+                    <div class="col-6">
+                      <label for="ingredient">Ingredient</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-3">
+                      <input type="number" class="form-control" placeholder="200" id="amount">
+                    </div>
+                    <div class="form-group col-3">
+                      <input type="text" class="form-control" placeholder="ml" id="measurement">
+                    </div>
+                    <div class="form-group col-6">
+                      <input type="text" class="form-control" placeholder="milk" id="ingredient">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                  <h5 class="card-title mb-0 align-self-center">Steps</h5>
+                  <button type="button" class="btn btn-outline-success"><i class="far fa-plus"></i> Add step</button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="step">Steps</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col-12">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">1</div>
+                        </div>
+                        <textarea class="form-control" id="step"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Allergens</h5>
+                </div>
+                <div class="spinner-border" role="status" *ngIf="loadingAllergens">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div class="card-body" *ngIf="allergens">
+                  <div class="custom-control custom-checkbox" *ngFor="let allergen of allergens.allergens">
+                    <input type="checkbox" class="custom-control-input" id="{{allergen.id}}">
+                    <label class="custom-control-label" for="{{allergen.id}}">{{allergen.name}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Categories</h5>
+                </div>
+                <div class="spinner-border" role="status" *ngIf="loadingCategory">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div class="card-body row" *ngIf="categories">
+                  <div class="custom-control col-6 custom-checkbox" *ngFor="let category of categories.categories">
+                    <input type="checkbox" class="custom-control-input" id="{{category.id}}">
+                    <label class="custom-control-label" for="{{category.id}}">{{category.name}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title mb-0">Other</h5>
+                </div>
+                <div class="spinner-border" role="status" *ngIf="loadingCuisine && loadingCourses">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div class="card-body" *ngIf="cuisine">
+                  <div class="form-group">
+                    <label for="cuisine">Cuisine</label>
+                    <select id="cuisine" class="form-control">
+                      <option>Choose one...</option>
+                      <option *ngFor="let cuisine of cuisine.cuisine" [value]="cuisine.name">{{cuisine.name}}</option>
+                    </select>
+                  </div>
+                  <p>Courses</p>
+                  <hr>
+                  <div class="form-group row">
+                    <div class="custom-control col-6 custom-checkbox" *ngFor="let course of courses.courses">
+                      <input type="checkbox" class="custom-control-input" id="{{course.id}}">
+                      <label class="custom-control-label" for="{{course.id}}">{{course.name}}</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-right">
+        <button type="button" class="btn btn-outline-warning mr-2">Cancel</button>
+        <button type="button" class="btn btn-outline-success">Save</button>
+      </div>
+    </div>
+  </div>
+
+</div>
