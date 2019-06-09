@@ -15,6 +15,10 @@ import { NewRecipeComponent } from './new-recipe/new-recipe.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CuisineComponent } from './cuisine/cuisine.component';
 import { CoursesComponent } from './courses/courses.component';
+import { AddAllergenModalComponent } from './new-recipe/add-allergen-modal/add-allergen-modal.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -29,18 +33,23 @@ import { CoursesComponent } from './courses/courses.component';
     NewRecipeComponent,
     CategoriesComponent,
     CuisineComponent,
-    CoursesComponent
+    CoursesComponent,
+    AddAllergenModalComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    CommentModalComponent
+    CommentModalComponent,
+    AddAllergenModalComponent
   ]
 })
 export class AppModule {

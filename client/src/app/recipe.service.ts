@@ -35,4 +35,10 @@ export class RecipeService {
   getAllergens() {
     return this.http.get(`${this.url}/allergens`);
   }
+
+  addAllergen(allergen) {
+        return this.http.post(`${this.url}/allergen`, allergen);
+
+  }
+
 }

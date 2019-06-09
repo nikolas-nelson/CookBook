@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../recipe.service";
+import {CommentModalComponent} from "../recipe-detail/comment-modal/comment-modal.component";
+import {AddAllergenModalComponent} from "./add-allergen-modal/add-allergen-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-new-recipe',
@@ -17,7 +21,9 @@ export class NewRecipeComponent implements OnInit {
   public loadingCuisine = true;
   public loadingCourses = true;
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService,
+              private modalService: NgbModal,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -29,14 +35,28 @@ export class NewRecipeComponent implements OnInit {
       this.categories = categories;
       this.loadingCategory = false;
     });
-    this.recipeService.getCuisines().subscribe( cuisine => {
+    this.recipeService.getCuisines().subscribe(cuisine => {
       this.cuisine = cuisine;
       this.loadingCuisine = false;
     });
     this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
       this.loadingCourses = true;
-    })
+    });
   }
+
+  openAddAllergen() {
+    const modalRef = this.modalService.open(AddAllergenModalComponent, {
+      size: "sm"
+    });
+    modalRef.componentInstance.name = 'World';
+    modalRef.result.then((result) => {
+      if (result) {
+        this.toastr.success(result.message, 'Success!');
+        this.ngOnInit()
+      }
+    });
+  }
+
 
 }

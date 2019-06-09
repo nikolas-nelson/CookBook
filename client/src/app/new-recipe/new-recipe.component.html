@@ -5,7 +5,7 @@
         <h3 class="card-title mb-0">Add new recipe</h3>
       </div>
       <div class="card-body">
-        <form>
+
           <div class="row">
             <div class="form-group col-12 col-md-6">
               <label for="recipeName">Recipe name</label>
@@ -119,8 +119,9 @@
           <div class="row mt-5">
             <div class="col-12 col-md-4">
               <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Allergens</h5>
+                <div class="card-header d-flex justify-content-between">
+                  <h5 class="card-title mb-0 align-self-end">Allergens</h5>
+                  <button type="button" class="btn btn-outline-primary" (click)="openAddAllergen()"><i class="far fa-plus"></i> Add Allergen</button>
                 </div>
                 <div class="spinner-border" role="status" *ngIf="loadingAllergens">
                   <span class="sr-only">Loading...</span>
@@ -135,8 +136,9 @@
             </div>
             <div class="col-12 col-md-4">
               <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Categories</h5>
+                <div class="card-header d-flex justify-content-between">
+                  <h5 class="card-title mb-0 align-self-end">Categories</h5>
+                  <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Category</button>
                 </div>
                 <div class="spinner-border" role="status" *ngIf="loadingCategory">
                   <span class="sr-only">Loading...</span>
@@ -151,8 +153,9 @@
             </div>
             <div class="col-12 col-md-4">
               <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title mb-0">Other</h5>
+                <div class="card-header d-flex justify-content-between">
+                  <h5 class="card-title mb-0 align-self-end">Other</h5>
+                  <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Cuisine</button>
                 </div>
                 <div class="spinner-border" role="status" *ngIf="loadingCuisine && loadingCourses">
                   <span class="sr-only">Loading...</span>
@@ -165,9 +168,12 @@
                       <option *ngFor="let cuisine of cuisine.cuisine" [value]="cuisine.name">{{cuisine.name}}</option>
                     </select>
                   </div>
-                  <p>Courses</p>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 align-self-end">Courses</p>
+                    <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Course</button>
+                  </div>
                   <hr>
-                  <div class="form-group row">
+                  <div class="form-group row" *ngIf="courses">
                     <div class="custom-control col-6 custom-checkbox" *ngFor="let course of courses.courses">
                       <input type="checkbox" class="custom-control-input" id="{{course.id}}">
                       <label class="custom-control-label" for="{{course.id}}">{{course.name}}</label>
@@ -177,7 +183,6 @@
               </div>
             </div>
           </div>
-        </form>
       </div>
       <div class="card-footer text-right">
         <button type="button" class="btn btn-outline-warning mr-2">Cancel</button>
