@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="card-title mb-0 align-self-end">Categories</h5>
+    <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add</button>
+  </div>
+  <div class="spinner-border" role="status" *ngIf="loading">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="card-body row" *ngIf="categories">
+    <div class="custom-control col-6 custom-checkbox" *ngFor="let category of categories.categories">
+      <input type="checkbox" class="custom-control-input" id="category{{category.id}}">
+      <label class="custom-control-label" for="category{{category.id}}">{{category.name}}</label>
+    </div>
+  </div>
+</div>

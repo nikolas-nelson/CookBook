@@ -13,14 +13,9 @@ import {DeleteModalComponent} from "./delete-modal/delete-modal.component";
 })
 export class NewRecipeComponent implements OnInit {
 
-  public categories: any;
   public cuisine: any;
-  public courses: any;
 
-  public loadingCategory = true;
   public loadingCuisine = true;
-  public loadingCourses = true;
-
 
   constructor(private recipeService: RecipeService,
               private modalService: NgbModal,
@@ -29,18 +24,11 @@ export class NewRecipeComponent implements OnInit {
 
   ngOnInit() {
 
-    this.recipeService.getCategories().subscribe(categories => {
-      this.categories = categories;
-      this.loadingCategory = false;
-    });
     this.recipeService.getCuisines().subscribe(cuisine => {
       this.cuisine = cuisine;
       this.loadingCuisine = false;
     });
-    this.recipeService.getCourses().subscribe(courses => {
-      this.courses = courses;
-      this.loadingCourses = true;
-    });
+
   }
 
 

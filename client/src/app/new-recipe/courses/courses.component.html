@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between">
+    <h5 class="card-title mb-0 align-self-end">Courses</h5>
+    <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add</button>
+  </div>
+  <div class="spinner-border" role="status" *ngIf="loading">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <div class="card-body">
+    <div class="form-group" *ngIf="courses">
+      <div class="custom-control custom-checkbox" *ngFor="let course of courses.courses">
+        <input type="checkbox" class="custom-control-input" id="course{{course.id}}">
+        <label class="custom-control-label" for="course{{course.id}}">{{course.name}}</label>
+      </div>
+    </div>
+  </div>
+</div>
