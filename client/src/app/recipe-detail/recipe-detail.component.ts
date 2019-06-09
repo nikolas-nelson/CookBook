@@ -35,7 +35,7 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getCuisines().subscribe(cuisines => {
       this.cuisines = cuisines;
     });
-    this.recipeService.getCourses().subscribe( courses => {
+    this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses
     });
   }

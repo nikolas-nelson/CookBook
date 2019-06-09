@@ -49,7 +49,14 @@
                   <option value="Very hard">Very hard</option>
                 </select>
               </div>
-              <div class="form-group col-12 col-md-6">
+              <div class="form-group col-12 col-md-6" *ngIf="cuisine">
+                  <label for="cuisine">Cuisine</label>
+                  <select id="cuisine" class="form-control">
+                    <option>Choose one...</option>
+                    <option *ngFor="let cuisine of cuisine.cuisine" [value]="cuisine.name">{{cuisine.name}}</option>
+                  </select>
+                </div>
+              <div class="form-group col-12">
                 <label for="source">Source</label>
                 <input type="text" class="form-control" id="source" placeholder="www.example.com">
               </div>
@@ -118,27 +125,7 @@
         </div>
         <div class="row mt-5">
           <div class="col-12 col-md-4">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between">
-                <h5 class="card-title mb-0 align-self-end">Allergens</h5>
-                <button type="button" class="btn btn-outline-primary" (click)="openAddAllergen()"><i
-                  class="far fa-plus"></i> Add Allergen
-                </button>
-              </div>
-              <div class="spinner-border" role="status" *ngIf="loadingAllergens">
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div class="card-body" *ngIf="allergens">
-                <div class="custom-control custom-checkbox d-flex" *ngFor="let allergen of allergens.allergens">
-                  <input type="checkbox" class="custom-control-input" id="{{allergen.id}}">
-                  <label class="custom-control-label align-self-center" for="{{allergen.id}}">{{allergen.name}}</label>
-                  <p class="text-right ml-auto mb-0">
-                    <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergen)"><i class="far fa-trash"></i></button>
-                    <button type="button" class="btn btn-link"><i class="far fa-edit"></i></button>
-                  </p>
-                </div>
-              </div>
-            </div>
+          <app-allergens></app-allergens>
           </div>
           <div class="col-12 col-md-4">
             <div class="card">
@@ -151,8 +138,8 @@
               </div>
               <div class="card-body row" *ngIf="categories">
                 <div class="custom-control col-6 custom-checkbox" *ngFor="let category of categories.categories">
-                  <input type="checkbox" class="custom-control-input" id="{{category.id}}">
-                  <label class="custom-control-label" for="{{category.id}}">{{category.name}}</label>
+                  <input type="checkbox" class="custom-control-input" id="{{category.id}}{{category.name}}">
+                  <label class="custom-control-label" for="{{category.id}}{{category.name}}">{{category.name}}</label>
                 </div>
               </div>
             </div>
@@ -160,27 +147,15 @@
           <div class="col-12 col-md-4">
             <div class="card">
               <div class="card-header d-flex justify-content-between">
-                <h5 class="card-title mb-0 align-self-end">Other</h5>
-                <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Cuisine</button>
+                <h5 class="card-title mb-0 align-self-end">Courses</h5>
+                <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Course</button>
               </div>
               <div class="spinner-border" role="status" *ngIf="loadingCuisine && loadingCourses">
                 <span class="sr-only">Loading...</span>
               </div>
-              <div class="card-body" *ngIf="cuisine">
-                <div class="form-group">
-                  <label for="cuisine">Cuisine</label>
-                  <select id="cuisine" class="form-control">
-                    <option>Choose one...</option>
-                    <option *ngFor="let cuisine of cuisine.cuisine" [value]="cuisine.name">{{cuisine.name}}</option>
-                  </select>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <p class="mb-0 align-self-end">Courses</p>
-                  <button class="btn btn-outline-primary"><i class="far fa-plus"></i> Add Course</button>
-                </div>
-                <hr>
-                <div class="form-group row" *ngIf="courses">
-                  <div class="custom-control col-6 custom-checkbox" *ngFor="let course of courses.courses">
+              <div class="card-body">
+                <div class="form-group" *ngIf="courses">
+                  <div class="custom-control custom-checkbox" *ngFor="let course of courses.courses">
                     <input type="checkbox" class="custom-control-input" id="{{course.id}}">
                     <label class="custom-control-label" for="{{course.id}}">{{course.name}}</label>
                   </div>

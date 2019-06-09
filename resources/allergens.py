@@ -18,7 +18,6 @@ class Allergen(Resource):
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
-        print(data)
         allergens = AllergensModel(data['id'],
                                    data['name'])
         allergens.save_to_db()

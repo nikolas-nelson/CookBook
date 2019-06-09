@@ -41,7 +41,7 @@ export class RecipeService {
   }
 
   editAllergen(allergen) {
-    return this.http.put(`${this.url}/allergen`, allergen);
+    return this.http.put(`${this.url}/allergen/${allergen.id}`, allergen);
   }
 
   deleteAllergen(allergenId) {

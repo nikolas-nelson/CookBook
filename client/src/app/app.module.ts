@@ -11,15 +11,15 @@ import {FooterComponent} from './footer/footer.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {HttpClientModule} from "@angular/common/http";
 import { CommentModalComponent } from './recipe-detail/comment-modal/comment-modal.component';
-import { NewRecipeComponent } from './new-recipe/new-recipe.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CuisineComponent } from './cuisine/cuisine.component';
 import { CoursesComponent } from './courses/courses.component';
-import { AddAllergenModalComponent } from './new-recipe/add-allergen-modal/add-allergen-modal.component';
+import { AddAllergenModalComponent } from './new-recipe/allergens/add-allergen-modal/add-allergen-modal.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { DeleteModalComponent } from './new-recipe/delete-modal/delete-modal.component';
+import {NewRecipeModule} from "./new-recipe/new-recipe.module";
 
 
 @NgModule({
@@ -31,12 +31,10 @@ import { DeleteModalComponent } from './new-recipe/delete-modal/delete-modal.com
     FooterComponent,
     RecipeDetailComponent,
     CommentModalComponent,
-    NewRecipeComponent,
     CategoriesComponent,
     CuisineComponent,
     CoursesComponent,
-    AddAllergenModalComponent,
-    DeleteModalComponent
+
   ],
   imports: [
     HttpClientModule,
@@ -45,7 +43,8 @@ import { DeleteModalComponent } from './new-recipe/delete-modal/delete-modal.com
     NgbModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    NewRecipeModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,6 +1,7 @@
 <form [formGroup]="allergenForm" (ngSubmit)="onSubmit()">
   <div class="modal-header">
-    <h4 class="modal-title">Add an Allergen!</h4>
+    <h4 class="modal-title" *ngIf="allergen">Edit an Allergen!</h4>
+    <h4 class="modal-title" *ngIf="!allergen">Add an Allergen!</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
