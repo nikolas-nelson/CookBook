@@ -4,6 +4,7 @@ import {CommentModalComponent} from "../recipe-detail/comment-modal/comment-moda
 import {AddAllergenModalComponent} from "./add-allergen-modal/add-allergen-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
+import {DeleteModalComponent} from "./delete-modal/delete-modal.component";
 
 @Component({
   selector: 'app-new-recipe',
@@ -20,6 +21,8 @@ export class NewRecipeComponent implements OnInit {
   public loadingCategory = true;
   public loadingCuisine = true;
   public loadingCourses = true;
+
+  public saveMessage: any;
 
   constructor(private recipeService: RecipeService,
               private modalService: NgbModal,
@@ -49,7 +52,6 @@ export class NewRecipeComponent implements OnInit {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
       size: "sm"
     });
-    modalRef.componentInstance.name = 'World';
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
@@ -57,6 +59,20 @@ export class NewRecipeComponent implements OnInit {
       }
     });
   }
+
+  openDeleteAllergen(allergen) {
+    const modalRef = this.modalService.open(DeleteModalComponent, {
+      size: "sm"
+    });
+    modalRef.componentInstance.allergen = allergen;
+    modalRef.result.then((result) => {
+      if (result) {
+        this.toastr.success(result.message, 'Success!');
+        this.ngOnInit()
+      }
+    });
+  }
+
 
 
 }

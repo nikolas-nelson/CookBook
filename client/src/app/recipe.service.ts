@@ -37,8 +37,15 @@ export class RecipeService {
   }
 
   addAllergen(allergen) {
-        return this.http.post(`${this.url}/allergen`, allergen);
+    return this.http.post(`${this.url}/allergen`, allergen);
+  }
 
+  editAllergen(allergen) {
+    return this.http.put(`${this.url}/allergen`, allergen);
+  }
+
+  deleteAllergen(allergenId) {
+    return this.http.delete(`${this.url}/allergen/${allergenId}`);
   }
 
 }

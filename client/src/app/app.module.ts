@@ -19,6 +19,7 @@ import { AddAllergenModalComponent } from './new-recipe/add-allergen-modal/add-a
 import {ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { DeleteModalComponent } from './new-recipe/delete-modal/delete-modal.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {ToastrModule} from "ngx-toastr";
     CategoriesComponent,
     CuisineComponent,
     CoursesComponent,
-    AddAllergenModalComponent
+    AddAllergenModalComponent,
+    DeleteModalComponent
   ],
   imports: [
     HttpClientModule,
@@ -49,7 +51,8 @@ import {ToastrModule} from "ngx-toastr";
   bootstrap: [AppComponent],
   entryComponents: [
     CommentModalComponent,
-    AddAllergenModalComponent
+    AddAllergenModalComponent,
+    DeleteModalComponent
   ]
 })
 export class AppModule {

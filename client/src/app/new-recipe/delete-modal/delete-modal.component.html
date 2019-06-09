@@ -1,0 +1,17 @@
+  <div class="modal-header bg-danger text-white">
+    <h4 class="modal-title">Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure that you want to <strong>DELETE</strong>: <span class="font-italic">{{allergen.name}}</span>?
+    </p>
+  </div>
+  <div class="modal-footer d-flex">
+    <button type="button" class="btn btn-outline-dark mr-2" (click)="activeModal.dismiss()">Close</button>
+    <button type="submit" class="btn btn-outline-danger" (click)="deleteAllergen(allergen.id)">Delete</button>
+  </div>
+
+
