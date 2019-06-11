@@ -6,6 +6,8 @@ import ast
 from models.recipes import RecipeModel
 from models.categories import CategoriesModel
 from models.allergens import AllergensModel
+from models.steps import StepsModel
+from models.ingredients import IngredientsModel
 
 
 class Recipe(Resource):
@@ -67,6 +69,12 @@ class Recipe(Resource):
     parser.add_argument('courses',
                         action='append'
                         )
+    parser.add_argument('steps',
+                        action='append'
+                        )
+    parser.add_argument('ingredients',
+                        action='append'
+                        )
 
     @classmethod
     def get(cls, id):
@@ -115,6 +123,23 @@ class Recipe(Resource):
                                     )
             recipe.save_course_to_db(course)
 
+        steps = data['steps']
+        for step in steps:
+            steps_json = ast.literal_eval(step)
+            step = StepsModel(steps_json['step_number'],
+                              steps_json['instructions'],
+                              )
+            recipe.save_step_to_db(step)
+
+        ingredients = data['ingredients']
+        for ingredient in ingredients:
+            ingredients_json = ast.literal_eval(ingredient)
+            ingredient = IngredientsModel(ingredients_json['amount'],
+                                          ingredients_json['ingredient'],
+                                          ingredients_json['measurement']
+                                          )
+            recipe.save_ingredient_to_db(ingredient)
+
         return {"message": "Recipe created successfully."}, 201
 
     @classmethod
@@ -146,7 +171,6 @@ class Recipe(Resource):
             recipe.save_recipe_to_db(category)
 
         allergens = data['allergens']
-        print(allergens)
 
         for aller in allergens:
             allergens_json = ast.literal_eval(aller)
@@ -162,6 +186,25 @@ class Recipe(Resource):
                                     courses_json['name'],
                                     )
             recipe.save_course_to_db(course)
+
+        steps = data['steps']
+        for step in steps:
+            steps_json = ast.literal_eval(step)
+            step = StepsModel(steps_json['id'],
+                              steps_json['step_number'],
+                              steps_json['instructions'],
+                              )
+            recipe.save_step_to_db(step)
+
+        ingredients = data['ingredients']
+        for ingredient in ingredients:
+            ingredients_json = ast.literal_eval(ingredient)
+            ingredient = IngredientsModel(ingredients_json['id'],
+                                          ingredients_json['amount'],
+                                          ingredients_json['ingredient'],
+                                          ingredients_json['measurement']
+                                          )
+            recipe.save_ingredient_to_db(ingredient)
 
         return recipe.json()
 

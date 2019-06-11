@@ -109,9 +109,15 @@ class RecipeModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    # def save_to_db_category(self, category):
-    #     db.session.add(self, category)
-    #     db.session.commit()
+    def save_step_to_db(self, step):
+        self.steps.append(step)
+        db.session.add(self)
+        db.session.commit()
+
+    def save_ingredient_to_db(self, ingredients):
+        self.ingredients.append(ingredients)
+        db.session.add(self)
+        db.session.commit()
 
     # Delete recipe from db
     def delete_from_db(self):

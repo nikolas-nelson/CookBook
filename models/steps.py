@@ -8,18 +8,18 @@ class StepsModel(db.Model):
     step_number = db.Column(db.Integer)
     instructions = db.Column(db.Text)
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    recipes = db.relationship('RecipeModel')
 
-    def __init__(self, step_number, instructions, recipes_id):
+    def __init__(self, id, step_number, instructions):
+        self.id = id
         self.step_number = step_number
         self.instructions = instructions
-        self.recipes_id = recipes_id
 
     def json(self):
         return {
             'id': self.id,
             'step_number': self.step_number,
             'instructions': self.instructions,
-            'recipes_id': self.recipes_id,
         }
 
     @classmethod

@@ -5,6 +5,11 @@ from models.steps import StepsModel
 
 class Step(Resource):
     parser = reqparse.RequestParser()
+    parser.add_argument('id',
+                        type=int,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
     parser.add_argument('step_number',
                         type=int,
                         required=True,
@@ -15,19 +20,14 @@ class Step(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('recipes_id',
-                        type=int,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
 
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
 
-        step = StepsModel(data['step_number'],
+        step = StepsModel(data['id'],
+                          data['step_number'],
                           data['instructions'],
-                          data['recipes_id'],
                           )
         step.save_to_db()
 
@@ -39,9 +39,9 @@ class Step(Resource):
         step = StepsModel.find_by_id(id)
 
         if step:
+            step.id = data['id'],
             step.step_number = data['step_number']
             step.instructions = data['instructions']
-            step.recipes_id = data['recipes_id']
         else:
             step = StepsModel(**data)
 

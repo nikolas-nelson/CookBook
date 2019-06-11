@@ -10,10 +10,10 @@ class IngredientsModel(db.Model):
     amount = db.Column(db.DECIMAL(3, 2))
     ingredient = db.Column(db.String)
     measurement = db.Column(db.String)
+    recipe = db.relationship('RecipeModel')
 
-    def __init__(self, id, recipes_id, amount, ingredient, measurement):
+    def __init__(self, id, amount, ingredient, measurement):
         self.id = id
-        self.recipes_id = recipes_id
         self.amount = amount
         self.ingredient = ingredient
         self.measurement = measurement

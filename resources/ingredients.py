@@ -10,11 +10,6 @@ class Ingredient(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
-    parser.add_argument('recipes_id',
-                        type=int,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
     parser.add_argument('amount',
                         type=float,
                         required=True,
@@ -34,7 +29,6 @@ class Ingredient(Resource):
         data = cls.parser.parse_args()
 
         ingredient = IngredientsModel(data['id'],
-                                      data['recipes_id'],
                                       data['amount'],
                                       data['ingredient'],
                                       data['measurement'],
@@ -50,7 +44,6 @@ class Ingredient(Resource):
 
         if ingredient:
             ingredient.id = data['id']
-            ingredient.recipes_id = data['recipes_id']
             ingredient.amount = data['amount']
             ingredient.ingredient = data['ingredient']
             ingredient.measurement = data['measurement']
