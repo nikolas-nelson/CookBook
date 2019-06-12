@@ -69,7 +69,7 @@ class RecipeModel(db.Model):
             'level': self.level,
             'source': self.source,
             'rating': json.dumps(self.rating),  # JSON encoder and decoder for DECIMAL number
-            'steps': [steps.json() for steps in self.steps.all()],
+            'steps': [steps.json() for steps in self.steps],
             'time_added': self.time_added.isoformat(),
             'comments': [comments.json() for comments in self.comments.all()],
             'user': self.user.json(),
@@ -129,9 +129,10 @@ class RecipeCategory(db.Model):
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", passive_deletes=True, cascade="all, delete-orphan"))
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", passive_deletes=True,
+                                                                cascade="all, delete-orphan"))
     categories = db.relationship("CategoriesModel",
-                                 backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
+                                 backref=db.backref("recipes_has_categories", passive_deletes=True, cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, categories_id):
         self.id = id
@@ -149,7 +150,7 @@ class RecipeAllergens(db.Model):
     recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_allergens", passive_deletes=True,
                                                                 cascade="all, delete-orphan"))
     allergens = db.relationship("AllergensModel",
-                                backref=db.backref("recipes_has_allergens", cascade="all, delete-orphan"))
+                                backref=db.backref("recipes_has_allergens", passive_deletes=True, cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, allergens_id):
         self.id = id
@@ -164,9 +165,10 @@ class RecipeCourses(db.Model):
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     courses_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
 
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", passive_deletes=True, cascade="all, delete-orphan"))
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", passive_deletes=True,
+                                                                cascade="all, delete-orphan"))
     courses = db.relationship("CoursesModel",
-                              backref=db.backref("recipes_has_courses", cascade="all, delete-orphan"))
+                              backref=db.backref("recipes_has_courses", passive_deletes=True, cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, courses_id):
         self.id = id
