@@ -20,10 +20,7 @@ class RecipeModel(db.Model):
     rating = db.Column(db.DECIMAL(3, 2))
     time_added = db.Column(db.Date)
 
-    steps = db.relationship('StepsModel', backref='step',
-                            cascade="all, delete-orphan",
-                            lazy='dynamic',
-                            passive_deletes=True)
+    steps = db.relationship('StepsModel', cascade='save-update, merge, delete')
 
     comments = db.relationship('CommentsModel', backref='comments',
                                cascade="all, delete-orphan",
@@ -42,7 +39,7 @@ class RecipeModel(db.Model):
 
     upvotes = db.relationship('UpVotesModel', backref='upvotes')
 
-    ingredients = db.relationship('IngredientsModel', backref='ingredients')
+    ingredients = db.relationship('IngredientsModel', cascade='save-update, merge, delete')
 
     def __init__(self, user_id, cuisine_id, name, description, image_path, total_time, prep_time, cook_time, level,
                  source, ):
@@ -132,7 +129,7 @@ class RecipeCategory(db.Model):
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     categories_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", passive_deletes=True, cascade="all, delete-orphan"))
     categories = db.relationship("CategoriesModel",
                                  backref=db.backref("recipes_has_categories", cascade="all, delete-orphan"))
 
@@ -149,7 +146,8 @@ class RecipeAllergens(db.Model):
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     allergens_id = db.Column(db.Integer, db.ForeignKey('allergens.id'))
 
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_allergens", cascade="all, delete-orphan"))
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_allergens", passive_deletes=True,
+                                                                cascade="all, delete-orphan"))
     allergens = db.relationship("AllergensModel",
                                 backref=db.backref("recipes_has_allergens", cascade="all, delete-orphan"))
 
@@ -166,7 +164,7 @@ class RecipeCourses(db.Model):
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
     courses_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
 
-    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", cascade="all, delete-orphan"))
+    recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", passive_deletes=True, cascade="all, delete-orphan"))
     courses = db.relationship("CoursesModel",
                               backref=db.backref("recipes_has_courses", cascade="all, delete-orphan"))
 

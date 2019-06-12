@@ -6,11 +6,11 @@ class IngredientsModel(db.Model):
     __tablename__ = 'ingredients'
 
     id = db.Column(db.Integer, primary_key=True)
-    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
+    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'))
     amount = db.Column(db.DECIMAL(3, 2))
     ingredient = db.Column(db.String)
     measurement = db.Column(db.String)
-    recipe = db.relationship('RecipeModel')
+    recipes = db.relationship('RecipeModel', single_parent=True)
 
     def __init__(self, id, amount, ingredient, measurement):
         self.id = id
@@ -21,7 +21,6 @@ class IngredientsModel(db.Model):
     def json(self):
         return {
             'id': self.id,
-            'recipes_id': self.recipes_id,
             'amount': json.dumps(self.amount),
             'ingredient': self.ingredient,
             'measurement': self.measurement,

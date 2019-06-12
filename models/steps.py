@@ -7,8 +7,8 @@ class StepsModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     step_number = db.Column(db.Integer)
     instructions = db.Column(db.Text)
-    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
-    recipes = db.relationship('RecipeModel')
+    recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'))
+    recipes = db.relationship('RecipeModel', single_parent=True)
 
     def __init__(self, id, step_number, instructions):
         self.id = id

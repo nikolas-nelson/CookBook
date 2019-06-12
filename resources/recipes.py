@@ -56,10 +56,6 @@ class Recipe(Resource):
                         type=str,
                         required=False,
                         )
-    # parser.add_argument('rating',
-    #                     type=float,
-    #                     required=False,
-    #                     )
     parser.add_argument('category',
                         action='append'
                         )
@@ -86,7 +82,6 @@ class Recipe(Resource):
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
-        print(data)
         recipe = RecipeModel(data['user_id'],
                              data['cuisine_id'],
                              data['name'],
@@ -126,7 +121,8 @@ class Recipe(Resource):
         steps = data['steps']
         for step in steps:
             steps_json = ast.literal_eval(step)
-            step = StepsModel(steps_json['step_number'],
+            step = StepsModel(steps_json['id'],
+                              steps_json['step_number'],
                               steps_json['instructions'],
                               )
             recipe.save_step_to_db(step)
@@ -134,7 +130,8 @@ class Recipe(Resource):
         ingredients = data['ingredients']
         for ingredient in ingredients:
             ingredients_json = ast.literal_eval(ingredient)
-            ingredient = IngredientsModel(ingredients_json['amount'],
+            ingredient = IngredientsModel(ingredients_json['id'],
+                                          ingredients_json['amount'],
                                           ingredients_json['ingredient'],
                                           ingredients_json['measurement']
                                           )
