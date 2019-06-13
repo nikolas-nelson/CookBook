@@ -132,12 +132,17 @@ class RecipeCategory(db.Model):
     recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_categories", passive_deletes=True,
                                                                 cascade="all, delete-orphan"))
     categories = db.relationship("CategoriesModel",
-                                 backref=db.backref("recipes_has_categories", passive_deletes=True, cascade="all, delete-orphan"))
+                                 backref=db.backref("recipes_has_categories", passive_deletes=True,
+                                                    cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, categories_id):
         self.id = id
         self.recipes_id = recipes_id
         self.categories_id = categories_id
+
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
 
 
 class RecipeAllergens(db.Model):
@@ -150,12 +155,17 @@ class RecipeAllergens(db.Model):
     recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_allergens", passive_deletes=True,
                                                                 cascade="all, delete-orphan"))
     allergens = db.relationship("AllergensModel",
-                                backref=db.backref("recipes_has_allergens", passive_deletes=True, cascade="all, delete-orphan"))
+                                backref=db.backref("recipes_has_allergens", passive_deletes=True,
+                                                   cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, allergens_id):
         self.id = id
         self.recipes_id = recipes_id
         self.allergens_id = allergens_id
+
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
 
 
 class RecipeCourses(db.Model):
@@ -168,9 +178,14 @@ class RecipeCourses(db.Model):
     recipes = db.relationship("RecipeModel", backref=db.backref("recipes_has_courses", passive_deletes=True,
                                                                 cascade="all, delete-orphan"))
     courses = db.relationship("CoursesModel",
-                              backref=db.backref("recipes_has_courses", passive_deletes=True, cascade="all, delete-orphan"))
+                              backref=db.backref("recipes_has_courses", passive_deletes=True,
+                                                 cascade="all, delete-orphan"))
 
     def __init__(self, id, recipes_id, courses_id):
         self.id = id
         self.recipes_id = recipes_id
         self.courses_id = courses_id
+
+    @classmethod
+    def find_by_id(cls, _id):
+        return cls.query.filter_by(id=_id).first()
