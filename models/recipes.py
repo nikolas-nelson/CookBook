@@ -121,6 +121,17 @@ class RecipeModel(db.Model):
         db.session.delete(self)
         db.session.commit()
 
+    def delete_category_from_db(self, category):
+        db.session.delete(category)
+        db.session.commit()
+
+    def delete_allergen_from_db(self, allergen):
+        db.session.delete(allergen)
+        db.session.commit()
+
+    def delete_course_from_db(self, course):
+        db.session.delete(course)
+        db.session.commit()
 
 class RecipeCategory(db.Model):
     __tablename__ = 'recipes_has_categories'
@@ -142,7 +153,7 @@ class RecipeCategory(db.Model):
 
     @classmethod
     def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+        return cls.query.filter_by(recipes_id=_id).first()
 
 
 class RecipeAllergens(db.Model):
@@ -165,7 +176,7 @@ class RecipeAllergens(db.Model):
 
     @classmethod
     def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+        return cls.query.filter_by(recipes_id=_id).first()
 
 
 class RecipeCourses(db.Model):
@@ -188,4 +199,4 @@ class RecipeCourses(db.Model):
 
     @classmethod
     def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+        return cls.query.filter_by(recipes_id=_id).first()

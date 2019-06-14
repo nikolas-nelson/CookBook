@@ -3,7 +3,7 @@ from flask_restful import Resource, reqparse
 import json
 import ast
 
-from models.recipes import RecipeModel
+from models.recipes import RecipeModel, RecipeCategory, RecipeCourses, RecipeAllergens
 from models.categories import CategoriesModel
 from models.allergens import AllergensModel
 from models.steps import StepsModel
@@ -143,7 +143,6 @@ class Recipe(Resource):
     @classmethod
     def put(cls, id):
         data = cls.parser.parse_args()
-        print(data)
         recipe = RecipeModel.find_by_id(id)
 
         if recipe:
@@ -160,45 +159,43 @@ class Recipe(Resource):
         else:
             recipe = RecipeModel(**data)
 
-        # categories = data['category']
-        # for cat in categories:
-        #     cat_json = ast.literal_eval(cat)
-        #     category = CategoriesModel.find_by_id(cat_json['id'])
-        #     if category:
-        #         category.name = cat_json['name']
-        #         category.description = cat_json['description']
-        #
-        #     else:
-        #         category_json = ast.literal_eval(category)
-        #         category = CategoriesModel(category_json['id'],
-        #                                    category_json['name'],
-        #                                    category_json['description']
-        #                                    )
-        #     recipe.save_recipe_to_db(category)
-        #
-        # allergens = data['allergens']
-        # for aller in allergens:
-        #     allergens_json = ast.literal_eval(aller)
-        #     allergen = AllergensModel.find_by_id(allergens_json['id'])
-        #     if allergen:
-        #         allergen.name = allergens_json['name']
-        #     else:
-        #         allergen = AllergensModel(allergens_json['id'],
-        #                                   allergens_json['name'],
-        #                                   )
-        #     recipe.save_allergen_to_db(allergen)
-        #
-        # courses = data['courses']
-        # for cour in courses:
-        #     courses_json = ast.literal_eval(cour)
-        #     course = CategoriesModel.find_by_id(courses_json['id'])
-        #     if course:
-        #         course.name = courses_json['name']
-        #     else:
-        #         course = CoursesModel(courses_json['id'],
-        #                               courses_json['name'],
-        #                               )
-        #     recipe.save_course_to_db(course)
+        recipe_categories = data['category']
+        for cat in recipe_categories:
+            category = RecipeCategory.find_by_id(id)
+            if category:
+                recipe.delete_category_from_db(category)
+
+        for cat in recipe_categories:
+            category_json = ast.literal_eval(cat)
+            category = CategoriesModel(category_json['id'],
+                                       category_json['name'],
+                                       category_json['description']
+                                       )
+            recipe.save_recipe_to_db(category)
+
+        allergens = data['allergens']
+        for aller in allergens:
+            allergen = RecipeAllergens.find_by_id(id)
+            if allergen:
+                recipe.delete_allergen_from_db(allergen)
+
+        for aller in allergens:
+            allergens_json = ast.literal_eval(aller)
+            allergen = AllergensModel(allergens_json['id'],
+                                      allergens_json['name'],
+                                      )
+            recipe.save_allergen_to_db(allergen)
+
+        courses = data['courses']
+        for cour in courses:
+            course = RecipeCourses.find_by_id(id)
+            if course:
+                recipe.delete_course_from_db(course)
+        for cour in courses:
+            courses_json = ast.literal_eval(cour)
+            course = CoursesModel(courses_json['id'],
+                                  courses_json['name'], )
+            recipe.save_course_to_db(course)
 
         steps = data['steps']
         for step in steps:
