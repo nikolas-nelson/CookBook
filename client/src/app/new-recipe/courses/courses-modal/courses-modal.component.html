@@ -1,0 +1,26 @@
+<form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="course">Edit an Course!</h4>
+    <h4 class="modal-title" *ngIf="!course">Add an Course!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group ">
+      <label for="name">Name</label>
+      <input type="text" class="form-control " placeholder="Some name"
+             formControlName="name" id="name"
+              [ngClass]="{'is-invalid': courseForm.controls.name.invalid && courseForm.controls.name.touched}">
+      <div class="invalid-feedback">
+        Name is required!
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer d-flex">
+    <button type="button" class="btn btn-outline-dark mr-2" (click)="activeModal.dismiss()">Close</button>
+    <button type="submit" class="btn btn-outline-success" [disabled]="!courseForm.valid">Submit</button>
+  </div>
+</form>
+

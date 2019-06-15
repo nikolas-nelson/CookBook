@@ -42,13 +42,13 @@ export class AllergensComponent implements OnInit {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
     });
-    modalRef.componentInstance.allergen = allergen;
+    modalRef.componentInstance.data = {data: allergen, type: 'allergen'};
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
-    });
+    }).catch((res) => {});
   }
 
   openEditAllergen(allergen) {
@@ -61,7 +61,7 @@ export class AllergensComponent implements OnInit {
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
-    });
+    }).catch((res) => {});
   }
 
 }

@@ -5,6 +5,11 @@ from models.categories import CategoriesModel
 
 class Category(Resource):
     parser = reqparse.RequestParser()
+    parser.add_argument('id',
+                        type=int,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
     parser.add_argument('name',
                         type=str,
                         required=True,

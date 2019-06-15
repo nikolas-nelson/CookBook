@@ -9,6 +9,8 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CoursesComponent } from './courses/courses.component';
 import { StepsComponent } from './steps/steps.component';
 import { IngredientsComponent } from './ingredients/ingredients.component';
+import { CategoryModalComponent } from './categories/category-modal/category-modal.component';
+import { CoursesModalComponent } from './courses/courses-modal/courses-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,16 @@ import { IngredientsComponent } from './ingredients/ingredients.component';
     CategoriesComponent,
     CoursesComponent,
     StepsComponent,
-    IngredientsComponent
+    IngredientsComponent,
+    CategoryModalComponent,
+    CoursesModalComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule
+  ], entryComponents: [
+    CategoryModalComponent,
+    CoursesModalComponent
   ]
 })
 export class NewRecipeModule {

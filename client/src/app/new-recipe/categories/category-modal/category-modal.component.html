@@ -1,0 +1,34 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h4 class="modal-title" *ngIf="category">Edit a Category!</h4>
+    <h4 class="modal-title" *ngIf="!category">Add a Category!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group ">
+      <label for="name">Name</label>
+      <input type="text" class="form-control " placeholder="Some name"
+             formControlName="name" id="name"
+              [ngClass]="{'is-invalid': categoryForm.controls.name.invalid && categoryForm.controls.name.touched}">
+      <div class="invalid-feedback">
+        Name is required!
+      </div>
+    </div>
+    <div class="form-group ">
+      <label for="description">Description</label>
+      <textarea type="text" class="form-control "
+             formControlName="description" id="description"
+                [ngClass]="{'is-invalid': categoryForm.controls.description.invalid && categoryForm.controls.description.touched}"></textarea>
+      <div class="invalid-feedback">
+        Description is required!
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer d-flex">
+    <button type="button" class="btn btn-outline-dark mr-2" (click)="activeModal.dismiss()">Close</button>
+    <button type="submit" class="btn btn-outline-success" [disabled]="!categoryForm.valid">Submit</button>
+  </div>
+</form>

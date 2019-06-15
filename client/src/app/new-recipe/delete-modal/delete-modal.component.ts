@@ -10,7 +10,7 @@ import {RecipeService} from "../../recipe.service";
 })
 export class DeleteModalComponent implements OnInit {
 
-  @Input() allergen;
+  @Input() data;
 
   constructor(public activeModal: NgbActiveModal,
               private recipeService: RecipeService,
@@ -21,12 +21,28 @@ export class DeleteModalComponent implements OnInit {
 
   }
 
-  deleteAllergen(allergenId) {
-    this.recipeService.deleteAllergen(allergenId).subscribe(res => {
-      this.activeModal.close(res)
-    }, (error) => {
-      this.toastr.error(error.message, 'Ohh NO! Something went wrong');
-    });
-  }
 
+  delete(id) {
+    if (this.data.type === 'allergen') {
+      this.recipeService.deleteAllergen(id).subscribe(res => {
+        this.activeModal.close(res)
+      }, (error) => {
+        this.toastr.error(error.message, 'Ohh NO! Something went wrong');
+      });
+    } else if (this.data.type === 'category') {
+      this.recipeService.deleteCategory(id).subscribe(res => {
+        this.activeModal.close(res)
+      }, (error) => {
+        this.toastr.error(error.message, 'Ohh NO! Something went wrong');
+      });
+    } else if (this.data.type === 'course') {
+      this.recipeService.deleteCourse(id).subscribe(res => {
+        this.activeModal.close(res)
+      }, (error) => {
+        this.toastr.error(error.message, 'Ohh NO! Something went wrong');
+      });
+    } else {
+      this.toastr.error('Ohh NO! Something went wrong');
+    }
+  }
 }

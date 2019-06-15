@@ -24,12 +24,36 @@ export class RecipeService {
     return this.http.get(`${this.url}/categories`);
   }
 
+  addCategory(category) {
+    return this.http.post(`${this.url}/category`, category);
+  }
+
+  editCategory(category) {
+    return this.http.put(`${this.url}/category/${category.id}`, category);
+  }
+
+  deleteCategory(categoryId) {
+    return this.http.delete(`${this.url}/category/${categoryId}`);
+  }
+
   getCuisines() {
     return this.http.get(`${this.url}/cuisines`);
   }
 
   getCourses() {
     return this.http.get(`${this.url}/courses`);
+  }
+
+  addCourse(course) {
+    return this.http.post(`${this.url}/course`, course);
+  }
+
+  editCourse(course) {
+    return this.http.put(`${this.url}/course/${course.id}`, course);
+  }
+
+  deleteCourse(courseId) {
+    return this.http.delete(`${this.url}/course/${courseId}`);
   }
 
   getAllergens() {
