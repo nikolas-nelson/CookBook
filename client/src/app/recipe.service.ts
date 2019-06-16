@@ -20,6 +20,10 @@ export class RecipeService {
     return this.http.get(`${this.url}/recipe/` + id);
   }
 
+  addRecipe(recipe) {
+    return this.http.post(`${this.url}/recipe`, recipe);
+  }
+
   getCategories() {
     return this.http.get(`${this.url}/categories`);
   }
