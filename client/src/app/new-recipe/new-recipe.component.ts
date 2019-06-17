@@ -29,24 +29,12 @@ export class NewRecipeComponent implements OnInit {
 
   public allergensList: any = {};
   public categories: any;
-   public courses: any;
+  public courses: any;
 
-  categoriesSelected = [
-    false, true, false
-  ];
+  public submitted = false;
 
-  recipeForm = new FormGroup({
-    id: new FormControl(''),
-    name: new FormControl('', Validators.required),
-    image_path: new FormControl('',),
-    description: new FormControl(''),
-    source: new FormControl(''),
-    prep_time: new FormControl(''),
-    cook_time: new FormControl(''),
-    level: new FormControl('', Validators.required),
-    cuisine_id: new FormControl(''),
-  });
 
+  recipeForm: FormGroup;
 
   constructor(private recipeService: RecipeService,
               private fb: FormBuilder,
@@ -71,7 +59,7 @@ export class NewRecipeComponent implements OnInit {
       this.loading = false;
     });
 
-     this.recipeService.getCourses().subscribe(courses => {
+    this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
       this.loading = false;
     });
@@ -80,11 +68,12 @@ export class NewRecipeComponent implements OnInit {
       'id': [null],
       'user_id': [1],
       'name': ['', Validators.required],
-      'image_path': [''],
+      'image_path': ['',],
       'description': ['', Validators.required],
       'source': [''],
       'prep_time': [null, Validators.required],
       'cook_time': [null, Validators.required],
+      'total_time': [null],
       'level': ['', Validators.required],
       'cuisine_id': ['', Validators.required],
       ingredients: this.fb.array([
@@ -92,12 +81,17 @@ export class NewRecipeComponent implements OnInit {
       ]),
       steps: this.fb.array([
         this.addStepFG()
-      ]),
+      ], Validators.required),
       allergens: this.fb.array([]),
       category: this.fb.array([]),
       courses: this.fb.array([])
     });
 
+  }
+
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.recipeForm.controls;
   }
 
   onChangeAllergen(allergen: any, isChecked: boolean) {
@@ -156,9 +150,16 @@ export class NewRecipeComponent implements OnInit {
   addIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(this.addIngredientFG())
   }
+  removeIngredient(index: number) {
+     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
+  }
 
   addStep() {
     (<FormArray>this.recipeForm.get('steps')).push(this.addStepFG())
+  }
+
+  removeStep(index: number) {
+    (<FormArray>this.recipeForm.get('steps')).removeAt(index)
   }
 
 
@@ -181,9 +182,16 @@ export class NewRecipeComponent implements OnInit {
       this.isImage = false;
     }
 
-    this.recipeService.addRecipe(this.recipeForm.value).subscribe(res => {
-      console.log(res)
-    });
+    this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
+
+    console.log(this.recipeForm && this.selectedImage);
+    this.submitted = true;
+    if (this.recipeForm.valid) {
+      this.recipeService.addRecipe(this.recipeForm.value).subscribe(res => {
+        console.log(res)
+      });
+    }
+
   }
 
   openAddAllergen() {
@@ -268,7 +276,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
-   openAddCourse() {
+  openAddCourse() {
     const modalRef = this.modalService.open(CoursesModalComponent, {
       size: "sm"
     });
@@ -277,20 +285,22 @@ export class NewRecipeComponent implements OnInit {
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
-    }).catch((res) => {});
+    }).catch((res) => {
+    });
   }
 
-   openDeleteCourses(course) {
+  openDeleteCourses(course) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
     });
-    modalRef.componentInstance.data = {data : course, type: 'course'};
+    modalRef.componentInstance.data = {data: course, type: 'course'};
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
-    }).catch((res) => {});
+    }).catch((res) => {
+    });
   }
 
   openEditCourse(course) {
@@ -303,7 +313,8 @@ export class NewRecipeComponent implements OnInit {
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
-    }).catch((res) => {});
+    }).catch((res) => {
+    });
   }
 
 }

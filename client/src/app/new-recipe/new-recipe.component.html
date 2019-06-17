@@ -9,9 +9,9 @@
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group">
-              <label for="recipeName">Recipe name</label>
+              <label for="recipeName" class="control-label required">Recipe name</label>
               <input type="text" class="form-control" formControlName="name" id="recipeName" placeholder="Recipe name"
-                     [ngClass]="{'is-invalid': recipeForm.controls.name.invalid && recipeForm.controls.name.touched}">
+                     [ngClass]="{'is-invalid': submitted && f.name.errors}">
               <div class="invalid-feedback">
                 Name is required!
               </div>
@@ -20,7 +20,7 @@
             <div class="form-group h-25 mb-3">
               <label for="recipeDescription">Recipe description</label>
               <textarea class="form-control h-100" formControlName="description" id="recipeDescription"
-                        [ngClass]="{'is-invalid': recipeForm.controls.description.invalid && recipeForm.controls.description.touched}"></textarea>
+                        [ngClass]="{'is-invalid': submitted && f.description.errors}"></textarea>
               <div class="invalid-feedback">
                 Description is required!
               </div>
@@ -57,54 +57,66 @@
             <div class="">
               <div class="row">
                 <div class="form-group col-12 col-md-6">
-                  <label for="prep_time">Prep time</label>
-                  <div class="input-group">
-                    <input type="number" class="form-control" formControlName="prep_time" id="prep_time"
-                           placeholder="Prep time">
-                    <div class="input-group-append">
-                      <div class="input-group-text">min</div>
+                  <label for="prep_time" class="control-label required">Prep time
+                    <div class="input-group">
+                      <input type="number" class="form-control"
+                             [ngClass]="{'is-invalid': submitted && f.prep_time.errors}"
+                             formControlName="prep_time" id="prep_time"
+                             placeholder="Prep time">
+                      <div class="input-group-append">
+                        <div class="input-group-text">min</div>
+                      </div>
+                      <div class="invalid-feedback">
+                        Prep time is required!
+                      </div>
                     </div>
-                  </div>
-                  <div class="invalid-feedback">
-                    Prep time is required!
-                  </div>
+
+                  </label>
                 </div>
                 <div class="form-group col-12 col-md-6">
-                  <label for="cook_time">Cook time</label>
-                  <div class="input-group">
-                    <input type="number" class="form-control" formControlName="cook_time" id="cook_time"
-                           placeholder="Cook time">
-                    <div class="input-group-append">
-                      <div class="input-group-text">min</div>
+                  <label for="cook_time">Cook time
+                    <div class="input-group">
+                      <input type="number" class="form-control"
+                             [ngClass]="{'is-invalid': submitted && f.cook_time.errors}" formControlName="cook_time"
+                             id="cook_time"
+                             placeholder="Cook time">
+                      <div class="input-group-append">
+                        <div class="input-group-text">min</div>
+                      </div>
+
                     </div>
-                  </div>
-                  <div class="invalid-feedback">
-                    Cook time is required!
-                  </div>
+
+                  </label>
                 </div>
                 <div class="form-group col-12 col-md-6">
                   <label class="my-1 mr-2" for="level">Difficulty level</label>
-                  <select class="custom-select my-1 mr-sm-2" id="level" formControlName="level"
-                          >
+                  <select class="form-control my-1 mr-sm-2" id="level" formControlName="level"
+                          [ngClass]="{'is-invalid': submitted && f.level.errors}">
                     <option value="" selected>Choose...</option>
                     <option value="Beginner">Beginner</option>
                     <option value="Easy">Easy</option>
                     <option value="Hard">Hard</option>
                     <option value="Very hard">Very hard</option>
                   </select>
+                  <div *ngIf="submitted && f.level.errors">
+                    <small class="mb-0 text-danger">Difficulty level is required!</small>
+                  </div>
+
 
                 </div>
                 <div class="form-group col-12 col-md-6" *ngIf="cuisine">
                   <label for="cuisine">Cuisine</label>
                   <select id="cuisine" class="form-control" formControlName="cuisine_id"
-                          [ngClass]="{'is-invalid': recipeForm.controls.cuisine_id.invalid && recipeForm.controls.cuisine_id.touched}">
+                          [ngClass]="{'is-invalid': submitted && f.cuisine_id.errors}">
                     <option value="">Choose one...</option>
                     <option *ngFor="let cuisine of cuisine.cuisine" [value]="cuisine.id">{{cuisine.name}}</option>
                   </select>
+                  <div *ngIf="submitted && f.cuisine_id.errors">
+                    <small class="mb-0 text-danger">Difficulty level is required!</small>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
 
 
@@ -131,18 +143,37 @@
                   </div>
                 </div>
                 <div formArrayName="ingredients"
-                     *ngFor="let ingredient of recipeForm.get('ingredients').controls; let i = index">
+                     *ngFor="let ingredient of recipeForm['controls'].ingredients['controls']; let i = index">
                   <div class="row" [formGroupName]="i">
-                    <div class="form-group col-3">
-                      <input type="number" class="form-control" id="amount" formControlName="amount">
+                    <div class="form-group col-3 px-1">
+                      <input type="number" class="form-control "
+                             [ngClass]="{'red-border': submitted && ingredient['controls'].amount.errors }" id="amount"
+                             formControlName="amount">
+                      <div class="text-danger" *ngIf="submitted && ingredient['controls'].amount.errors">
+                        <small>Required!</small>
+                      </div>
                     </div>
-                    <div class="form-group col-3">
-                      <input type="text" class="form-control" id="measurement"
+                    <div class="form-group col-3 px-1">
+                      <input type="text" class="form-control"
+                             [ngClass]="{'red-border': submitted && ingredient['controls'].measurement.errors}"
+                             id="measurement"
                              formControlName="measurement">
+                      <div class="text-danger" *ngIf="submitted && ingredient['controls'].measurement.errors">
+                        <small>Required!</small>
+                      </div>
                     </div>
-                    <div class="form-group col-6">
-                      <input type="text" class="form-control" id="ingredient"
+                    <div class="form-group col-5 px-1">
+                      <input type="text" class="form-control"
+                             [ngClass]="{'red-border': submitted && ingredient['controls'].ingredient.errors}"
+                             id="ingredient"
                              formControlName="ingredient">
+                      <div class="text-danger" *ngIf="submitted && ingredient['controls'].ingredient.errors">
+                        <small>Required!</small>
+                      </div>
+                    </div>
+                    <div class="form-group col-1 px-1 text-center">
+                      <button type="button" class="btn btn-link" (click)="removeIngredient(i)"><i
+                        class="far fa-trash"></i></button>
                     </div>
                   </div>
                 </div>
@@ -164,14 +195,23 @@
                   </div>
                 </div>
                 <div class="row" formArrayName="steps"
-                     *ngFor="let step of recipeForm.get('steps').controls; let i = index">
+                     *ngFor="let step of recipeForm['controls'].steps['controls']; let i = index">
                   <div class="form-group col-12" [formGroupName]="i">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <input type="number" class="form-control text-center" style="width: 50px; height: 100%;"
+                        <input type="number" class="form-control text-center" min="1" max="20"
+                               style="width: 70px; height: 100%;"
                                formControlName="step_number">
                       </div>
-                      <textarea class="form-control" formControlName="instructions" id="step"></textarea>
+                      <textarea class="form-control" formControlName="instructions" id="step"
+                                [ngClass]="{'red-border': submitted && step['controls'].instructions.errors}"></textarea>
+                      <div class="input-group-append px-1 text-center">
+                        <button type="button" class="btn btn-link" (click)="removeStep(i)"><i class="far fa-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="text-danger" *ngIf="submitted && step['controls'].instructions.errors">
+                      <small>At lest one step required!</small>
                     </div>
                   </div>
                 </div>
@@ -227,7 +267,7 @@
                 <div class="form-group" *ngIf="courses">
                   <div class="custom-control custom-checkbox d-flex" *ngFor="let course of courses.courses">
                     <input type="checkbox" class="custom-control-input" id="course{{course.id}}"
-                    (change)="onChangeCourse(course, $event.target.checked)">
+                           (change)="onChangeCourse(course, $event.target.checked)">
                     <label class="custom-control-label" for="course{{course.id}}">{{course.name}}</label>
                     <p class="text-right ml-auto mb-0">
                       <button type="button" class="btn btn-link" (click)="openDeleteCourses(course)"><i
