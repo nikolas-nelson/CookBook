@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-
+import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
+import {Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -76,4 +76,9 @@ export class RecipeService {
     return this.http.delete(`${this.url}/allergen/${allergenId}`);
   }
 
+  uploadImage(image) {
+    const uploadData = new FormData();
+    uploadData.append('image', image, image.name);
+    return this.http.post(`${this.url}/img_upload`, uploadData)
+  }
 }

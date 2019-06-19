@@ -26,6 +26,9 @@ export class NewRecipeComponent implements OnInit {
   public isImage: boolean = false;
 
   public loading = true;
+  public loadingCategory = true;
+  public loadingCourse = true;
+  public loadingAllergens = true;
 
   public allergensList: any = {};
   public categories: any;
@@ -51,17 +54,17 @@ export class NewRecipeComponent implements OnInit {
 
     this.recipeService.getAllergens().subscribe(allergens => {
       this.allergensList = allergens;
-      this.loading = false;
+      this.loadingAllergens = false;
     });
 
     this.recipeService.getCategories().subscribe(categories => {
       this.categories = categories;
-      this.loading = false;
+      this.loadingCategory = false;
     });
 
     this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
-      this.loading = false;
+      this.loadingCourse = false;
     });
 
     this.recipeForm = this.fb.group({
@@ -103,7 +106,6 @@ export class NewRecipeComponent implements OnInit {
       this.recipeForm.value.allergens.splice(index, 1);
     }
 
-    console.log(this.recipeForm.value)
   }
 
   onChangeCourse(course: any, isChecked: boolean) {
@@ -115,19 +117,19 @@ export class NewRecipeComponent implements OnInit {
       this.recipeForm.value.courses.splice(index, 1);
     }
 
-    console.log(this.recipeForm.value)
   }
 
   onChangeCategory(category: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.category.push(
         {'id': category.id, 'name': category.name, 'description': category.description});
+    } else if (!isChecked) {
+      this.recipeForm.value.category.push();
     } else {
       let index = this.recipeForm.value.category.indexOf(category);
       this.recipeForm.value.category.splice(index, 1);
     }
 
-    console.log(this.recipeForm.value)
   }
 
   addIngredientFG() {
@@ -150,8 +152,9 @@ export class NewRecipeComponent implements OnInit {
   addIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(this.addIngredientFG())
   }
+
   removeIngredient(index: number) {
-     (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
   }
 
   addStep() {
@@ -178,15 +181,18 @@ export class NewRecipeComponent implements OnInit {
     if (this.selectedImage) {
       this.isImage = true;
       this.recipeForm.value.image_path = this.selectedImage.name;
+      console.log(this.selectedImage);
+      this.recipeService.uploadImage(this.selectedImage).subscribe(res => {
+        console.log(res)
+      })
     } else {
       this.isImage = false;
     }
 
     this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
 
-    console.log(this.recipeForm && this.selectedImage);
     this.submitted = true;
-    if (this.recipeForm.valid) {
+    if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
       this.recipeService.addRecipe(this.recipeForm.value).subscribe(res => {
         console.log(res)
       });

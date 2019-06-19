@@ -15,6 +15,7 @@ from resources.courses import Course, CoursesList
 from resources.cuisine import Cuisine, CuisineList
 from resources.upvotes import UpVote, UpVotesList
 from resources.ingredients import Ingredient, IngredientList
+from image import Image
 
 from dbconfig import dbConfig
 
@@ -122,6 +123,7 @@ api.add_resource(UserLogin, '/login')
 api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(TokenRefresh, '/refresh')
 api.add_resource(UserLogout, '/logout')
+api.add_resource(Image, '/img_upload')
 
 db.init_app(app)
 if __name__ == '__main__':

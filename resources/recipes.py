@@ -95,48 +95,53 @@ class Recipe(Resource):
                              data['source']
                              )
         categories = data['category']
-        for cat in categories:
-            category_json = ast.literal_eval(cat)
-            category = CategoriesModel(category_json['id'],
-                                       category_json['name'],
-                                       category_json['description']
-                                       )
-            recipe.save_recipe_to_db(category)
+        if categories is not None:
+            for cat in categories:
+                category_json = ast.literal_eval(cat)
+                category = CategoriesModel(category_json['id'],
+                                           category_json['name'],
+                                           category_json['description']
+                                           )
+                recipe.save_recipe_to_db(category)
 
         allergens = data['allergens']
-        for aller in allergens:
-            allergens_json = ast.literal_eval(aller)
-            allergen = AllergensModel(allergens_json['id'],
-                                      allergens_json['name'],
-                                      )
-            recipe.save_allergen_to_db(allergen)
+        if allergens is not None:
+            for aller in allergens:
+                allergens_json = ast.literal_eval(aller)
+                allergen = AllergensModel(allergens_json['id'],
+                                          allergens_json['name'],
+                                          )
+                recipe.save_allergen_to_db(allergen)
 
         courses = data['courses']
-        for cour in courses:
-            courses_json = ast.literal_eval(cour)
-            course = AllergensModel(courses_json['id'],
-                                    courses_json['name'],
-                                    )
-            recipe.save_course_to_db(course)
+        if courses is not None:
+            for cour in courses:
+                courses_json = ast.literal_eval(cour)
+                course = AllergensModel(courses_json['id'],
+                                        courses_json['name'],
+                                        )
+                recipe.save_course_to_db(course)
 
         steps = data['steps']
-        for step in steps:
-            steps_json = ast.literal_eval(step)
-            step = StepsModel(steps_json['id'],
-                              steps_json['step_number'],
-                              steps_json['instructions'],
-                              )
-            recipe.save_step_to_db(step)
+        if steps is not None:
+            for step in steps:
+                steps_json = ast.literal_eval(step)
+                step = StepsModel(steps_json['id'],
+                                  steps_json['step_number'],
+                                  steps_json['instructions'],
+                                  )
+                recipe.save_step_to_db(step)
 
         ingredients = data['ingredients']
-        for ingredient in ingredients:
-            ingredients_json = ast.literal_eval(ingredient)
-            ingredient = IngredientsModel(ingredients_json['id'],
-                                          ingredients_json['amount'],
-                                          ingredients_json['ingredient'],
-                                          ingredients_json['measurement']
-                                          )
-            recipe.save_ingredient_to_db(ingredient)
+        if ingredients is not None:
+            for ingredient in ingredients:
+                ingredients_json = ast.literal_eval(ingredient)
+                ingredient = IngredientsModel(ingredients_json['id'],
+                                              ingredients_json['amount'],
+                                              ingredients_json['ingredient'],
+                                              ingredients_json['measurement']
+                                              )
+                recipe.save_ingredient_to_db(ingredient)
 
         return {"message": "Recipe created successfully."}, 201
 
