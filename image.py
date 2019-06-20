@@ -14,7 +14,7 @@ def allowed_file(filename):
 class Image(Resource):
     @classmethod
     def post(cls):
-        target = os.path.join(APP_ROOT, 'public/images/')
+        target = os.path.join(APP_ROOT, 'client/src/assets/img/')
         if not os.path.isdir(target):
             os.mkdir(target)
 
@@ -26,6 +26,5 @@ class Image(Resource):
             if file and allowed_file(filename):
                 destination = "/".join([target, filename])
                 file.save(destination)
-
         else:
             return 'no image'
