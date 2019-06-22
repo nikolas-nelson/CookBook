@@ -76,6 +76,10 @@ export class RecipeService {
     return this.http.delete(`${this.url}/allergen/${allergenId}`);
   }
 
+  getRecipesByFilter(filter) {
+    return this.http.post(`${this.url}/findbyfilter`, filter);
+  }
+
   uploadImage(image) {
     const uploadData = new FormData();
     uploadData.append('image', image, image.name);

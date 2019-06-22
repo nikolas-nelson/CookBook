@@ -6,9 +6,11 @@ import {NewRecipeComponent} from "./new-recipe/new-recipe.component";
 import {CategoriesComponent} from "./categories/categories.component";
 import {CoursesComponent} from "./courses/courses.component";
 import {CuisineComponent} from "./cuisine/cuisine.component";
+import {RecipesComponent} from "./recipes/recipes.component";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
+  {path: 'recipes', component: RecipesComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'new-recipe', component: NewRecipeComponent},
   {path: 'categories', component: CategoriesComponent},

@@ -247,3 +247,13 @@ class RecipesList(Resource):
     @classmethod
     def get(cls):
         return {'recipes': [recipes.json() for recipes in RecipeModel.find_all()]}
+
+
+class RecipesByFilter(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('filter')
+
+    def post(self):
+        data = self.parser.parse_args()
+        filters = ast.literal_eval(data['filter'])
+        return {'recipes': [recipes.json() for recipes in RecipeModel.find_by_filter(filters)]}

@@ -1,0 +1,49 @@
+<div class="recipes">
+  <div class="container py-4">
+    <div>
+      <div class="d-flex" >
+        <div class="ml-auto">
+          <div class="form-group">
+            <label class="" for="level">Difficulty level {{level}}</label>
+            <select class="form-control" [(ngModel)]="level" id="level">
+              <option value="" selected>Choose...</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Easy">Easy</option>
+              <option value="Hard">Hard</option>
+              <option value="Very hard">Very hard</option>
+            </select>
+          </div>
+        </div>
+        <div class="align-self-center pt-3 ml-3">
+          <button class="btn btn-success" (click)="filterRecipes()">Find</button>
+        </div>
+      </div>
+    </div>
+    <h2>Recipes</h2>
+    <hr>
+    <div class="spinner-border" role="status" *ngIf="loading">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row" *ngIf="recipes && !loading">
+      <div class="col-12 col-md-3 mb-3"
+           *ngFor="let recipe of recipes.recipes | paginate: { itemsPerPage: 12, currentPage: p }">
+        <div class="card mb-3 h-100">
+          <div class="card-header">
+            <h5 class="card-title mb-0">{{recipe.name}}</h5>
+          </div>
+          <img src="/assets/img/{{recipe.image_path}}" class="card-img" alt="">
+          <div class="card-body">
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          </div>
+          <div class="card-footer d-flex justify-content-between">
+            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
+            <button class="btn btn-outline-primary" routerLink="/recipe/{{recipe.id}}">Read more</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right" *ngIf="!loading">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

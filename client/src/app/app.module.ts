@@ -15,11 +15,14 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CuisineComponent } from './cuisine/cuisine.component';
 import { CoursesComponent } from './courses/courses.component';
 import { AddAllergenModalComponent } from './new-recipe/allergens/add-allergen-modal/add-allergen-modal.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { DeleteModalComponent } from './new-recipe/delete-modal/delete-modal.component';
 import {NewRecipeModule} from "./new-recipe/new-recipe.module";
+import { RecipesComponent } from './recipes/recipes.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
 
 
 @NgModule({
@@ -34,6 +37,7 @@ import {NewRecipeModule} from "./new-recipe/new-recipe.module";
     CategoriesComponent,
     CuisineComponent,
     CoursesComponent,
+    RecipesComponent,
 
   ],
   imports: [
@@ -44,7 +48,10 @@ import {NewRecipeModule} from "./new-recipe/new-recipe.module";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NewRecipeModule
+    NewRecipeModule,
+    NgxPaginationModule,
+    AppBootstrapModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
