@@ -16,6 +16,7 @@ from resources.cuisine import Cuisine, CuisineList
 from resources.upvotes import UpVote, UpVotesList
 from resources.ingredients import Ingredient, IngredientList
 from resources.recipes import RecipesByFilter
+from resources.recipes import RecipesBySearch
 from image import Image
 
 from dbconfig import dbConfig
@@ -120,6 +121,7 @@ api.add_resource(UpVotesList, '/upvotes')
 api.add_resource(Ingredient, '/ingredient/<int:id>', '/ingredient')
 api.add_resource(IngredientList, '/ingredients')
 api.add_resource(RecipesByFilter, '/findbyfilter')
+api.add_resource(RecipesBySearch, '/search')
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(User, '/user/<int:user_id>')

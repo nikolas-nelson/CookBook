@@ -23,6 +23,7 @@ import {NewRecipeModule} from "./new-recipe/new-recipe.module";
 import { RecipesComponent } from './recipes/recipes.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
+import {OrderModule} from "ngx-order-pipe";
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
     NewRecipeModule,
     NgxPaginationModule,
     AppBootstrapModule,
-    FormsModule
+    FormsModule,
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent],

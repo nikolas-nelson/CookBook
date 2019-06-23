@@ -94,6 +94,10 @@ class RecipeModel(db.Model):
     def find_by_filter(cls, filters):
         return cls.query.filter_by(**filters).all()
 
+    @classmethod
+    def search_by_filter(cls, filters):
+        return cls.query.filter(cls.name.like('%' + filters['name'] + '%')).all()
+
 
 # Save recipe to db
 def save_recipe_to_db(self, category):

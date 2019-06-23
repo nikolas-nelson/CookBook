@@ -80,6 +80,10 @@ export class RecipeService {
     return this.http.post(`${this.url}/findbyfilter`, filter);
   }
 
+   getRecipesBySearch(filter) {
+    return this.http.post(`${this.url}/search`, filter);
+  }
+
   uploadImage(image) {
     const uploadData = new FormData();
     uploadData.append('image', image, image.name);

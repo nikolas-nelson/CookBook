@@ -1,6 +1,5 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {RecipeService} from "../recipe.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-recipes',
@@ -10,22 +9,30 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 export class RecipesComponent implements OnInit {
 
   public recipes: any;
+  public recipe: any;
   public loading = true;
   p: number = 1;
+  public sort = 'name';
+  public order = false;
 
-
+  public searchName;
   public level = '';
+  public timeKey = '';
+  public timeValue = null;
 
   filters = {
     filter: {}
   };
 
-  constructor(private recipeService: RecipeService,
-              private fb: FormBuilder,) {
+  search = {
+    filter: {}
+  };
+
+
+  constructor(private recipeService: RecipeService) {
   }
 
   ngOnInit() {
-
     this.recipeService.getRecipesByFilter(this.filters).subscribe(res => {
       this.recipes = res;
       this.loading = false;
@@ -33,18 +40,33 @@ export class RecipesComponent implements OnInit {
 
   }
 
-  filterRecipes() {
-    if (this.level !== '') {
-      this.filters.filter = {'level': this.level};
-      this.loading = true;
-      this.ngOnInit()
-    } else {
-      this.filters.filter = {};
-      this.loading = true;
-      this.ngOnInit()
-    }
+  sortRecipes() {
+    this.order =  !this.order ;
   }
 
+  filterRecipes() {
+    if (this.level !== '') {
+      this.filters.filter['level'] = this.level;
+    } else {
+      delete this.filters.filter['level'];
+    }
+    if (this.timeKey !== '' && this.timeValue !== null) {
+      this.filters.filter[this.timeKey] = this.timeValue;
+    } else {
+
+    }
+    this.loading = true;
+    this.ngOnInit();
+    delete this.filters.filter[this.timeKey];
+  }
+
+  searchRecipes() {
+    this.search.filter['name'] = this.searchName;
+    this.recipeService.getRecipesBySearch(this.search).subscribe(res => {
+      this.recipes = res;
+      this.loading = false;
+    })
+  }
 
 
 }

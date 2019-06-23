@@ -257,3 +257,14 @@ class RecipesByFilter(Resource):
         data = self.parser.parse_args()
         filters = ast.literal_eval(data['filter'])
         return {'recipes': [recipes.json() for recipes in RecipeModel.find_by_filter(filters)]}
+
+
+class RecipesBySearch(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('filter')
+    parser.add_argument('order')
+
+    def post(self):
+        data = self.parser.parse_args()
+        filters = ast.literal_eval(data['filter'])
+        return {'recipes': [recipes.json() for recipes in RecipeModel.search_by_filter(filters)]}
