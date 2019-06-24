@@ -26,6 +26,7 @@
     "jquery": "^3.4.1",
     "ng-bootstrap": "^1.6.3",
     "ngx-bootstrap": "^4.3.0",
+    "ngx-cookie-service": "^2.2.0",
     "ngx-order-pipe": "^2.0.2",
     "ngx-pagination": "^4.0.0",
     "ngx-toastr": "^10.0.4",

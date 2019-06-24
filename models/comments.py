@@ -8,13 +8,15 @@ class CommentsModel(db.Model):
     comment = db.Column(db.Text)
     name = db.Column(db.String)
     email = db.Column(db.String)
+    time_added = db.Column(db.Date)
     recipes_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
 
-    def __init__(self, comment, name, email, recipes_id):
+    def __init__(self, comment, name, email, recipes_id, time_added):
         self.comment = comment
         self.name = name
         self.email = email
         self.recipes_id = recipes_id
+        self.time_added = time_added
 
     def json(self):
         return {
@@ -23,6 +25,7 @@ class CommentsModel(db.Model):
             'name': self.name,
             'email': self.email,
             'recipes_id': self.recipes_id,
+            'time_added': self.time_added.isoformat()
         }
 
     @classmethod

@@ -8,8 +8,19 @@
         <h1 class="text-left">{{recipe.name}}</h1>
         <div class="d-flex justify-content-between">
           <p class="text-muted">{{recipe.time_added | date: 'dd MMMM yyyy'}} by {{recipe.user.name}}
-            | {{recipe.comments.length}} comments</p>
-          <span class="align-self-center"><ngb-rating [rate]="3" max="5"></ngb-rating></span>
+            | {{recipe.comments.length}} <span *ngIf="recipe.comments.length > 0">comments</span>
+            <span *ngIf="recipe.comments.length < 1">comment</span>
+          </p>
+          <span class="align-self-center">
+            <div class="form-group" *ngIf="!cookieValue">
+              <ngb-rating [formControl]="ctrl" max="5" (click)="saveRating()"></ngb-rating>
+              <div class="form-text small">
+                <div *ngIf="ctrl.valid" class="text-success">Thanks!</div>
+                <div *ngIf="ctrl.invalid" class="text-danger">Please rate us</div>
+              </div>
+            </div>
+            <ngb-rating [rate]="recipe.rating" [readonly]="true" max="5" *ngIf="cookieValue"></ngb-rating>
+          </span>
         </div>
         <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="img-fluid img-thumbnail" alt="">
         <div class="row">
@@ -72,18 +83,61 @@
             <div class="card mt-5">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-center"><i class="fal fa-comments"></i> Comments</h5>
-                <button class="btn btn-sm btn-outline-dark" (click)="openAddComment()"><i class="far fa-plus"></i> Add
-                  your comment
+                <button class="btn btn-sm btn-outline-dark" (click)="addComment()">
+                  <span *ngIf="!isComment">
+                    <i class="far fa-plus"></i>
+                    Add your comment
+                  </span>
+                  <span *ngIf="isComment">
+                    <i class="far fa-minus"></i>
+                    Hide comment
+                  </span>
                 </button>
               </div>
               <div class="card-body">
 
+                <form class="p-2 bg-light mb-3" [formGroup]="commentForm" (ngSubmit)="onSubmit()" *ngIf="isComment">
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control"
+                             [ngClass]="{'is-invalid': submitted && f.name.errors}"
+                             id="name" formControlName="name" placeholder="Name">
+                      <div class="invalid-feedback">
+                        Please enter your name.
+                      </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control"
+                             [ngClass]="{'is-invalid': submitted && f.email.errors}"
+                             formControlName="email" id="email" placeholder="Email">
+                      <div class="invalid-feedback">
+                        Please enter your email.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="textarea">Comment</label>
+                    <textarea class="form-control"
+                              [ngClass]="{'is-invalid': submitted && f.comment.errors}"
+                              id="textarea" formControlName="comment" required></textarea>
+                    <div class="invalid-feedback">
+                      Please enter a message in the textarea.
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <button class="btn btn-sm btn-success">+ Add</button>
+                  </div>
+                </form>
+
                 <div class="border p-3 bg-light mb-2" *ngFor="let comment of recipe.comments">
                   <p class="">
-                    <small>{{comment.name}} | {{comment.email}}</small>
+                    <small>{{comment.name}} | {{comment.email}} | {{comment.time_added | date: 'dd MMMM yyyy'}}</small>
                   </p>
                   <p class="mb-0 font-italic">{{comment.comment}}</p>
                 </div>
+
 
               </div>
 

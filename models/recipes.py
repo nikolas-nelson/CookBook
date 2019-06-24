@@ -76,7 +76,7 @@ class RecipeModel(db.Model):
             'allergens': [allergens.json() for allergens in self.allergens],
             'courses': [courses.json() for courses in self.courses],
             'cuisine': self.cuisine.json(),
-            'upvotes': [upvotes.json() for upvotes in self.upvotes],
+            # 'upvotes': [upvotes.json() for upvotes in self.upvotes],
             'ingredients': [ingredients.json() for ingredients in self.ingredients],
         }
 

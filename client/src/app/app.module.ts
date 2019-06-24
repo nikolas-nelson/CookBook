@@ -10,7 +10,6 @@ import {TopRecipesComponent} from './home/top-recipes/top-recipes.component';
 import {FooterComponent} from './footer/footer.component';
 import {RecipeDetailComponent} from './recipe-detail/recipe-detail.component';
 import {HttpClientModule} from "@angular/common/http";
-import { CommentModalComponent } from './recipe-detail/comment-modal/comment-modal.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CuisineComponent } from './cuisine/cuisine.component';
 import { CoursesComponent } from './courses/courses.component';
@@ -24,6 +23,7 @@ import { RecipesComponent } from './recipes/recipes.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
 import {OrderModule} from "ngx-order-pipe";
+import {CookieService} from "ngx-cookie-service";
 
 
 @NgModule({
@@ -34,7 +34,6 @@ import {OrderModule} from "ngx-order-pipe";
     TopRecipesComponent,
     FooterComponent,
     RecipeDetailComponent,
-    CommentModalComponent,
     CategoriesComponent,
     CuisineComponent,
     CoursesComponent,
@@ -53,12 +52,11 @@ import {OrderModule} from "ngx-order-pipe";
     NgxPaginationModule,
     AppBootstrapModule,
     FormsModule,
-    OrderModule
+    OrderModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
   entryComponents: [
-    CommentModalComponent,
     AddAllergenModalComponent,
     DeleteModalComponent
   ]

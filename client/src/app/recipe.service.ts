@@ -83,6 +83,13 @@ export class RecipeService {
    getRecipesBySearch(filter) {
     return this.http.post(`${this.url}/search`, filter);
   }
+  addRating(rating) {
+    return this.http.post(`${this.url}/upvote`, rating)
+  }
+
+  addComment(comment) {
+    return this.http.post(`${this.url}/comment`, comment)
+  }
 
   uploadImage(image) {
     const uploadData = new FormData();
