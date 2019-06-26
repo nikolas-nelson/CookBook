@@ -24,6 +24,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
 import {OrderModule} from "ngx-order-pipe";
 import {CookieService} from "ngx-cookie-service";
+import { RegistrationComponent } from './registration/registration.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {CookieService} from "ngx-cookie-service";
     CuisineComponent,
     CoursesComponent,
     RecipesComponent,
+    RegistrationComponent,
 
   ],
   imports: [

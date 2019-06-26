@@ -7,6 +7,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {CoursesComponent} from "./courses/courses.component";
 import {CuisineComponent} from "./cuisine/cuisine.component";
 import {RecipesComponent} from "./recipes/recipes.component";
+import {RegistrationComponent} from "./registration/registration.component";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'new-recipe', component: NewRecipeComponent},
   {path: 'categories', component: CategoriesComponent},
   {path: 'courses', component: CoursesComponent},
-  {path: 'cuisine', component: CuisineComponent}
+  {path: 'cuisine', component: CuisineComponent},
+  {path: 'registration', component: RegistrationComponent}
 ];
 
 @NgModule({

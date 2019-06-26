@@ -91,6 +91,10 @@ export class RecipeService {
     return this.http.post(`${this.url}/comment`, comment)
   }
 
+  register(user) {
+     return this.http.post(`${this.url}/register`, user)
+  }
+
   uploadImage(image) {
     const uploadData = new FormData();
     uploadData.append('image', image, image.name);
