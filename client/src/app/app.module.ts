@@ -25,6 +25,9 @@ import {AppBootstrapModule} from "./app-bootstrap/app-bootstrap.module";
 import {OrderModule} from "ngx-order-pipe";
 import {CookieService} from "ngx-cookie-service";
 import { RegistrationComponent } from './registration/registration.component';
+import {AuthenticationService} from "./auth/authentication.service";
+import {AuthModule} from "./auth/auth.module";
+import {AuthGuard} from "./auth/guards/auth.guard";
 
 
 @NgModule({
@@ -55,8 +58,13 @@ import { RegistrationComponent } from './registration/registration.component';
     AppBootstrapModule,
     FormsModule,
     OrderModule,
+    AuthModule
   ],
-  providers: [CookieService],
+  providers: [
+    CookieService,
+    AuthGuard,
+    AuthenticationService,
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     AddAllergenModalComponent,

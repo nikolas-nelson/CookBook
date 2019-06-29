@@ -28,7 +28,8 @@
       </ul>
        <span>
           <div class="navbar-text">
-            <a href="" class="btn btn-link mr-2 text-right">Login</a>
+            <a class="btn btn-link mr-2 text-right" routerLink="/login" *ngIf="!isLogin">Login</a>
+            <a class="btn btn-link mr-2 text-right" (click)="logout()" *ngIf="isLogin">Logout</a>
             <a routerLink="/registration" class="btn btn-outline-primary text-right">Register</a>
           </div>
         </span>

@@ -8,6 +8,9 @@ import {CoursesComponent} from "./courses/courses.component";
 import {CuisineComponent} from "./cuisine/cuisine.component";
 import {RecipesComponent} from "./recipes/recipes.component";
 import {RegistrationComponent} from "./registration/registration.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthGuard} from "./auth/guards/auth.guard";
+import {RecipeGuard} from "./auth/guards/recipe.guard";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
@@ -17,7 +20,18 @@ const routes: Routes = [
   {path: 'categories', component: CategoriesComponent},
   {path: 'courses', component: CoursesComponent},
   {path: 'cuisine', component: CuisineComponent},
-  {path: 'registration', component: RegistrationComponent}
+  {path: 'registration', component: RegistrationComponent},
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'new-recipe',
+    loadChildren: './new-recipe/new-recipe.module#NewRecipeModule',
+    canActivate: [RecipeGuard],
+    canLoad: [RecipeGuard]
+  }
 ];
 
 @NgModule({

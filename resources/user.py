@@ -47,6 +47,8 @@ class UserLogin(Resource):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
             return {
+                       'id': user.id,
+                       'name': user.name,
                        'access_token': access_token,
                        'refresh_token': refresh_token
                    }, 200

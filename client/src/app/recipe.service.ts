@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,9 @@ import {Observable, Subject} from "rxjs";
 export class RecipeService {
 
   url = 'http://127.0.0.1:5000';
+
+  private loginToken = new BehaviorSubject({});
+  token = this.loginToken.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -93,6 +96,16 @@ export class RecipeService {
 
   register(user) {
      return this.http.post(`${this.url}/register`, user)
+  }
+  login(user) {
+    return this.http.post(`${this.url}/login`, user)
+  }
+  logout(token){
+    return this.http.post(`${this.url}/logout`, token)
+  }
+
+  updateLoginToken(token) {
+    this.loginToken.next(token);
   }
 
   uploadImage(image) {
