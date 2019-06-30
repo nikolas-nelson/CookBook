@@ -6,10 +6,7 @@
         <div class="col-12 col-md-4">
           <label class="" for="name">Search by name</label>
           <div class="input-group">
-            <input type="text" class="form-control" id="name" [(ngModel)]="searchName">
-            <div class="input-group-append">
-              <button class="btn btn-success" (click)="searchRecipes()">Find</button>
-            </div>
+            <input type="text" class="form-control" id="name" (keyup)="searchRecipes()" [(ngModel)]="searchName">
           </div>
         </div>
         <div class="col-12 col-md-3 offset-1">

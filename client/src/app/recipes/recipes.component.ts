@@ -40,10 +40,6 @@ export class RecipesComponent implements OnInit {
 
   }
 
-  sortRecipes() {
-    this.order =  !this.order ;
-  }
-
   filterRecipes() {
     if (this.level !== '') {
       this.filters.filter['level'] = this.level;

@@ -53,7 +53,6 @@ class RecipeModel(db.Model):
         self.cook_time = cook_time
         self.level = level
         self.source = source
-        # self.rating = json.dumps(rating)
 
     # Return recipe as JSON object
     def json(self):
@@ -76,8 +75,23 @@ class RecipeModel(db.Model):
             'allergens': [allergens.json() for allergens in self.allergens],
             'courses': [courses.json() for courses in self.courses],
             'cuisine': self.cuisine.json(),
-            # 'upvotes': [upvotes.json() for upvotes in self.upvotes],
             'ingredients': [ingredients.json() for ingredients in self.ingredients],
+        }
+
+    def recipe_list(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'cuisine_id': self.cuisine_id,
+            'description': self.description,
+            'image_path': self.image_path,
+            'total_time': self.total_time,
+            'prep_time': self.prep_time,
+            'cook_time': self.cook_time,
+            'level': self.level,
+            'rating': json.dumps(self.rating),  # JSON encoder and decoder for DECIMAL number
+            'time_added': self.time_added.isoformat(),
+            'user': self.user.json(),
         }
 
     # Find recipe by ID

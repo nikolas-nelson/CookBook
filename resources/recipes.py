@@ -246,7 +246,7 @@ class Recipe(Resource):
 class RecipesList(Resource):
     @classmethod
     def get(cls):
-        return {'recipes': [recipes.json() for recipes in RecipeModel.find_all()]}
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_all()]}
 
 
 class RecipesByFilter(Resource):
@@ -256,7 +256,7 @@ class RecipesByFilter(Resource):
     def post(self):
         data = self.parser.parse_args()
         filters = ast.literal_eval(data['filter'])
-        return {'recipes': [recipes.json() for recipes in RecipeModel.find_by_filter(filters)]}
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_by_filter(filters)]}
 
 
 class RecipesBySearch(Resource):
@@ -267,4 +267,4 @@ class RecipesBySearch(Resource):
     def post(self):
         data = self.parser.parse_args()
         filters = ast.literal_eval(data['filter'])
-        return {'recipes': [recipes.json() for recipes in RecipeModel.search_by_filter(filters)]}
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.search_by_filter(filters)]}
