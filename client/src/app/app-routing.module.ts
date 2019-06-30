@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {TopRecipesComponent} from "./home/top-recipes/top-recipes.component";
 import {RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
 import {NewRecipeComponent} from "./new-recipe/new-recipe.component";
@@ -9,14 +9,13 @@ import {CuisineComponent} from "./cuisine/cuisine.component";
 import {RecipesComponent} from "./recipes/recipes.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./auth/login/login.component";
-import {AuthGuard} from "./auth/guards/auth.guard";
-import {RecipeGuard} from "./auth/guards/recipe.guard";
+import {AuthGuard} from "./_helpers/auth.guard";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
   {path: 'recipes', component: RecipesComponent},
   {path: 'recipe/:id', component: RecipeDetailComponent},
-  {path: 'new-recipe', component: NewRecipeComponent},
+  {path: 'new-recipe', component: NewRecipeComponent, canActivate: [AuthGuard]},
   {path: 'categories', component: CategoriesComponent},
   {path: 'courses', component: CoursesComponent},
   {path: 'cuisine', component: CuisineComponent},
@@ -24,18 +23,12 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [AuthGuard]
   },
-  {
-    path: 'new-recipe',
-    loadChildren: './new-recipe/new-recipe.module#NewRecipeModule',
-    canActivate: [RecipeGuard],
-    canLoad: [RecipeGuard]
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

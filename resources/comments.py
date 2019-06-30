@@ -25,6 +25,11 @@ class Comment(Resource):
                         required=True,
                         help="This field cannot be blank."
                         )
+    parser.add_argument('user_id',
+                        type=int,
+                        required=True,
+                        help="This field cannot be blank."
+                        )
 
     @classmethod
     def post(cls):
@@ -34,6 +39,7 @@ class Comment(Resource):
                              data['name'],
                              data['email'],
                              data['recipes_id'],
+                             data['user_id'],
                              )
         step.save_to_db()
 
@@ -49,6 +55,7 @@ class Comment(Resource):
             comment.name = data['name']
             comment.email = data['email']
             comment.recipes_id = data['recipes_id']
+            comment.user_id = data['user_id']
         else:
             comment = CommentsModel(**data)
 

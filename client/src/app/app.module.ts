@@ -26,8 +26,8 @@ import {OrderModule} from "ngx-order-pipe";
 import {CookieService} from "ngx-cookie-service";
 import { RegistrationComponent } from './registration/registration.component';
 import {AuthenticationService} from "./auth/authentication.service";
-import {AuthModule} from "./auth/auth.module";
-import {AuthGuard} from "./auth/guards/auth.guard";
+import {AuthGuard} from "./_helpers/auth.guard";
+import {LoginComponent} from "@app/auth/login/login.component";
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import {AuthGuard} from "./auth/guards/auth.guard";
     CoursesComponent,
     RecipesComponent,
     RegistrationComponent,
+    LoginComponent
 
   ],
   imports: [
@@ -58,7 +59,6 @@ import {AuthGuard} from "./auth/guards/auth.guard";
     AppBootstrapModule,
     FormsModule,
     OrderModule,
-    AuthModule
   ],
   providers: [
     CookieService,

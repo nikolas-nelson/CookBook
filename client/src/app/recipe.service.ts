@@ -1,116 +1,110 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpEventType, HttpRequest, HttpResponse} from '@angular/common/http';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {HttpClient,} from '@angular/common/http';
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
 
-  url = 'http://127.0.0.1:5000';
-
-  private loginToken = new BehaviorSubject({});
-  token = this.loginToken.asObservable();
-
   constructor(private http: HttpClient) {
   }
 
   getRecipes() {
-    return this.http.get(`${this.url}/recipes`);
+    return this.http.get(`${environment.apiUrl}/recipes`);
   }
 
   getRecipe(id) {
-    return this.http.get(`${this.url}/recipe/` + id);
+    return this.http.get(`${environment.apiUrl}/recipe/` + id);
   }
 
   addRecipe(recipe) {
-    return this.http.post(`${this.url}/recipe`, recipe);
+    return this.http.post(`${environment.apiUrl}/recipe`, recipe);
   }
 
   getCategories() {
-    return this.http.get(`${this.url}/categories`);
+    return this.http.get(`${environment.apiUrl}/categories`);
   }
 
   addCategory(category) {
-    return this.http.post(`${this.url}/category`, category);
+    return this.http.post(`${environment.apiUrl}/category`, category);
   }
 
   editCategory(category) {
-    return this.http.put(`${this.url}/category/${category.id}`, category);
+    return this.http.put(`${environment.apiUrl}/category/${category.id}`, category);
   }
 
   deleteCategory(categoryId) {
-    return this.http.delete(`${this.url}/category/${categoryId}`);
+    return this.http.delete(`${environment.apiUrl}/category/${categoryId}`);
   }
 
   getCuisines() {
-    return this.http.get(`${this.url}/cuisines`);
+    return this.http.get(`${environment.apiUrl}/cuisines`);
   }
 
   getCourses() {
-    return this.http.get(`${this.url}/courses`);
+    return this.http.get(`${environment.apiUrl}/courses`);
   }
 
   addCourse(course) {
-    return this.http.post(`${this.url}/course`, course);
+    return this.http.post(`${environment.apiUrl}/course`, course);
   }
 
   editCourse(course) {
-    return this.http.put(`${this.url}/course/${course.id}`, course);
+    return this.http.put(`${environment.apiUrl}/course/${course.id}`, course);
   }
 
   deleteCourse(courseId) {
-    return this.http.delete(`${this.url}/course/${courseId}`);
+    return this.http.delete(`${environment.apiUrl}/course/${courseId}`);
   }
 
   getAllergens() {
-    return this.http.get(`${this.url}/allergens`);
+    return this.http.get(`${environment.apiUrl}/allergens`);
   }
 
   addAllergen(allergen) {
-    return this.http.post(`${this.url}/allergen`, allergen);
+    return this.http.post(`${environment.apiUrl}/allergen`, allergen);
   }
 
   editAllergen(allergen) {
-    return this.http.put(`${this.url}/allergen/${allergen.id}`, allergen);
+    return this.http.put(`${environment.apiUrl}/allergen/${allergen.id}`, allergen);
   }
 
   deleteAllergen(allergenId) {
-    return this.http.delete(`${this.url}/allergen/${allergenId}`);
+    return this.http.delete(`${environment.apiUrl}/allergen/${allergenId}`);
   }
 
   getRecipesByFilter(filter) {
-    return this.http.post(`${this.url}/findbyfilter`, filter);
+    return this.http.post(`${environment.apiUrl}/findbyfilter`, filter);
   }
 
-   getRecipesBySearch(filter) {
-    return this.http.post(`${this.url}/search`, filter);
+  getRecipesBySearch(filter) {
+    return this.http.post(`${environment.apiUrl}/search`, filter);
   }
+
   addRating(rating) {
-    return this.http.post(`${this.url}/upvote`, rating)
+    return this.http.post(`${environment.apiUrl}/upvote`, rating)
   }
 
   addComment(comment) {
-    return this.http.post(`${this.url}/comment`, comment)
+    return this.http.post(`${environment.apiUrl}/comment`, comment)
+  }
+
+  editComment(comment) {
+    return this.http.put(`${environment.apiUrl}/comment/${comment.id}`, comment);
+  }
+
+  deleteComment(commentId) {
+    return this.http.delete(`${environment.apiUrl}/comment/${commentId}`);
   }
 
   register(user) {
-     return this.http.post(`${this.url}/register`, user)
-  }
-  login(user) {
-    return this.http.post(`${this.url}/login`, user)
-  }
-  logout(token){
-    return this.http.post(`${this.url}/logout`, token)
-  }
-
-  updateLoginToken(token) {
-    this.loginToken.next(token);
+    return this.http.post(`${environment.apiUrl}/register`, user)
   }
 
   uploadImage(image) {
     const uploadData = new FormData();
     uploadData.append('image', image, image.name);
-    return this.http.post(`${this.url}/img_upload`, uploadData)
+    return this.http.post(`${environment.apiUrl}/img_upload`, uploadData)
   }
 }

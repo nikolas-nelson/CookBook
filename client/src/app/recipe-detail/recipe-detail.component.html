@@ -83,7 +83,7 @@
             <div class="card mt-5">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-center"><i class="fal fa-comments"></i> Comments</h5>
-                <button class="btn btn-sm btn-outline-dark" (click)="addComment()">
+                <button class="btn btn-sm btn-outline-dark" (click)="showEditComment()">
                   <span *ngIf="!isComment">
                     <i class="far fa-plus"></i>
                     Add your comment
@@ -96,7 +96,7 @@
               </div>
               <div class="card-body">
 
-                <form class="p-2 bg-light mb-3" [formGroup]="commentForm" (ngSubmit)="onSubmit()" *ngIf="isComment">
+                <form class="p-2 bg-light mb-3" [formGroup]="commentForm" *ngIf="isComment">
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="name">Name</label>
@@ -127,14 +127,30 @@
                     </div>
                   </div>
                   <div class="text-right">
-                    <button class="btn btn-sm btn-success">+ Add</button>
+                    <button type="button" class="btn btn-sm btn-success" *ngIf="!isEdit" (click)="addComment()">+ Add
+                    </button>
+                    <button type="button" class="btn btn-sm btn-warning mr-2" *ngIf="isEdit"
+                            (click)="showEditComment()">Cancel
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success" *ngIf="isEdit" (click)="addEditedComment()">
+                      Edit
+                    </button>
                   </div>
                 </form>
 
                 <div class="border p-3 bg-light mb-2" *ngFor="let comment of recipe.comments">
-                  <p class="">
-                    <small>{{comment.name}} | {{comment.email}} | {{comment.time_added | date: 'dd MMMM yyyy'}}</small>
-                  </p>
+                  <div class="d-flex justify-content-between">
+                    <small class="align-self-center">{{comment.name}} | {{comment.email}}
+                      | {{comment.time_added | date: 'dd MMMM yyyy'}}</small>
+                    <div *ngIf="currentUser">
+                      <div *ngIf="currentUser.id === comment.user_id">
+                        <button type="button" class="btn btn-link" (click)="editComment(comment)"><i
+                          class="far fa-edit"></i></button>
+                        <button type="button" class="btn btn-link text-danger" (click)="deleteComment(comment.id)"><i
+                          class="far fa-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
                   <p class="mb-0 font-italic">{{comment.comment}}</p>
                 </div>
 

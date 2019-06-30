@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../auth/authentication.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {User} from "@app/models/user";
 
 @Component({
   selector: 'app-navigation',
@@ -9,24 +10,22 @@ import {Router} from "@angular/router";
 })
 export class NavigationComponent implements OnInit {
 
-  public isLogin;
+  currentUser: User;
+  returnUrl: string;
 
-  constructor(private authentication: AuthenticationService,
+  constructor(private authenticationService: AuthenticationService,
+              private route: ActivatedRoute,
               private router: Router,) {
-    this.authentication.islogin.subscribe(x => this.isLogin = x);
-    console.log(this.isLogin)
+            this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+
   }
 
   ngOnInit() {
-    // this.isLogin = this.authentication.isLoggedIn()
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
-  logout() {
-    this.authentication.logout().subscribe(res => {
-      if (res) {
-        this.router.navigate(['/']);
-        this.ngOnInit()
-      }
-    });
-  }
+   logout() {
+        this.authenticationService.logout();
+        this.router.navigate([this.returnUrl]);
+    }
 
 }

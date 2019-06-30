@@ -6,6 +6,8 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../../auth/authentication.service";
+import {first} from "rxjs/operators";
+import {User} from "@app/models/user";
 
 @Component({
   selector: 'app-hero',
@@ -16,18 +18,21 @@ export class HeroComponent implements OnInit {
 
 
   loginForm: FormGroup;
-  public submitted = false;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+  error = '';
 
-  private token: any;
-  public isLogin: boolean = false;
+  currentUser: User;
 
   constructor(private recipeService: RecipeService,
-              private authentication: AuthenticationService,
+              private authenticationService: AuthenticationService,
               private fb: FormBuilder,
               private modalService: NgbModal,
               private router: Router,
               private cookieService: CookieService,
               private toastr: ToastrService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 
     this.loginForm = this.fb.group({
       name: ['', Validators.required],
@@ -37,36 +42,41 @@ export class HeroComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.token = this.cookieService.get('refreshToken');
-    console.log(this.token);
-    if(this.token) {
-      this.isLogin = true;
-    }
+
   }
 
-   // convenience getter for easy access to form fields
+  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
 
-  login() {
+  onSubmit() {
     this.submitted = true;
-    if(this.loginForm.valid) {
-      this.authentication.login(this.loginForm.value).subscribe(res => {
-        this.token = res;
-        this.recipeService.updateLoginToken(res);
-        this.cookieService.set('refreshToken', this.token.refresh_token);
-        if(this.token) {
-          this.isLogin = true;
-        }
-      })
+
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+      return;
     }
+
+    this.loading = true;
+    this.authenticationService.login(this.loginForm.value)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this.toastr.success('Successfully logged in!');
+        },
+        error => {
+          this.error = error.error.message;
+          this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
+          this.loading = false;
+        });
   }
 
-  logout(){
-
-    this.isLogin = false;
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/']);
+    this.loginForm.value.name = '';
+    this.loginForm.value.password = '';
   }
-
 
 }

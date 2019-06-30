@@ -23,13 +23,13 @@
           </div>
         </li>
          <li class="nav-item">
-          <a class="nav-link" routerLink="new-recipe">Submit a recipe</a>
+          <a class="nav-link" routerLink="new-recipe">Add a recipe</a>
         </li>
       </ul>
        <span>
           <div class="navbar-text">
-            <a class="btn btn-link mr-2 text-right" routerLink="/login" *ngIf="!isLogin">Login</a>
-            <a class="btn btn-link mr-2 text-right" (click)="logout()" *ngIf="isLogin">Logout</a>
+            <a class="btn btn-link mr-2 text-right" routerLink="/login" *ngIf="!currentUser">Login</a>
+            <a class="btn btn-link mr-2 text-right" (click)="logout()" *ngIf="currentUser">Logout</a>
             <a routerLink="/registration" class="btn btn-outline-primary text-right">Register</a>
           </div>
         </span>
