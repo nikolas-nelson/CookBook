@@ -13,6 +13,9 @@ export class RecipeService {
   getRecipes() {
     return this.http.get(`${environment.apiUrl}/recipes`);
   }
+  getTopRecipes() {
+    return this.http.get(`${environment.apiUrl}/toprecipes`);
+  }
 
   getRecipe(id) {
     return this.http.get(`${environment.apiUrl}/recipe/` + id);

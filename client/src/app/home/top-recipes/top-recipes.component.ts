@@ -10,12 +10,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class TopRecipesComponent implements OnInit {
 
   public recipes: any;
+  public topRecipes: any;
   public loading = true;
-
-
-  recipeForm: FormGroup;
-
-  ctrl = new FormControl(null, Validators.required);
+  public topRecipesLoading = true;
 
 
   constructor(private recipeService: RecipeService) {
@@ -25,17 +22,12 @@ export class TopRecipesComponent implements OnInit {
     this.recipeService.getRecipes().subscribe(res => {
       this.recipes = res;
       this.loading = false;
-    })
+    });
+    this.recipeService.getTopRecipes().subscribe(res => {
+      this.topRecipes = res;
+      this.topRecipesLoading = false;
+    });
   }
 
-
-
-  toggle() {
-    if (this.ctrl.disabled) {
-      this.ctrl.enable();
-    } else {
-      this.ctrl.disable();
-    }
-  }
 
 }

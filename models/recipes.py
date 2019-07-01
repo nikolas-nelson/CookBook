@@ -105,6 +105,10 @@ class RecipeModel(db.Model):
         return cls.query.order_by(cls.time_added.desc()).all()
 
     @classmethod
+    def find_top_recipes(cls):
+        return cls.query.order_by(cls.rating.desc()).all()
+
+    @classmethod
     def find_by_filter(cls, filters):
         return cls.query.filter_by(**filters).all()
 

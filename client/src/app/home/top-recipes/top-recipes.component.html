@@ -2,7 +2,7 @@
 <div class="top-recipes py-5">
   <div class="container">
 
-    <h2>TOP Recipes</h2>
+    <h2>New Recipes</h2>
     <hr>
     <div class="spinner-border" role="status" *ngIf="loading">
       <span class="sr-only">Loading...</span>
@@ -15,7 +15,7 @@
           </div>
           <img src="/assets/img/{{recipe.image_path}}" class="card-img" alt="">
           <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <p class="card-text">{{recipe.description}}</p>
           </div>
           <div class="card-footer d-flex justify-content-between">
             <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true" class="align-self-center"></ngb-rating>
@@ -24,126 +24,24 @@
         </div>
       </div>
     </div>
-    <h2>New Recipes</h2>
+    <h2>Top Recipes</h2>
     <hr>
-    <div class="row">
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
+    <div class="spinner-border" role="status" *ngIf="topRecipesLoading">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row" *ngIf="topRecipes && !topRecipesLoading">
+      <div class="col-12 col-md-3 mb-3" *ngFor="let recipe of topRecipes.recipes | slice:0:12;">
+        <div class="card mb-3 h-100">
           <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
+            <h5 class="card-title mb-0">{{recipe.name}}</h5>
           </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
+          <img src="/assets/img/{{recipe.image_path}}" class="card-img" alt="">
           <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <p class="card-text">{{recipe.description}}</p>
           </div>
           <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-3">
-        <div class="card mb-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">Recipe Title</h5>
-          </div>
-          <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="card-img" alt="">
-          <div class="card-body">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          </div>
-          <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="3" max="5" class="align-self-center"></ngb-rating>
-            <button class="btn btn-outline-primary">More</button>
+            <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true"  class="align-self-center"></ngb-rating>
+            <button class="btn btn-outline-primary" routerLink="/recipe/{{recipe.id}}">Read more</button>
           </div>
         </div>
       </div>

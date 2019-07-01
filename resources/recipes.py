@@ -249,6 +249,12 @@ class RecipesList(Resource):
         return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_all()]}
 
 
+class TopRecipesList(Resource):
+    @classmethod
+    def get(cls):
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_top_recipes()]}
+
+
 class RecipesByFilter(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('filter')

@@ -3,7 +3,7 @@
     <div class="spinner-border" role="status" *ngIf="loading">
       <span class="sr-only">Loading...</span>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="cuisine">
       <div class="col-12 col-md-3 mb-5" *ngFor="let cuisine of cuisine.cuisine">
         <div class="card h-100">
           <div class="card-header">

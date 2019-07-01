@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 from blacklist import BLACKLIST
 
-from resources.recipes import RecipesList, Recipe
+from resources.recipes import RecipesList, Recipe, TopRecipesList
 from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogout
 from resources.steps import Step
 from resources.comments import Comment
@@ -105,6 +105,7 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})   # allowing Cross-Origin 
 
 # endpoints
 api.add_resource(RecipesList, '/recipes')
+api.add_resource(TopRecipesList, '/toprecipes')
 api.add_resource(Recipe, '/recipe/<int:id>', '/recipe')
 api.add_resource(Step, '/step/<int:id>', '/step')
 api.add_resource(Comment, '/comment/<int:id>', '/comment')
