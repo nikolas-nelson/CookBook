@@ -1,7 +1,5 @@
 from db import db
 
-from models.recipes import RecipeCategory
-
 
 class CategoriesModel(db.Model):
     __tablename__ = 'categories'

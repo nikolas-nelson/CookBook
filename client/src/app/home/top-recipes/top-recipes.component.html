@@ -40,7 +40,7 @@
             <p class="card-text">{{recipe.description}}</p>
           </div>
           <div class="card-footer d-flex justify-content-between">
-            <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true"  class="align-self-center"></ngb-rating>
+            <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true" class="align-self-center"></ngb-rating>
             <button class="btn btn-outline-primary" routerLink="/recipe/{{recipe.id}}">Read more</button>
           </div>
         </div>

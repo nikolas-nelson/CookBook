@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 from blacklist import BLACKLIST
 
-from resources.recipes import RecipesList, Recipe, TopRecipesList
+from resources.recipes import RecipesList, Recipe, TopRecipesList, RecipesByCuisine, RecipesByCategory, RecipesByCourses
 from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogout
 from resources.steps import Step
 from resources.comments import Comment
@@ -129,6 +129,10 @@ api.add_resource(User, '/user/<int:user_id>')
 api.add_resource(TokenRefresh, '/refresh')
 api.add_resource(UserLogout, '/logout')
 api.add_resource(Image, '/img_upload')
+
+api.add_resource(RecipesByCuisine, '/recipecuisine')
+api.add_resource(RecipesByCategory, '/recipecategory')
+api.add_resource(RecipesByCourses, '/recipecourses')
 
 db.init_app(app)
 if __name__ == '__main__':

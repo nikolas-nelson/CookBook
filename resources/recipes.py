@@ -265,6 +265,36 @@ class RecipesByFilter(Resource):
         return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_by_filter(filters)]}
 
 
+class RecipesByCuisine(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('filter')
+
+    def post(self):
+        data = self.parser.parse_args()
+        filters = data['filter']
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_by_cuisine(filters)]}
+
+
+class RecipesByCategory(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('filter')
+
+    def post(self):
+        data = self.parser.parse_args()
+        filters = data['filter']
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_by_category(filters)]}
+
+
+class RecipesByCourses(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('filter')
+
+    def post(self):
+        data = self.parser.parse_args()
+        filters = data['filter']
+        return {'recipes': [recipes.recipe_list() for recipes in RecipeModel.find_by_courses(filters)]}
+
+
 class RecipesBySearch(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('filter')

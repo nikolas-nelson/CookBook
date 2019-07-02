@@ -1,5 +1,8 @@
 from db import db
 import simplejson as json
+from models.cuisine import CuisineModel
+from models.categories import CategoriesModel
+from models.courses import CoursesModel
 
 
 class RecipeModel(db.Model):
@@ -29,11 +32,11 @@ class RecipeModel(db.Model):
 
     user = db.relationship('UserModel', backref='user')
 
-    categories = db.relationship('CategoriesModel', secondary='recipes_has_categories')
+    categories = db.relationship('CategoriesModel', backref='categories', secondary='recipes_has_categories')
 
     allergens = db.relationship('AllergensModel', secondary='recipes_has_allergens')
 
-    courses = db.relationship('CoursesModel', secondary='recipes_has_courses')
+    courses = db.relationship('CoursesModel', backref='courses', secondary='recipes_has_courses')
 
     cuisine = db.relationship('CuisineModel', backref='cuisine')
 
@@ -111,6 +114,18 @@ class RecipeModel(db.Model):
     @classmethod
     def find_by_filter(cls, filters):
         return cls.query.filter_by(**filters).all()
+
+    @classmethod
+    def find_by_cuisine(cls, filters):
+        return cls.query.join(CuisineModel.cuisine).filter(CuisineModel.name == filters).all()
+
+    @classmethod
+    def find_by_category(cls, filters):
+        return cls.query.join(CategoriesModel.categories).filter(CategoriesModel.name == filters).all()
+
+    @classmethod
+    def find_by_courses(cls, filters):
+        return cls.query.join(CoursesModel.courses).filter(CoursesModel.name == filters).all()
 
     @classmethod
     def search_by_filter(cls, filters):

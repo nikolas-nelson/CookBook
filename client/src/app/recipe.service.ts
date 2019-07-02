@@ -13,6 +13,19 @@ export class RecipeService {
   getRecipes() {
     return this.http.get(`${environment.apiUrl}/recipes`);
   }
+
+  getRecipesCuisine(cuisineName) {
+    return this.http.post(`${environment.apiUrl}/recipecuisine`, cuisineName);
+  }
+
+  getRecipesCategory(categoryName) {
+    return this.http.post(`${environment.apiUrl}/recipecategory`, categoryName);
+  }
+
+  getRecipesCourses(coursesName) {
+    return this.http.post(`${environment.apiUrl}/recipecourses`, coursesName);
+  }
+
   getTopRecipes() {
     return this.http.get(`${environment.apiUrl}/toprecipes`);
   }

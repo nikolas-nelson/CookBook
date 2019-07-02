@@ -1,5 +1,6 @@
 import {Component, OnInit,} from '@angular/core';
 import {RecipeService} from "../recipe.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-recipes',
@@ -29,15 +30,37 @@ export class RecipesComponent implements OnInit {
   };
 
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute,) {
   }
 
   ngOnInit() {
-    this.recipeService.getRecipesByFilter(this.filters).subscribe(res => {
-      this.recipes = res;
-      this.loading = false;
+    this.route.paramMap.subscribe(params => {
+      if (params.get('name') === 'cuisine') {
+        let name = params.get('filter');
+        this.recipeService.getRecipesCuisine({"filter": name}).subscribe(res => {
+          this.recipes = res;
+          this.loading = false;
+        });
+      }else if (params.get('name') === 'category') {
+        let name = params.get('filter');
+        this.recipeService.getRecipesCategory({"filter": name}).subscribe(res => {
+          this.recipes = res;
+          this.loading = false;
+        });
+      } else if (params.get('name') === 'courses') {
+        let name = params.get('filter');
+        this.recipeService.getRecipesCourses({"filter": name}).subscribe(res => {
+          this.recipes = res;
+          this.loading = false;
+        });
+      } else {
+        this.recipeService.getRecipesByFilter(this.filters).subscribe(res => {
+          this.recipes = res;
+          this.loading = false;
+        });
+      }
     });
-
   }
 
   filterRecipes() {
