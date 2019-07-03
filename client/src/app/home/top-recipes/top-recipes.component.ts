@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "../../recipe.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-top-recipes',
   templateUrl: './top-recipes.component.html',
-  styleUrls: ['./top-recipes.component.scss']
+  styleUrls: ['./top-recipes.component.scss'],
 })
 export class TopRecipesComponent implements OnInit {
 

@@ -109,7 +109,7 @@ class RecipeModel(db.Model):
 
     @classmethod
     def find_top_recipes(cls):
-        return cls.query.order_by(cls.rating.desc()).all()
+        return cls.query.order_by(cls.rating.desc()).limit(12).all()
 
     @classmethod
     def find_by_filter(cls, filters):

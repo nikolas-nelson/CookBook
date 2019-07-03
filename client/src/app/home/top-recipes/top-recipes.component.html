@@ -15,7 +15,7 @@
           </div>
           <img src="/assets/img/{{recipe.image_path}}" class="card-img" alt="">
           <div class="card-body">
-            <p class="card-text">{{recipe.description}}</p>
+            <p class="card-text">{{recipe.description | truncate: [100, '...']}}</p>
           </div>
           <div class="card-footer d-flex justify-content-between">
             <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true" class="align-self-center"></ngb-rating>
@@ -37,7 +37,7 @@
           </div>
           <img src="/assets/img/{{recipe.image_path}}" class="card-img" alt="">
           <div class="card-body">
-            <p class="card-text">{{recipe.description}}</p>
+            <p class="card-text">{{recipe.description | truncate: [100, '...']}}</p>
           </div>
           <div class="card-footer d-flex justify-content-between">
             <ngb-rating [rate]="recipe.rating" max="5" [readonly]="true" class="align-self-center"></ngb-rating>

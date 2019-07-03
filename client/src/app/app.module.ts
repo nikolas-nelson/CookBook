@@ -28,6 +28,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import {AuthenticationService} from "./auth/authentication.service";
 import {AuthGuard} from "./_helpers/auth.guard";
 import {LoginComponent} from "@app/auth/login/login.component";
+import { TruncatePipe } from './_helpers/truncate.pipe';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import {LoginComponent} from "@app/auth/login/login.component";
     CoursesComponent,
     RecipesComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    TruncatePipe
 
   ],
   imports: [

@@ -177,8 +177,8 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let category of categories.categories | slice:0:10; let i=index">{{category.name}}</li>
-              <li><a href="#">All categories</a></li>
+              <li *ngFor="let category of categories.categories | slice:0:10; let i=index"><a [routerLink]="['/recipes', category.name, 'category']">{{category.name}}</a></li>
+              <li><a routerLink="/categories">All categories</a></li>
             </ul>
           </div>
         </div>
@@ -194,8 +194,8 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let cuisin of cuisines.cuisine | slice:0:10; let i=index">{{cuisin.name}}</li>
-              <li><a href="#">All cuisines</a></li>
+              <li *ngFor="let cuisin of cuisines.cuisine | slice:0:10; let i=index"><a [routerLink]="['/recipes', cuisin.name, 'cuisine']">{{cuisin.name}}</a></li>
+              <li><a routerLink="/cuisine">All cuisines</a></li>
             </ul>
           </div>
         </div>
@@ -211,8 +211,8 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let course of courses.courses | slice:0:10; let i=index">{{course.name}}</li>
-              <li><a href="#">All courses</a></li>
+              <li *ngFor="let course of courses.courses | slice:0:10; let i=index"><a [routerLink]="['/recipes', course.name, 'courses']">{{course.name}}</a> </li>
+              <li><a routerLink="/courses">All courses</a></li>
             </ul>
           </div>
         </div>
