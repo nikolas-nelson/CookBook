@@ -131,57 +131,48 @@ class RecipeModel(db.Model):
     def search_by_filter(cls, filters):
         return cls.query.filter(cls.name.like('%' + filters['name'] + '%')).all()
 
+    # Delete recipe from db
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
 
-# Save recipe to db
-def save_recipe_to_db(self, category):
-    self.recipes_has_categories.append(RecipeCategory(id=None, recipes_id=self.id, categories_id=category.id))
-    db.session.add(self)
-    db.session.commit()
+    # Save recipe to db
+    def save_recipe_to_db(self, category):
+        self.recipes_has_categories.append(RecipeCategory(id=None, recipes_id=self.id, categories_id=category.id))
+        db.session.add(self)
+        db.session.commit()
 
+    def save_allergen_to_db(self, allergens):
+        self.recipes_has_allergens.append(RecipeAllergens(id=None, recipes_id=self.id, allergens_id=allergens.id))
+        db.session.add(self)
+        db.session.commit()
 
-def save_allergen_to_db(self, allergens):
-    self.recipes_has_allergens.append(RecipeAllergens(id=None, recipes_id=self.id, allergens_id=allergens.id))
-    db.session.add(self)
-    db.session.commit()
+    def save_course_to_db(self, courses):
+        self.recipes_has_courses.append(RecipeCourses(id=None, recipes_id=self.id, courses_id=courses.id))
+        db.session.add(self)
+        db.session.commit()
 
+    def save_step_to_db(self, step):
+        self.steps.append(step)
+        db.session.add(self)
+        db.session.commit()
 
-def save_course_to_db(self, courses):
-    self.recipes_has_courses.append(RecipeCourses(id=None, recipes_id=self.id, courses_id=courses.id))
-    db.session.add(self)
-    db.session.commit()
+    def save_ingredient_to_db(self, ingredients):
+        self.ingredients.append(ingredients)
+        db.session.add(self)
+        db.session.commit()
 
+    def delete_category_from_db(self, category):
+        db.session.delete(category)
+        db.session.commit()
 
-def save_step_to_db(self, step):
-    self.steps.append(step)
-    db.session.add(self)
-    db.session.commit()
+    def delete_allergen_from_db(self, allergen):
+        db.session.delete(allergen)
+        db.session.commit()
 
-
-def save_ingredient_to_db(self, ingredients):
-    self.ingredients.append(ingredients)
-    db.session.add(self)
-    db.session.commit()
-
-
-# Delete recipe from db
-def delete_from_db(self):
-    db.session.delete(self)
-    db.session.commit()
-
-
-def delete_category_from_db(self, category):
-    db.session.delete(category)
-    db.session.commit()
-
-
-def delete_allergen_from_db(self, allergen):
-    db.session.delete(allergen)
-    db.session.commit()
-
-
-def delete_course_from_db(self, course):
-    db.session.delete(course)
-    db.session.commit()
+    def delete_course_from_db(self, course):
+        db.session.delete(course)
+        db.session.commit()
 
 
 class RecipeCategory(db.Model):

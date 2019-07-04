@@ -10,10 +10,12 @@ import {RecipesComponent} from "./recipes/recipes.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthGuard} from "./_helpers/auth.guard";
+import {MyRecipesComponent} from "@app/my-recipes/my-recipes.component";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
   {path: 'recipes', component: RecipesComponent},
+  {path: 'my-recipes', component: MyRecipesComponent, canActivate: [AuthGuard]},
   {path: 'recipe/:id', component: RecipeDetailComponent},
   {path: 'recipes/:filter/:name', component: RecipesComponent},
   {path: 'new-recipe', component: NewRecipeComponent, canActivate: [AuthGuard]},

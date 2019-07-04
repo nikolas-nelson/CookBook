@@ -36,7 +36,7 @@
               </div>
             </form>
             <div *ngIf="currentUser">
-
+              <button class="btn btn-block btn-info" routerLink="/my-recipes">My recipes</button>
               <button class="btn btn-block btn-success" routerLink="/new-recipe">Add a new recipe</button>
               <button class="btn btn-block btn-primary" (click)="logout()">Logout</button>
 

@@ -239,7 +239,6 @@ class Recipe(Resource):
         recipe = RecipeModel.find_by_id(id)
         if recipe:
             recipe.delete_from_db()
-
         return {'message': 'Recipe deleted'}
 
 

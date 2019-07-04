@@ -85,12 +85,12 @@ export class RecipeDetailComponent implements OnInit {
       this.isEdit = false;
       this.isComment = !this.isComment;
       this.commentForm = this.fb.group({
-            'comment': ['', Validators.required],
-            'name': ['', Validators.required],
-            'email': ['', Validators.required],
-            'recipes_id': [this.recipe.id],
-            'user_id': [this.currentUser.id]
-          });
+        'comment': ['', Validators.required],
+        'name': ['', Validators.required],
+        'email': ['', Validators.required],
+        'recipes_id': [this.recipe.id],
+        'user_id': [this.currentUser.id]
+      });
     } else {
       this.router.navigate(['/login']);
     }
@@ -145,7 +145,6 @@ export class RecipeDetailComponent implements OnInit {
   addEditedComment() {
     if (this.commentForm.valid) {
       this.submitted = true;
-      console.log(this.commentForm.value);
       this.recipeService.editComment(this.commentForm.value).subscribe(res => {
         this.isComment = false;
         this.submitted = false;
@@ -166,10 +165,10 @@ export class RecipeDetailComponent implements OnInit {
       "vote_score": this.ctrl.value
     };
     this.recipeService.addRating(this.rating).subscribe(res => {
-      console.log(res);
+      this.toastr.success('Your rating was successfully added!');
       this.cookieService.set('isVoted', 'Yes');
     }, (error) => {
-      console.log(error)
+      this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
     })
 
   }

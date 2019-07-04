@@ -38,6 +38,14 @@ export class RecipeService {
     return this.http.post(`${environment.apiUrl}/recipe`, recipe);
   }
 
+   editRecipe(recipe) {
+    return this.http.put(`${environment.apiUrl}/recipe/${recipe.id}`, recipe);
+  }
+
+  deleteRecipe(recipeId) {
+    return this.http.delete(`${environment.apiUrl}/recipe/${recipeId}`);
+  }
+
   getCategories() {
     return this.http.get(`${environment.apiUrl}/categories`);
   }

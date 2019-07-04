@@ -29,6 +29,7 @@ import {AuthenticationService} from "./auth/authentication.service";
 import {AuthGuard} from "./_helpers/auth.guard";
 import {LoginComponent} from "@app/auth/login/login.component";
 import { TruncatePipe } from './_helpers/truncate.pipe';
+import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { TruncatePipe } from './_helpers/truncate.pipe';
     RecipesComponent,
     RegistrationComponent,
     LoginComponent,
-    TruncatePipe
+    TruncatePipe,
+    MyRecipesComponent
 
   ],
   imports: [
