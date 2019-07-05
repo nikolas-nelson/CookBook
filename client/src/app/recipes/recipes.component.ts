@@ -42,7 +42,7 @@ export class RecipesComponent implements OnInit {
           this.recipes = res;
           this.loading = false;
         });
-      }else if (params.get('name') === 'category') {
+      } else if (params.get('name') === 'category') {
         let name = params.get('filter');
         this.recipeService.getRecipesCategory({"filter": name}).subscribe(res => {
           this.recipes = res;
