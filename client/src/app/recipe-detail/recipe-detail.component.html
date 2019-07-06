@@ -22,7 +22,7 @@
             <ngb-rating [rate]="recipe.rating" [readonly]="true" max="5" *ngIf="cookieValue"></ngb-rating>
           </span>
         </div>
-        <img src="/assets/img/todd-quackenbush-700-unsplash.jpg" class="img-fluid img-thumbnail" alt="">
+        <img src="/assets/img/{{recipe.image_path}}" class="img-fluid img-thumbnail" alt="">
         <div class="row">
           <div class="col-12 col-md-7 mt-4">
             <h5><i class="far fa-book mr-2"></i> INTRO</h5>
@@ -177,7 +177,7 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let category of categories.categories | slice:0:10; let i=index"><a [routerLink]="['/recipes', category.name, 'category']">{{category.name}}</a></li>
+              <li *ngFor="let category of categories.categories | slice:0:10; let i=index"><a [routerLink]="['/recipes-by-category', category.name, 'category']">{{category.name}}</a></li>
               <li><a routerLink="/categories">All categories</a></li>
             </ul>
           </div>
@@ -194,7 +194,7 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let cuisin of cuisines.cuisine | slice:0:10; let i=index"><a [routerLink]="['/recipes', cuisin.name, 'cuisine']">{{cuisin.name}}</a></li>
+              <li *ngFor="let cuisin of cuisines.cuisine | slice:0:10; let i=index"><a [routerLink]="['/recipes-by-category', cuisin.name, 'cuisine']">{{cuisin.name}}</a></li>
               <li><a routerLink="/cuisine">All cuisines</a></li>
             </ul>
           </div>
@@ -211,7 +211,7 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled mb-0">
-              <li *ngFor="let course of courses.courses | slice:0:10; let i=index"><a [routerLink]="['/recipes', course.name, 'courses']">{{course.name}}</a> </li>
+              <li *ngFor="let course of courses.courses | slice:0:10; let i=index"><a [routerLink]="['/recipes-by-category', course.name, 'courses']">{{course.name}}</a> </li>
               <li><a routerLink="/courses">All courses</a></li>
             </ul>
           </div>

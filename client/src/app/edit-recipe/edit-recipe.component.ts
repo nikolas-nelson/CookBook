@@ -1,20 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeService} from "../recipe.service";
+import {RecipeService} from "@app/recipe.service";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ToastrService} from "ngx-toastr";
-import {FormArray, FormBuilder, FormGroup, Validators,} from "@angular/forms";
-import {AddAllergenModalComponent} from "./allergens/add-allergen-modal/add-allergen-modal.component";
-import {DeleteModalComponent} from "./delete-modal/delete-modal.component";
-import {CategoryModalComponent} from "./categories/category-modal/category-modal.component";
-import {CoursesModalComponent} from "./courses/courses-modal/courses-modal.component";
+import {AddAllergenModalComponent} from "@app/new-recipe/allergens/add-allergen-modal/add-allergen-modal.component";
+import {DeleteModalComponent} from "@app/new-recipe/delete-modal/delete-modal.component";
+import {CategoryModalComponent} from "@app/new-recipe/categories/category-modal/category-modal.component";
+import {CoursesModalComponent} from "@app/new-recipe/courses/courses-modal/courses-modal.component";
+import {ActivatedRoute} from "@angular/router";
+import {Recipe} from "@app/models/recipe";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
-  selector: 'app-new-recipe',
-  templateUrl: './new-recipe.component.html',
-  styleUrls: ['./new-recipe.component.scss']
+  selector: 'app-edit-recipe',
+  templateUrl: './edit-recipe.component.html',
+  styleUrls: ['./edit-recipe.component.scss']
 })
-export class NewRecipeComponent implements OnInit {
+export class EditRecipeComponent implements OnInit {
 
+  public recipe: Recipe;
   public cuisine: any;
 
   public loadingCuisine = true;
@@ -40,32 +44,9 @@ export class NewRecipeComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private fb: FormBuilder,
+              private route: ActivatedRoute,
               private modalService: NgbModal,
               private toastr: ToastrService) {
-  }
-
-  ngOnInit() {
-
-    this.recipeService.getCuisines().subscribe(cuisine => {
-      this.cuisine = cuisine;
-      this.loadingCuisine = false;
-    });
-
-    this.recipeService.getAllergens().subscribe(allergens => {
-      this.allergensList = allergens;
-      this.loadingAllergens = false;
-    });
-
-    this.recipeService.getCategories().subscribe(categories => {
-      this.categories = categories;
-      this.loadingCategory = false;
-    });
-
-    this.recipeService.getCourses().subscribe(courses => {
-      this.courses = courses;
-      this.loadingCourse = false;
-    });
-
     this.recipeForm = this.fb.group({
       'id': [null],
       'user_id': [1],
@@ -88,7 +69,102 @@ export class NewRecipeComponent implements OnInit {
       category: this.fb.array([]),
       courses: this.fb.array([])
     });
+  }
 
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.recipeService.getRecipe(params.get('id')).subscribe((res: Recipe) => {
+        this.recipe = res;
+        console.log(this.recipe);
+        this.recipeForm = this.fb.group({
+          'user_id': [this.recipe.user.id],
+          'name': [this.recipe.name, Validators.required],
+          'image_path': [this.recipe.image_path],
+          'description': [this.recipe.description, Validators.required],
+          'source': [this.recipe.source],
+          'prep_time': [this.recipe.prep_time, Validators.required],
+          'cook_time': [this.recipe.cook_time, Validators.required],
+          'total_time': [this.recipe.prep_time + this.recipe.cook_time],
+          'level': [this.recipe.level, Validators.required],
+          'cuisine_id': [this.recipe.cuisine_id, Validators.required],
+          ingredients: this.fb.array([]),
+          steps: this.fb.array([], Validators.required),
+          allergens: this.fb.array([]),
+          category: this.fb.array([]),
+          courses: this.fb.array([])
+        });
+        this.recipe.ingredients.forEach((x) => {
+          this.ingredientArr.push(this.fb.group(x))
+        });
+        this.recipe.steps.forEach((x) => {
+          this.stepsArr.push(this.fb.group(x))
+        });
+        this.loading = false;
+      })
+    });
+
+    this.recipeService.getCuisines().subscribe(cuisine => {
+      this.cuisine = cuisine;
+      this.loadingCuisine = false;
+    });
+
+    this.recipeService.getAllergens().subscribe(allergens => {
+      this.allergensList = allergens;
+      this.loadingAllergens = false;
+    });
+
+    this.recipeService.getCategories().subscribe(categories => {
+      this.categories = categories;
+      this.loadingCategory = false;
+    });
+
+    this.recipeService.getCourses().subscribe(courses => {
+      this.courses = courses;
+      this.loadingCourse = false;
+    });
+
+  }
+
+  // getting recipe array to push values from service
+  get ingredientArr() {
+    return this.recipeForm.get('ingredients') as FormArray;
+  }
+
+  get stepsArr() {
+    return this.recipeForm.get('steps') as FormArray;
+  }
+
+  onSubmit() {
+    if (this.selectedImage) {
+      this.isImage = true;
+      this.recipeForm.value.image_path = this.selectedImage.name;
+      this.recipeService.uploadImage(this.selectedImage).subscribe(res => {
+        this.toastr.success('Image added successfully')
+      })
+    } else {
+      this.isImage = false;
+    }
+
+    this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
+
+    this.submitted = true;
+    if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
+      this.recipeService.editRecipe(this.recipeForm.value).subscribe(res => {
+        this.toastr.success('Recipe edited successfully')
+      });
+    }
+  }
+
+
+  onFileUpload(event) {
+    if (event.target.files && event.target.files[0]) {
+      this.isImage = true;
+      this.selectedImage = <File>event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = reader.result;
+      reader.readAsDataURL(this.selectedImage);
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -164,40 +240,6 @@ export class NewRecipeComponent implements OnInit {
     (<FormArray>this.recipeForm.get('steps')).removeAt(index)
   }
 
-
-  onFileUpload(event) {
-    if (event.target.files && event.target.files[0]) {
-      this.isImage = true;
-      this.selectedImage = <File>event.target.files[0];
-
-      const reader = new FileReader();
-      reader.onload = e => this.imageSrc = reader.result;
-      reader.readAsDataURL(this.selectedImage);
-    }
-  }
-
-  onSubmit() {
-    if (this.selectedImage) {
-      this.isImage = true;
-      this.recipeForm.value.image_path = this.selectedImage.name;
-      console.log(this.selectedImage);
-      this.recipeService.uploadImage(this.selectedImage).subscribe(res => {
-        console.log(res)
-      })
-    } else {
-      this.isImage = false;
-    }
-
-    this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
-
-    this.submitted = true;
-    if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
-      this.recipeService.addRecipe(this.recipeForm.value).subscribe(res => {
-        console.log(res)
-      });
-    }
-
-  }
 
   openAddAllergen() {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
@@ -321,5 +363,6 @@ export class NewRecipeComponent implements OnInit {
     }).catch((res) => {
     });
   }
+
 
 }
