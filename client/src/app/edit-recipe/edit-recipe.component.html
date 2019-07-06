@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
 
-        <div class="row">
+        <div class="row" *ngIf="recipe">
           <div class="col-12 col-md-6">
             <div class="form-group">
               <label for="recipeName" class="control-label required">Recipe name</label>
@@ -225,7 +225,6 @@
         </div>
         <div class="row mt-5">
           <div class="col-12 col-md-6 mb-3">
-            <!--            <app-allergens formArrayName="allergens"></app-allergens>-->
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-end">Allergens</h5>
@@ -238,7 +237,7 @@
               </div>
               <div class="card-body">
                 <div class="custom-control custom-checkbox d-flex" formArrayName="allergens"
-                     *ngFor="let allergen of allergensList.allergens">
+                     *ngFor="let allergen of allergensList.allergens; let i = index">
                   <input type="checkbox" class="custom-control-input" id="allergen{{allergen.id}}"
                          (change)="onChangeAllergen(allergen, $event.target.checked)">
                   <label for="allergen{{allergen.id}}" class="custom-control-label align-self-center">

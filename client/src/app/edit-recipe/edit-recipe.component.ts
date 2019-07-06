@@ -9,7 +9,6 @@ import {CategoryModalComponent} from "@app/new-recipe/categories/category-modal/
 import {CoursesModalComponent} from "@app/new-recipe/courses/courses-modal/courses-modal.component";
 import {ActivatedRoute} from "@angular/router";
 import {Recipe} from "@app/models/recipe";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: 'app-edit-recipe',
@@ -89,7 +88,7 @@ export class EditRecipeComponent implements OnInit {
           'cuisine_id': [this.recipe.cuisine_id, Validators.required],
           ingredients: this.fb.array([]),
           steps: this.fb.array([], Validators.required),
-          allergens: this.fb.array([]),
+          allergens: this.fb.array([true, false, true]),
           category: this.fb.array([]),
           courses: this.fb.array([])
         });
@@ -99,6 +98,7 @@ export class EditRecipeComponent implements OnInit {
         this.recipe.steps.forEach((x) => {
           this.stepsArr.push(this.fb.group(x))
         });
+        console.log(this.recipeForm.value);
         this.loading = false;
       })
     });
@@ -111,6 +111,7 @@ export class EditRecipeComponent implements OnInit {
     this.recipeService.getAllergens().subscribe(allergens => {
       this.allergensList = allergens;
       this.loadingAllergens = false;
+      // console.log(this.allergensList.some(i => this.recipe.allergens.includes(i)));
     });
 
     this.recipeService.getCategories().subscribe(categories => {
@@ -122,6 +123,7 @@ export class EditRecipeComponent implements OnInit {
       this.courses = courses;
       this.loadingCourse = false;
     });
+
 
   }
 
@@ -172,6 +174,7 @@ export class EditRecipeComponent implements OnInit {
     return this.recipeForm.controls;
   }
 
+  //on check adding allergens to the form array
   onChangeAllergen(allergen: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.allergens.push(
@@ -182,7 +185,7 @@ export class EditRecipeComponent implements OnInit {
     }
 
   }
-
+  //on check adding course to the form array
   onChangeCourse(course: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.courses.push(
@@ -193,7 +196,7 @@ export class EditRecipeComponent implements OnInit {
     }
 
   }
-
+  //on check adding category to the form array
   onChangeCategory(category: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.category.push(
