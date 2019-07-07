@@ -235,10 +235,9 @@
               <div class="spinner-border" role="status" *ngIf="loadingAllergens">
                 <span class="sr-only">Loading...</span>
               </div>
-              <div class="card-body" *ngIf="allergensList" formArrayName="allergens">
+              <div class="card-body" *ngIf="!loadingAllergens && recipe" formArrayName="allergens">
                 <div class="custom-control custom-checkbox d-flex"
                      *ngFor="let allergen of allergensArr.controls; let i=index" [formGroupName]="i">
-
                     <input type="checkbox" class="custom-control-input" formControlName="selected"
                            id="allergen{{allergensList.allergens[i].id}}"
                            (change)="onChangeAllergen(allergen, $event.target.checked)">
@@ -246,10 +245,10 @@
                     {{allergensList.allergens[i].name}}
                   </label>
                   <p class="text-right ml-auto mb-0">
-                    <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergen)"><i
+                    <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergensList.allergens[i])"><i
                       class="far fa-trash"></i>
                     </button>
-                    <button type="button" class="btn btn-link" (click)="openEditAllergen(allergen)"><i
+                    <button type="button" class="btn btn-link" (click)="openEditAllergen(allergensList.allergens[i])"><i
                       class="far fa-edit"></i>
                     </button>
                   </p>

@@ -93,6 +93,7 @@ export class EditRecipeComponent implements OnInit {
           category: this.fb.array([]),
           courses: this.fb.array([])
         });
+
         this.recipe.ingredients.forEach((x) => {
           this.ingredientArr.push(this.fb.group(x))
         });
@@ -110,13 +111,15 @@ export class EditRecipeComponent implements OnInit {
 
     this.recipeService.getAllergens().subscribe(allergens => {
       this.allergensList = allergens;
-      this.loadingAllergens = false;
       this.allergensList.allergens.forEach((x) => {
-        this.allergensArr.push(this.fb.group({
-          id: x.id,
-          selected: (this.recipe.allergens.find(y => y.id === x.id)) ? true : false,
-          name: x.name,
-        }))
+        setTimeout(() => {
+          this.allergensArr.push(this.fb.group({
+            id: x.id,
+            selected: (this.recipe.allergens.find(y => y.id === x.id)) ? true : false,
+            name: x.name,
+          }));
+        }, 500);
+        this.loadingAllergens = false;
       });
     });
 
@@ -207,7 +210,6 @@ export class EditRecipeComponent implements OnInit {
       let index = this.recipeForm.value.courses.indexOf(course);
       this.recipeForm.value.courses.splice(index, 1);
     }
-
   }
 
   //on check adding category to the form array
@@ -221,7 +223,6 @@ export class EditRecipeComponent implements OnInit {
       let index = this.recipeForm.value.category.indexOf(category);
       this.recipeForm.value.category.splice(index, 1);
     }
-
   }
 
   addIngredientFG() {
@@ -264,6 +265,7 @@ export class EditRecipeComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingAllergens = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -292,6 +294,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.allergen = allergen;
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingAllergens = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
