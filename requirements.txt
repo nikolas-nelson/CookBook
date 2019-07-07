@@ -3,3 +3,4 @@ Flask-RESTful
 Flask-SQLAlchemy
 PyMySQL
 werkzeug
+flask_cors
