@@ -33,7 +33,7 @@ export class EditRecipeComponent implements OnInit {
   public loadingCourse = true;
   public loadingAllergens = true;
 
-  public allergensList: any = {};
+  public allergensList: any = [];
   public categories: any;
   public courses: any;
 
@@ -76,6 +76,7 @@ export class EditRecipeComponent implements OnInit {
         this.recipe = res;
         console.log(this.recipe);
         this.recipeForm = this.fb.group({
+          'id': [this.recipe.id],
           'user_id': [this.recipe.user.id],
           'name': [this.recipe.name, Validators.required],
           'image_path': [this.recipe.image_path],
@@ -88,7 +89,7 @@ export class EditRecipeComponent implements OnInit {
           'cuisine_id': [this.recipe.cuisine_id, Validators.required],
           ingredients: this.fb.array([]),
           steps: this.fb.array([], Validators.required),
-          allergens: this.fb.array([true, false, true]),
+          allergens: this.fb.array([]),
           category: this.fb.array([]),
           courses: this.fb.array([])
         });
@@ -98,7 +99,6 @@ export class EditRecipeComponent implements OnInit {
         this.recipe.steps.forEach((x) => {
           this.stepsArr.push(this.fb.group(x))
         });
-        console.log(this.recipeForm.value);
         this.loading = false;
       })
     });
@@ -111,7 +111,13 @@ export class EditRecipeComponent implements OnInit {
     this.recipeService.getAllergens().subscribe(allergens => {
       this.allergensList = allergens;
       this.loadingAllergens = false;
-      // console.log(this.allergensList.some(i => this.recipe.allergens.includes(i)));
+      this.allergensList.allergens.forEach((x) => {
+        this.allergensArr.push(this.fb.group({
+          id: x.id,
+          selected: (this.recipe.allergens.find(y => y.id === x.id)) ? true : false,
+          name: x.name,
+        }))
+      });
     });
 
     this.recipeService.getCategories().subscribe(categories => {
@@ -123,8 +129,11 @@ export class EditRecipeComponent implements OnInit {
       this.courses = courses;
       this.loadingCourse = false;
     });
+  }
 
 
+  get allergensArr() {
+    return this.recipeForm.get('allergens') as FormArray;
   }
 
   // getting recipe array to push values from service
@@ -137,6 +146,9 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onSubmit() {
+    const mine: any[] = <any[]>this.recipeForm.value.allergens.filter(x => x.selected),
+      selectedAllergens: any[] = mine.map(x => this.allergensList.allergens.find(y => y.id === x.id));
+    this.recipeForm.value.allergens = selectedAllergens;
     if (this.selectedImage) {
       this.isImage = true;
       this.recipeForm.value.image_path = this.selectedImage.name;
@@ -185,6 +197,7 @@ export class EditRecipeComponent implements OnInit {
     }
 
   }
+
   //on check adding course to the form array
   onChangeCourse(course: any, isChecked: boolean) {
     if (isChecked) {
@@ -196,6 +209,7 @@ export class EditRecipeComponent implements OnInit {
     }
 
   }
+
   //on check adding category to the form array
   onChangeCategory(category: any, isChecked: boolean) {
     if (isChecked) {

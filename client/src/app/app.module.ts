@@ -32,6 +32,7 @@ import { TruncatePipe } from './_helpers/truncate.pipe';
 import { MyRecipesComponent } from './my-recipes/my-recipes.component';
 import { RecipesByCategoryComponent } from './recipes-by-category/recipes-by-category.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
+import { TestRecipeComponent } from './test-recipe/test-recipe.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
     TruncatePipe,
     MyRecipesComponent,
     RecipesByCategoryComponent,
-    EditRecipeComponent
+    EditRecipeComponent,
+    TestRecipeComponent
 
   ],
   imports: [

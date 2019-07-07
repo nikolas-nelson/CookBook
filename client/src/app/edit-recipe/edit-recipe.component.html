@@ -1,4 +1,4 @@
-<form class="new-recipe"  [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+<form class="new-recipe" [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
   <div class="container my-5">
     <div class="card">
       <div class="card-header">
@@ -235,13 +235,15 @@
               <div class="spinner-border" role="status" *ngIf="loadingAllergens">
                 <span class="sr-only">Loading...</span>
               </div>
-              <div class="card-body">
-                <div class="custom-control custom-checkbox d-flex" formArrayName="allergens"
-                     *ngFor="let allergen of allergensList.allergens; let i = index">
-                  <input type="checkbox" class="custom-control-input" id="allergen{{allergen.id}}"
-                         (change)="onChangeAllergen(allergen, $event.target.checked)">
-                  <label for="allergen{{allergen.id}}" class="custom-control-label align-self-center">
-                    {{allergen.name}}
+              <div class="card-body" *ngIf="allergensList" formArrayName="allergens">
+                <div class="custom-control custom-checkbox d-flex"
+                     *ngFor="let allergen of allergensArr.controls; let i=index" [formGroupName]="i">
+
+                    <input type="checkbox" class="custom-control-input" formControlName="selected"
+                           id="allergen{{allergensList.allergens[i].id}}"
+                           (change)="onChangeAllergen(allergen, $event.target.checked)">
+                  <label for="allergen{{allergensList.allergens[i].id}}" class="custom-control-label align-self-center">
+                    {{allergensList.allergens[i].name}}
                   </label>
                   <p class="text-right ml-auto mb-0">
                     <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergen)"><i

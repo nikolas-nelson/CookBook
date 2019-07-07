@@ -179,17 +179,23 @@ class Recipe(Resource):
             recipe.save_recipe_to_db(category)
 
         allergens = data['allergens']
-        for aller in allergens:
+        if allergens:
+            for aller in allergens:
+                allergen = RecipeAllergens.find_by_id(id)
+                if allergen:
+                    recipe.delete_allergen_from_db(allergen)
+        else:
             allergen = RecipeAllergens.find_by_id(id)
             if allergen:
                 recipe.delete_allergen_from_db(allergen)
 
-        for aller in allergens:
-            allergens_json = ast.literal_eval(aller)
-            allergen = AllergensModel(allergens_json['id'],
-                                      allergens_json['name'],
-                                      )
-            recipe.save_allergen_to_db(allergen)
+        if allergens:
+            for aller in allergens:
+                allergens_json = ast.literal_eval(aller)
+                allergen = AllergensModel(allergens_json['id'],
+                                          allergens_json['name'],
+                                          )
+                recipe.save_allergen_to_db(allergen)
 
         courses = data['courses']
         for cour in courses:
