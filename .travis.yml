@@ -4,6 +4,5 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - pip install .
 
 script: python3 app.py || python app.py
