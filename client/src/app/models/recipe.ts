@@ -1,5 +1,6 @@
 export class Recipe {
   allergens: Array<Allergens>;
+  categories: Array<Category>;
   comments: Array<Comment>;
   cook_time: number;
   courses: Array<Course>;
@@ -23,6 +24,12 @@ export class Recipe {
 export class Allergens {
   id: number;
   name: string;
+}
+
+export class Category {
+  id: number;
+  name: string;
+  description: string;
 }
 
 export class Course {

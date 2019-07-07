@@ -125,7 +125,16 @@ export class EditRecipeComponent implements OnInit {
 
     this.recipeService.getCategories().subscribe(categories => {
       this.categories = categories;
-      this.loadingCategory = false;
+      this.categories.categories.forEach((x) => {
+        setTimeout(() => {
+          this.categoriesArr.push(this.fb.group({
+            id: x.id,
+            selected: (this.recipe.categories.find(y => y.id === x.id)) ? true : false,
+            name: x.name,
+          }));
+        }, 500);
+         this.loadingCategory = false;
+      });
     });
 
     this.recipeService.getCourses().subscribe(courses => {
@@ -137,6 +146,10 @@ export class EditRecipeComponent implements OnInit {
 
   get allergensArr() {
     return this.recipeForm.get('allergens') as FormArray;
+  }
+
+  get categoriesArr() {
+    return this.recipeForm.get('category') as FormArray;
   }
 
   // getting recipe array to push values from service

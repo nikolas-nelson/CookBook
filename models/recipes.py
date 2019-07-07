@@ -79,6 +79,7 @@ class RecipeModel(db.Model):
             'courses': [courses.json() for courses in self.courses],
             'cuisine': self.cuisine.json(),
             'ingredients': [ingredients.json() for ingredients in self.ingredients],
+            'categories': [categories.json() for categories in self.categories],
         }
 
     def recipe_list(self):

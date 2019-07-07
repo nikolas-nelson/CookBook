@@ -236,6 +236,7 @@
                 <span class="sr-only">Loading...</span>
               </div>
               <div class="card-body" *ngIf="!loadingAllergens && recipe" formArrayName="allergens">
+
                 <div class="custom-control custom-checkbox d-flex"
                      *ngFor="let allergen of allergensArr.controls; let i=index" [formGroupName]="i">
                     <input type="checkbox" class="custom-control-input" formControlName="selected"
@@ -302,10 +303,12 @@
                 <span class="sr-only">Loading...</span>
               </div>
               <div class="card-body row" *ngIf="categories">
-                <div class="custom-control col-6 custom-checkbox d-flex" *ngFor="let category of categories.categories">
-                  <input type="checkbox" class="custom-control-input" id="category{{category.id}}"
-                         (change)="onChangeCategory(category, $event.target.checked)">
-                  <label class="custom-control-label" for="category{{category.id}}">{{category.name}}</label>
+
+                <div class="custom-control col-6 custom-checkbox d-flex" [formGroupName]="i"
+                     *ngFor="let category of categoriesArr.controls; let i=index">
+                  <input type="checkbox" class="custom-control-input" id="category{{categories.calegories[i].id}}"
+                         (change)="onChangeCategory(category, $event.target.checked)" formControlName="selected">
+                  <label class="custom-control-label" for="category{{categories.calegories[i].id}}">{{categories.calegories[i].name}}</label>
                   <p class="text-right ml-auto mb-0">
                     <button type="button" class="btn btn-link" (click)="openDeleteCategory(category)"><i
                       class="far fa-trash"></i>
@@ -315,6 +318,7 @@
                     </button>
                   </p>
                 </div>
+
               </div>
               <div class="text-danger" *ngIf="recipeForm.value.category.length < 1 && submitted">
                 <p class="ml-2">Select at least one category</p>
