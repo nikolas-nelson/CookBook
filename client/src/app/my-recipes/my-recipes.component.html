@@ -5,7 +5,7 @@
       <span class="sr-only">Loading...</span>
     </div>
     <div class="row" *ngIf="recipes && !loading">
-      <div class="col-12 col-md-3 mb-3"
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
            *ngFor="let recipe of recipes.recipes | paginate: { itemsPerPage: 12, currentPage: p } ">
         <div class="card mb-3 h-100">
           <div class="card-header">
@@ -17,7 +17,7 @@
           </div>
           <div class="card-footer d-flex justify-content-end">
             <button class="btn btn-outline-danger mr-2" (click)="deleteRecipe(recipe.id)"><i class="far fa-trash"></i></button>
-            <button class="btn btn-outline-warning mr-2" routerLink="/recipe/{{recipe.id}}"><i class="far fa-edit"></i></button>
+            <button class="btn btn-outline-warning mr-2" routerLink="/edit-recipe/{{recipe.id}}"><i class="far fa-edit"></i></button>
             <button class="btn btn-outline-primary" routerLink="/recipe/{{recipe.id}}"><i class="far fa-eye"></i></button>
           </div>
         </div>

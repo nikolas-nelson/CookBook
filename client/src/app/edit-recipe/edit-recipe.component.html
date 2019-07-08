@@ -36,7 +36,7 @@
 
           <div class="col-12 col-md-6">
             <div class="row">
-              <div class="form-group col-4">
+              <div class="form-group col-12 col-md-4">
                 <label for="image" class="d-block">Add recipe image</label>
                 <input type="file" name="image" class="form-control-file d-none"
                        (change)="onFileUpload($event)"
@@ -49,11 +49,11 @@
                   Image is required!
                 </div>
               </div>
-              <div class="col-8" *ngIf="isImage">
+              <div class="col-12 col-md-8" *ngIf="isImage">
                 <img class="img-fluid img-thumbnail" [src]="imageSrc || 'http://placehold.it/500x250'"
                      alt="recipe image"/>
               </div>
-              <div class="col-8" *ngIf="recipe.image_path && !isImage">
+              <div class="col-12 col-md-8" *ngIf="recipe.image_path && !isImage">
                 <img class="img-fluid img-thumbnail" src="/assets/img/{{recipe.image_path}}"
                      alt="recipe image"/>
               </div>
@@ -126,8 +126,8 @@
 
         </div>
         <div class="row">
-          <div class="col-12 col-md-6">
-            <div class="card">
+          <div class="col-12 col-lg-6">
+            <div class="card mb-3">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-center">Ingredients</h5>
                 <button type="button" class="btn btn-outline-success" (click)="addIngredient()"><i
@@ -135,7 +135,7 @@
                 </button>
               </div>
               <div class="card-body">
-                <div class="row">
+                <div class="row d-none d-md-flex">
                   <div class="col-3">
                     <label for="amount">Amount</label>
                   </div>
@@ -144,6 +144,17 @@
                   </div>
                   <div class="col-6">
                     <label for="ingredient">Ingredient</label>
+                  </div>
+                </div>
+                <div class="row d-flex d-md-none">
+                  <div class="col-3">
+                    <label for="amount">Amou.</label>
+                  </div>
+                  <div class="col-3">
+                    <label for="measurement">Measu.</label>
+                  </div>
+                  <div class="col-6">
+                    <label for="ingredient">Ingr.</label>
                   </div>
                 </div>
                 <div formArrayName="ingredients"
@@ -166,25 +177,27 @@
                         <small>Required!</small>
                       </div>
                     </div>
-                    <div class="form-group col-5 px-1">
-                      <input type="text" class="form-control"
-                             [ngClass]="{'red-border': submitted && ingredient['controls'].ingredient.errors}"
-                             id="ingredient"
-                             formControlName="ingredient">
-                      <div class="text-danger" *ngIf="submitted && ingredient['controls'].ingredient.errors">
-                        <small>Required!</small>
+                    <div class="form-group col-6 px-1">
+                      <div class="input-group">
+                        <input type="text" class="form-control"
+                               [ngClass]="{'red-border': submitted && ingredient['controls'].ingredient.errors}"
+                               id="ingredient"
+                               formControlName="ingredient">
+                        <div class="text-danger" *ngIf="submitted && ingredient['controls'].ingredient.errors">
+                          <small>Required!</small>
+                        </div>
+                        <div class="input-group-append text-center">
+                          <button type="button" class="btn btn-link" (click)="removeIngredient(i)"><i
+                            class="far fa-trash"></i></button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group col-1 px-1 text-center">
-                      <button type="button" class="btn btn-link" (click)="removeIngredient(i)"><i
-                        class="far fa-trash"></i></button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-6">
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-center">Steps</h5>
@@ -274,7 +287,7 @@
                      *ngFor="let course of coursesArr.controls; let i=index" [formGroupName]="i">
                   <input type="checkbox" class="custom-control-input" formControlName="selectedCourse"
                          id="course{{courses.courses[i].id}}"
-                         (change)="onChangeCourse(course, $event.target.checked)" >
+                         (change)="onChangeCourse(course, $event.target.checked)">
                   <label class="custom-control-label"
                          for="course{{courses.courses[i].id}}">{{courses.courses[i].name}}</label>
                   <p class="text-right ml-auto mb-0">
@@ -307,7 +320,7 @@
               </div>
               <div class="card-body row" *ngIf="recipe && !loadingCategory" formArrayName="category">
 
-                <div class="custom-control col-6 custom-checkbox d-flex"
+                <div class="custom-control col-12 col-md-6 custom-checkbox d-flex"
                      *ngFor="let category of categoriesArr.controls; let i=index" [formGroupName]="i">
                   <input type="checkbox" class="custom-control-input" id="category{{categories.categories[i].id}}"
                          (change)="onChangeCategory(category, $event.target.checked)"
@@ -335,7 +348,7 @@
       <div class="card-footer text-right fixed-bottom bg-transparent border-0">
         <div class="ml-auto">
           <button type="button" class="btn btn-warning mr-2" routerLink="/my-recipes">Cancel</button>
-          <button type="submit" class="btn btn-success" >Save</button>
+          <button type="submit" class="btn btn-success">Save</button>
         </div>
       </div>
     </div>

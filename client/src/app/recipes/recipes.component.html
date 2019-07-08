@@ -3,13 +3,13 @@
     <div class="bg-light pt-2 px-2">
 
       <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-lg-4">
           <label class="" for="name">Search by name</label>
           <div class="input-group">
             <input type="text" class="form-control" id="name" (keyup)="searchRecipes()" [(ngModel)]="searchName">
           </div>
         </div>
-        <div class="col-12 col-md-3 offset-1">
+        <div class="col-12 col-lg-3 offset-xl-1">
           <label class="" for="time">Time</label>
           <div class="input-group ">
             <div class="input-group-prepend">
@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-lg-3">
           <div class="form-group">
             <label class="" for="level">Difficulty level</label>
             <select class="form-control" [(ngModel)]="level" id="level">
@@ -39,8 +39,8 @@
             </select>
           </div>
         </div>
-        <div class="align-self-center pt-3 col-1 text-center">
-          <button class="btn btn-success" (click)="filterRecipes()">Find</button>
+        <div class="align-self-center pt-3 col-12 col-md-12 col-lg-2 col-xl-1">
+          <button class="btn btn-success btn-block" (click)="filterRecipes()">Find</button>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@
       <span class="sr-only">Loading...</span>
     </div>
     <div class="row" *ngIf="recipes && !loading">
-      <div class="col-12 col-md-3 mb-3"
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3"
            *ngFor="let recipe of recipes.recipes| orderBy: sort : order | paginate: { itemsPerPage: 12, currentPage: p } ">
         <div class="card mb-3 h-100">
           <div class="card-header">
