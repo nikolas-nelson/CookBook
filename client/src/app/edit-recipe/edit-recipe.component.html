@@ -236,18 +236,18 @@
                 <span class="sr-only">Loading...</span>
               </div>
               <div class="card-body" *ngIf="!loadingAllergens && recipe" formArrayName="allergens">
-
                 <div class="custom-control custom-checkbox d-flex"
                      *ngFor="let allergen of allergensArr.controls; let i=index" [formGroupName]="i">
-                    <input type="checkbox" class="custom-control-input" formControlName="selected"
-                           id="allergen{{allergensList.allergens[i].id}}"
-                           (change)="onChangeAllergen(allergen, $event.target.checked)">
+                  <input type="checkbox" class="custom-control-input" formControlName="selectedAllergen"
+                         id="allergen{{allergensList.allergens[i].id}}"
+                         (change)="onChangeAllergen(allergen, $event.target.checked)">
                   <label for="allergen{{allergensList.allergens[i].id}}" class="custom-control-label align-self-center">
                     {{allergensList.allergens[i].name}}
                   </label>
                   <p class="text-right ml-auto mb-0">
-                    <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergensList.allergens[i])"><i
-                      class="far fa-trash"></i>
+                    <button type="button" class="btn btn-link" (click)="openDeleteAllergen(allergensList.allergens[i])">
+                      <i
+                        class="far fa-trash"></i>
                     </button>
                     <button type="button" class="btn btn-link" (click)="openEditAllergen(allergensList.allergens[i])"><i
                       class="far fa-edit"></i>
@@ -262,30 +262,32 @@
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-end">Courses</h5>
-                <button class="btn btn-outline-primary" (click)="openAddCourse()"><i class="far fa-plus"></i> Add
+                <button type="button" class="btn btn-outline-primary" (click)="openAddCourse()"><i
+                  class="far fa-plus"></i> Add
                 </button>
               </div>
               <div class="spinner-border" role="status" *ngIf="loadingCourse">
                 <span class="sr-only">Loading...</span>
               </div>
-              <div class="card-body">
-                <div class="form-group" *ngIf="courses">
-                  <div class="custom-control custom-checkbox d-flex" *ngFor="let course of courses.courses">
-                    <input type="checkbox" class="custom-control-input" id="course{{course.id}}"
-                           (change)="onChangeCourse(course, $event.target.checked)">
-                    <label class="custom-control-label" for="course{{course.id}}">{{course.name}}</label>
-                    <p class="text-right ml-auto mb-0">
-                      <button type="button" class="btn btn-link" (click)="openDeleteCourses(course)"><i
-                        class="far fa-trash"></i>
-                      </button>
-                      <button type="button" class="btn btn-link" (click)="openEditCourse(course)"><i
-                        class="far fa-edit"></i>
-                      </button>
-                    </p>
-                  </div>
-                  <div class="text-danger" *ngIf="recipeForm.value.courses.length < 1 && submitted">
-                    <p class="mb-0">Select at least one course</p>
-                  </div>
+              <div class="card-body" *ngIf="recipe && !loadingCourse" formArrayName="courses">
+                <div class="custom-control custom-checkbox d-flex"
+                     *ngFor="let course of coursesArr.controls; let i=index" [formGroupName]="i">
+                  <input type="checkbox" class="custom-control-input" formControlName="selectedCourse"
+                         id="course{{courses.courses[i].id}}"
+                         (change)="onChangeCourse(course, $event.target.checked)" >
+                  <label class="custom-control-label"
+                         for="course{{courses.courses[i].id}}">{{courses.courses[i].name}}</label>
+                  <p class="text-right ml-auto mb-0">
+                    <button type="button" class="btn btn-link" (click)="openDeleteCourses(courses.courses[i])"><i
+                      class="far fa-trash"></i>
+                    </button>
+                    <button type="button" class="btn btn-link" (click)="openEditCourse(courses.courses[i])"><i
+                      class="far fa-edit"></i>
+                    </button>
+                  </p>
+                </div>
+                <div class="text-danger" *ngIf="recipeForm.value.courses.length < 1 && submitted">
+                  <p class="mb-0">Select at least one course</p>
                 </div>
               </div>
             </div>
@@ -296,24 +298,27 @@
             <div class="card">
               <div class="card-header d-flex justify-content-between">
                 <h5 class="card-title mb-0 align-self-end">Categories</h5>
-                <button class="btn btn-outline-primary" (click)="openAddCategory()"><i class="far fa-plus"></i> Add
+                <button type="button" class="btn btn-outline-primary" (click)="openAddCategory()"><i
+                  class="far fa-plus"></i> Add
                 </button>
               </div>
               <div class="spinner-border" role="status" *ngIf="loadingCategory">
                 <span class="sr-only">Loading...</span>
               </div>
-              <div class="card-body row" *ngIf="categories">
+              <div class="card-body row" *ngIf="recipe && !loadingCategory" formArrayName="category">
 
-                <div class="custom-control col-6 custom-checkbox d-flex" [formGroupName]="i"
-                     *ngFor="let category of categoriesArr.controls; let i=index">
-                  <input type="checkbox" class="custom-control-input" id="category{{categories.calegories[i].id}}"
-                         (change)="onChangeCategory(category, $event.target.checked)" formControlName="selected">
-                  <label class="custom-control-label" for="category{{categories.calegories[i].id}}">{{categories.calegories[i].name}}</label>
+                <div class="custom-control col-6 custom-checkbox d-flex"
+                     *ngFor="let category of categoriesArr.controls; let i=index" [formGroupName]="i">
+                  <input type="checkbox" class="custom-control-input" id="category{{categories.categories[i].id}}"
+                         (change)="onChangeCategory(category, $event.target.checked)"
+                         formControlName="selectedCategory">
+                  <label class="custom-control-label"
+                         for="category{{categories.categories[i].id}}">{{categories.categories[i].name}}</label>
                   <p class="text-right ml-auto mb-0">
-                    <button type="button" class="btn btn-link" (click)="openDeleteCategory(category)"><i
+                    <button type="button" class="btn btn-link" (click)="openDeleteCategory(categories.categories[i])"><i
                       class="far fa-trash"></i>
                     </button>
-                    <button type="button" class="btn btn-link" (click)="openEditCategory(category)"><i
+                    <button type="button" class="btn btn-link" (click)="openEditCategory(categories.categories[i])"><i
                       class="far fa-edit"></i>
                     </button>
                   </p>
@@ -329,8 +334,8 @@
       </div>
       <div class="card-footer text-right fixed-bottom bg-transparent border-0">
         <div class="ml-auto">
-          <button type="button" class="btn btn-warning mr-2">Cancel</button>
-          <button type="submit" class="btn btn-success">Save</button>
+          <button type="button" class="btn btn-warning mr-2" routerLink="/my-recipes">Cancel</button>
+          <button type="submit" class="btn btn-success" >Save</button>
         </div>
       </div>
     </div>

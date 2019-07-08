@@ -7,7 +7,7 @@ import {AddAllergenModalComponent} from "@app/new-recipe/allergens/add-allergen-
 import {DeleteModalComponent} from "@app/new-recipe/delete-modal/delete-modal.component";
 import {CategoryModalComponent} from "@app/new-recipe/categories/category-modal/category-modal.component";
 import {CoursesModalComponent} from "@app/new-recipe/courses/courses-modal/courses-modal.component";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Recipe} from "@app/models/recipe";
 
 @Component({
@@ -44,6 +44,7 @@ export class EditRecipeComponent implements OnInit {
   constructor(private recipeService: RecipeService,
               private fb: FormBuilder,
               private route: ActivatedRoute,
+              private router: Router,
               private modalService: NgbModal,
               private toastr: ToastrService) {
     this.recipeForm = this.fb.group({
@@ -74,7 +75,6 @@ export class EditRecipeComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.recipeService.getRecipe(params.get('id')).subscribe((res: Recipe) => {
         this.recipe = res;
-        console.log(this.recipe);
         this.recipeForm = this.fb.group({
           'id': [this.recipe.id],
           'user_id': [this.recipe.user.id],
@@ -115,7 +115,7 @@ export class EditRecipeComponent implements OnInit {
         setTimeout(() => {
           this.allergensArr.push(this.fb.group({
             id: x.id,
-            selected: (this.recipe.allergens.find(y => y.id === x.id)) ? true : false,
+            selectedAllergen: (this.recipe.allergens.find(y => y.id === x.id)) ? true : false,
             name: x.name,
           }));
         }, 500);
@@ -129,7 +129,7 @@ export class EditRecipeComponent implements OnInit {
         setTimeout(() => {
           this.categoriesArr.push(this.fb.group({
             id: x.id,
-            selected: (this.recipe.categories.find(y => y.id === x.id)) ? true : false,
+            selectedCategory: (this.recipe.categories.find(y => y.id === x.id)) ? true : false,
             name: x.name,
           }));
         }, 500);
@@ -139,7 +139,16 @@ export class EditRecipeComponent implements OnInit {
 
     this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
-      this.loadingCourse = false;
+      this.courses.courses.forEach((x) => {
+        setTimeout(() => {
+          this.coursesArr.push(this.fb.group({
+            id: x.id,
+            selectedCourse: (this.recipe.courses.find(y => y.id === x.id)) ? true : false,
+            name: x.name,
+          }));
+        }, 1000);
+          this.loadingCourse = false;
+      });
     });
   }
 
@@ -152,6 +161,10 @@ export class EditRecipeComponent implements OnInit {
     return this.recipeForm.get('category') as FormArray;
   }
 
+  get coursesArr() {
+    return this.recipeForm.get('courses') as FormArray;
+  }
+
   // getting recipe array to push values from service
   get ingredientArr() {
     return this.recipeForm.get('ingredients') as FormArray;
@@ -162,9 +175,18 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onSubmit() {
-    const mine: any[] = <any[]>this.recipeForm.value.allergens.filter(x => x.selected),
-      selectedAllergens: any[] = mine.map(x => this.allergensList.allergens.find(y => y.id === x.id));
+    const allergen: any[] = <any[]>this.recipeForm.value.allergens.filter(x => x.selectedAllergen),
+      selectedAllergens: any[] = allergen.map(x => this.allergensList.allergens.find(y => y.id === x.id));
     this.recipeForm.value.allergens = selectedAllergens;
+
+    const category: any[] = <any[]>this.recipeForm.value.category.filter(x => x.selectedCategory),
+      selectedCategories: any[] = category.map(x => this.categories.categories.find(y => y.id === x.id));
+    this.recipeForm.value.category = selectedCategories;
+
+    const course: any[] = <any[]>this.recipeForm.value.courses.filter(x => x.selectedCourse),
+      selectedCourses: any[] = course.map(x => this.courses.courses.find(y => y.id === x.id));
+    this.recipeForm.value.courses = selectedCourses;
+
     if (this.selectedImage) {
       this.isImage = true;
       this.recipeForm.value.image_path = this.selectedImage.name;
@@ -180,7 +202,8 @@ export class EditRecipeComponent implements OnInit {
     this.submitted = true;
     if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
       this.recipeService.editRecipe(this.recipeForm.value).subscribe(res => {
-        this.toastr.success('Recipe edited successfully')
+        this.toastr.success('Recipe edited successfully');
+         this.router.navigate(['/recipe/' + this.recipe.id]);
       });
     }
   }
@@ -293,6 +316,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.data = {data: allergen, type: 'allergen'};
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingAllergens = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -321,6 +345,7 @@ export class EditRecipeComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCategory = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -335,6 +360,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.data = {data: category, type: 'category'};
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCategory = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -349,6 +375,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.category = category;
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCategory = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -362,6 +389,7 @@ export class EditRecipeComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCourse = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -376,6 +404,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.data = {data: course, type: 'course'};
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCourse = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }
@@ -390,6 +419,7 @@ export class EditRecipeComponent implements OnInit {
     modalRef.componentInstance.course = course;
     modalRef.result.then((result) => {
       if (result) {
+        this.loadingCourse = true;
         this.toastr.success(result.message, 'Success!');
         this.ngOnInit()
       }

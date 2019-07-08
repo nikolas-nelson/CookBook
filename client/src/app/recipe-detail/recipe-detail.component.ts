@@ -20,6 +20,7 @@ export class RecipeDetailComponent implements OnInit {
   public courses: any;
   public loading = true;
   public cookieValue = '';
+  public isVoted: boolean = false;
 
   rating = {};
 
@@ -56,6 +57,11 @@ export class RecipeDetailComponent implements OnInit {
             'user_id': [this.currentUser.id]
           });
         }
+        this.cookieValue = this.cookieService.get('recipeId');
+        if (this.cookieValue == String(this.recipe.id)) {
+          this.isVoted = true;
+          this.ctrl.disable();
+        }
       })
     });
     this.recipeService.getCategories().subscribe(categories => {
@@ -67,10 +73,6 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses
     });
-    this.cookieValue = this.cookieService.get('isVoted');
-    if (this.cookieValue === 'Yes') {
-      this.ctrl.disable();
-    }
 
 
   }
@@ -166,7 +168,8 @@ export class RecipeDetailComponent implements OnInit {
     };
     this.recipeService.addRating(this.rating).subscribe(res => {
       this.toastr.success('Your rating was successfully added!');
-      this.cookieService.set('isVoted', 'Yes');
+      this.cookieService.set('recipeId', this.recipe.id);
+      this.isVoted = true;
     }, (error) => {
       this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
     })

@@ -18,7 +18,6 @@ class Course(Resource):
     @classmethod
     def post(cls):
         data = cls.parser.parse_args()
-        print(data)
         course = CoursesModel(data['id'],
                               data['name'])
         course.save_to_db()

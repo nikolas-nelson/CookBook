@@ -12,14 +12,14 @@
             <span *ngIf="recipe.comments.length < 1">comment</span>
           </p>
           <span class="align-self-center">
-            <div class="form-group" *ngIf="!cookieValue">
+            <div class="form-group" *ngIf="!isVoted">
               <ngb-rating [formControl]="ctrl" max="5" (click)="saveRating()"></ngb-rating>
               <div class="form-text small">
                 <div *ngIf="ctrl.valid" class="text-success">Thanks!</div>
                 <div *ngIf="ctrl.invalid" class="text-danger">Please rate us</div>
               </div>
             </div>
-            <ngb-rating [rate]="recipe.rating" [readonly]="true" max="5" *ngIf="cookieValue"></ngb-rating>
+            <ngb-rating [rate]="recipe.rating" [readonly]="true" max="5" *ngIf="isVoted"></ngb-rating>
           </span>
         </div>
         <img src="/assets/img/{{recipe.image_path}}" class="img-fluid img-thumbnail" alt="">

@@ -7,6 +7,9 @@ import {AddAllergenModalComponent} from "./allergens/add-allergen-modal/add-alle
 import {DeleteModalComponent} from "./delete-modal/delete-modal.component";
 import {CategoryModalComponent} from "./categories/category-modal/category-modal.component";
 import {CoursesModalComponent} from "./courses/courses-modal/courses-modal.component";
+import {AuthenticationService} from "@app/auth/authentication.service";
+import {User} from "@app/models/user";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-recipe',
@@ -36,12 +39,17 @@ export class NewRecipeComponent implements OnInit {
 
   public submitted = false;
 
+  currentUser: User;
+
   recipeForm: FormGroup;
 
   constructor(private recipeService: RecipeService,
               private fb: FormBuilder,
+              private router: Router,
+              private authenticationService: AuthenticationService,
               private modalService: NgbModal,
               private toastr: ToastrService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
@@ -68,7 +76,7 @@ export class NewRecipeComponent implements OnInit {
 
     this.recipeForm = this.fb.group({
       'id': [null],
-      'user_id': [1],
+      'user_id': [this.currentUser.id],
       'name': ['', Validators.required],
       'image_path': ['',],
       'description': ['', Validators.required],
@@ -180,9 +188,7 @@ export class NewRecipeComponent implements OnInit {
     if (this.selectedImage) {
       this.isImage = true;
       this.recipeForm.value.image_path = this.selectedImage.name;
-      console.log(this.selectedImage);
       this.recipeService.uploadImage(this.selectedImage).subscribe(res => {
-        console.log(res)
       })
     } else {
       this.isImage = false;
@@ -193,10 +199,10 @@ export class NewRecipeComponent implements OnInit {
     this.submitted = true;
     if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
       this.recipeService.addRecipe(this.recipeForm.value).subscribe(res => {
-        console.log(res)
+        this.toastr.success('Your recipe was added!');
+        this.router.navigate(['/my-recipes']);
       });
     }
-
   }
 
   openAddAllergen() {

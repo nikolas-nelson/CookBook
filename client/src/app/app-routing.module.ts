@@ -13,7 +13,6 @@ import {AuthGuard} from "./_helpers/auth.guard";
 import {MyRecipesComponent} from "@app/my-recipes/my-recipes.component";
 import {RecipesByCategoryComponent} from "@app/recipes-by-category/recipes-by-category.component";
 import {EditRecipeComponent} from "@app/edit-recipe/edit-recipe.component";
-import {TestRecipeComponent} from "@app/test-recipe/test-recipe.component";
 
 const routes: Routes = [
   {path: '', component: TopRecipesComponent},
@@ -27,7 +26,6 @@ const routes: Routes = [
   {path: 'courses', component: CoursesComponent},
   {path: 'cuisine', component: CuisineComponent},
   {path: 'registration', component: RegistrationComponent},
-  {path: 'test', component: TestRecipeComponent},
   {
     path: 'login',
     component: LoginComponent,

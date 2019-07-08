@@ -7,8 +7,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ">
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active"><i class="fal fa-home"></i> <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbar" role="button" data-toggle="dropdown"
@@ -16,14 +16,17 @@
             Recipes
           </a>
           <div class="dropdown-menu" aria-labelledby="navbar">
-            <a class="dropdown-item" routerLink="recipes">All recipes</a>
-            <a class="dropdown-item" routerLink="cuisine">By cuisine</a>
-            <a class="dropdown-item" routerLink="categories">By category</a>
-            <a class="dropdown-item" routerLink="courses">By courses</a>
+            <a class="dropdown-item" routerLink="recipes" routerLinkActive="active">All recipes</a>
+            <a class="dropdown-item" routerLink="cuisine" routerLinkActive="active">By cuisine</a>
+            <a class="dropdown-item" routerLink="categories" routerLinkActive="active">By category</a>
+            <a class="dropdown-item" routerLink="courses" routerLinkActive="active">By courses</a>
           </div>
         </li>
          <li class="nav-item">
-          <a class="nav-link" routerLink="new-recipe">Add a recipe</a>
+          <a class="nav-link" routerLink="new-recipe" routerLinkActive="active">Add a recipe</a>
+        </li>
+        <li class="nav-item" *ngIf="currentUser">
+          <a class="nav-link" routerLink="my-recipes" routerLinkActive="active">My recipes</a>
         </li>
       </ul>
        <span class="ml-auto">

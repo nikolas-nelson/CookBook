@@ -26,7 +26,6 @@ export class MyRecipesComponent implements OnInit {
               private toastr: ToastrService,
               private route: ActivatedRoute,) {
 
-    console.log(this.currentUser)
   }
 
   ngOnInit() {
