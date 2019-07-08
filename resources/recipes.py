@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
 
-import json
 import ast
 
 from models.recipes import RecipeModel, RecipeCategory, RecipeCourses, RecipeAllergens
@@ -261,6 +260,7 @@ class TopRecipesList(Resource):
 
 
 class RecipesByFilter(Resource):
+    """Get recipes by filter """
     parser = reqparse.RequestParser()
     parser.add_argument('filter')
 
@@ -271,6 +271,7 @@ class RecipesByFilter(Resource):
 
 
 class RecipesByCuisine(Resource):
+    """Get recipes by cuisine """
     parser = reqparse.RequestParser()
     parser.add_argument('filter')
 
@@ -281,6 +282,7 @@ class RecipesByCuisine(Resource):
 
 
 class RecipesByCategory(Resource):
+    """Get recipes by category """
     parser = reqparse.RequestParser()
     parser.add_argument('filter')
 
@@ -291,6 +293,7 @@ class RecipesByCategory(Resource):
 
 
 class RecipesByCourses(Resource):
+    """Get recipes by courses """
     parser = reqparse.RequestParser()
     parser.add_argument('filter')
 
@@ -301,6 +304,7 @@ class RecipesByCourses(Resource):
 
 
 class RecipesBySearch(Resource):
+    """Get recipes by searching name """
     parser = reqparse.RequestParser()
     parser.add_argument('filter')
     parser.add_argument('order')

@@ -82,6 +82,7 @@ class RecipeModel(db.Model):
             'categories': [categories.json() for categories in self.categories],
         }
 
+    # return list with some information for faster loading
     def recipe_list(self):
         return {
             'id': self.id,
@@ -108,26 +109,32 @@ class RecipeModel(db.Model):
     def find_all(cls):
         return cls.query.order_by(cls.time_added.desc()).all()
 
+    # find recipes sorted by rating
     @classmethod
     def find_top_recipes(cls):
         return cls.query.order_by(cls.rating.desc()).limit(12).all()
 
+    # filter recipes by filter
     @classmethod
     def find_by_filter(cls, filters):
         return cls.query.filter_by(**filters).all()
 
+    # find all recipes by cuisine
     @classmethod
     def find_by_cuisine(cls, filters):
         return cls.query.join(CuisineModel.cuisine).filter(CuisineModel.name == filters).all()
 
+    # find all recipes by category
     @classmethod
     def find_by_category(cls, filters):
         return cls.query.join(CategoriesModel.categories).filter(CategoriesModel.name == filters).all()
 
+    # find all recipes by course
     @classmethod
     def find_by_courses(cls, filters):
         return cls.query.join(CoursesModel.courses).filter(CoursesModel.name == filters).all()
 
+    # find recipes by name
     @classmethod
     def search_by_filter(cls, filters):
         return cls.query.filter(cls.name.like('%' + filters['name'] + '%')).all()
@@ -177,6 +184,7 @@ class RecipeModel(db.Model):
 
 
 class RecipeCategory(db.Model):
+    """Relationship class recipe and category"""
     __tablename__ = 'recipes_has_categories'
 
     id = db.Column(db.Integer, primary_key=True, )
@@ -200,6 +208,7 @@ class RecipeCategory(db.Model):
 
 
 class RecipeAllergens(db.Model):
+    """Relationship class recipe and allergens"""
     __tablename__ = 'recipes_has_allergens'
 
     id = db.Column(db.Integer, primary_key=True, )
@@ -223,6 +232,7 @@ class RecipeAllergens(db.Model):
 
 
 class RecipeCourses(db.Model):
+    """Relationship class recipe and courses"""
     __tablename__ = 'recipes_has_courses'
 
     id = db.Column(db.Integer, primary_key=True, )

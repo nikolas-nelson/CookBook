@@ -33,7 +33,7 @@ export class NewRecipeComponent implements OnInit {
   public loadingCourse = true;
   public loadingAllergens = true;
 
-  public allergensList: any = {};
+  public allergensList: any = [];
   public categories: any;
   public courses: any;
 
@@ -104,6 +104,7 @@ export class NewRecipeComponent implements OnInit {
     return this.recipeForm.controls;
   }
 
+    //on check adding category to the form array
   onChangeAllergen(allergen: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.allergens.push(
@@ -115,6 +116,7 @@ export class NewRecipeComponent implements OnInit {
 
   }
 
+    //on check adding category to the form array
   onChangeCourse(course: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.courses.push(
@@ -139,6 +141,7 @@ export class NewRecipeComponent implements OnInit {
 
   }
 
+  //adding form group to form array
   addIngredientFG() {
     return this.fb.group({
       'id': [null],
@@ -148,6 +151,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  //adding form group to form array
   addStepFG() {
     return this.fb.group({
       'id': [null],
@@ -156,6 +160,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  //adding or removing form fields in form group
   addIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(this.addIngredientFG())
   }
@@ -173,6 +178,7 @@ export class NewRecipeComponent implements OnInit {
   }
 
 
+  // image upload
   onFileUpload(event) {
     if (event.target.files && event.target.files[0]) {
       this.isImage = true;
@@ -194,6 +200,7 @@ export class NewRecipeComponent implements OnInit {
       this.isImage = false;
     }
 
+     // calculate total cook time and add to recipe object
     this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
 
     this.submitted = true;
@@ -205,6 +212,7 @@ export class NewRecipeComponent implements OnInit {
     }
   }
 
+  // open bootstrap modal and pass data to the modal
   openAddAllergen() {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
       size: "sm"
@@ -218,6 +226,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openDeleteAllergen(allergen) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -232,6 +241,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openEditAllergen(allergen) {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
       size: "sm"
@@ -246,6 +256,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openAddCategory() {
     const modalRef = this.modalService.open(CategoryModalComponent, {
       size: "sm"
@@ -259,6 +270,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openDeleteCategory(category) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -273,6 +285,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openEditCategory(category) {
     const modalRef = this.modalService.open(CategoryModalComponent, {
       size: "sm"
@@ -287,6 +300,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openAddCourse() {
     const modalRef = this.modalService.open(CoursesModalComponent, {
       size: "sm"
@@ -300,6 +314,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openDeleteCourses(course) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -314,6 +329,7 @@ export class NewRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openEditCourse(course) {
     const modalRef = this.modalService.open(CoursesModalComponent, {
       size: "sm"

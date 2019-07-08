@@ -30,6 +30,7 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
+  {path: '**', component: TopRecipesComponent}
 ];
 
 @NgModule({

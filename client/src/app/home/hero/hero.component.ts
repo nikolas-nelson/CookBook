@@ -20,7 +20,6 @@ export class HeroComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
-  returnUrl: string;
   error = '';
 
   currentUser: User;

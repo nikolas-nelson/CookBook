@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from "@app/recipe.service";
-import {ActivatedRoute} from "@angular/router";
 import {User} from "@app/models/user";
 import {AuthenticationService} from "@app/auth/authentication.service";
 import {ToastrService} from "ngx-toastr";
+import {Recipe} from "@app/models/recipe";
 
 @Component({
   selector: 'app-my-recipes',
@@ -12,7 +12,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class MyRecipesComponent implements OnInit {
 
-  public recipes: any;
+  public recipes: Recipe;
   public currentUser: User;
   public loading = true;
   filters = {
@@ -23,8 +23,7 @@ export class MyRecipesComponent implements OnInit {
 
   constructor(private recipeService: RecipeService,
               private authenticationService: AuthenticationService,
-              private toastr: ToastrService,
-              private route: ActivatedRoute,) {
+              private toastr: ToastrService,) {
 
   }
 
@@ -32,7 +31,7 @@ export class MyRecipesComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     if (this.currentUser) {
       this.filters.filter.user_id = this.currentUser.id;
-      this.recipeService.getRecipesByFilter(this.filters).subscribe(res => {
+      this.recipeService.getRecipesByFilter(this.filters).subscribe((res: Recipe) => {
         this.recipes = res;
         this.loading = false;
       });

@@ -19,12 +19,13 @@ from resources.recipes import RecipesByFilter
 from resources.recipes import RecipesBySearch
 from image import Image
 
-from dbconfig import dbConfig
+from dbconfig import dbConfig, secretKey
 
 from db import db
 
 app = Flask(__name__)
 
+"""database settings"""
 app.config['SQLALCHEMY_DATABASE_URI'] = dbConfig
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -35,7 +36,7 @@ JWT related configuration. The following functions includes:
 1) add claims to each jwt
 2) customize the token expired error message 
 """
-app.config['JWT_SECRET_KEY'] = 'secret'
+app.config['JWT_SECRET_KEY'] = secretKey
 app.config['JWT_BLACKLIST_ENABLED'] = True  # enable blacklist feature
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']  # allow blacklisting for access and refresh tokens
 jwt = JWTManager(app)

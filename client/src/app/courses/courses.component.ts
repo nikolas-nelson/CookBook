@@ -16,7 +16,7 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.recipeService.getCourses().subscribe( courses => {
+    this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
       this.loading = false;
     })

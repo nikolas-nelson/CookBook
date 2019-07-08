@@ -133,7 +133,7 @@ export class EditRecipeComponent implements OnInit {
             name: x.name,
           }));
         }, 500);
-         this.loadingCategory = false;
+        this.loadingCategory = false;
       });
     });
 
@@ -147,12 +147,12 @@ export class EditRecipeComponent implements OnInit {
             name: x.name,
           }));
         }, 1000);
-          this.loadingCourse = false;
+        this.loadingCourse = false;
       });
     });
   }
 
-
+  // getting form arrays to push values from service
   get allergensArr() {
     return this.recipeForm.get('allergens') as FormArray;
   }
@@ -165,7 +165,6 @@ export class EditRecipeComponent implements OnInit {
     return this.recipeForm.get('courses') as FormArray;
   }
 
-  // getting recipe array to push values from service
   get ingredientArr() {
     return this.recipeForm.get('ingredients') as FormArray;
   }
@@ -175,14 +174,17 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onSubmit() {
+    // add allergens to recipe object before it is send to backend
     const allergen: any[] = <any[]>this.recipeForm.value.allergens.filter(x => x.selectedAllergen),
       selectedAllergens: any[] = allergen.map(x => this.allergensList.allergens.find(y => y.id === x.id));
     this.recipeForm.value.allergens = selectedAllergens;
 
+    // add categories to recipe object before it is send to backend
     const category: any[] = <any[]>this.recipeForm.value.category.filter(x => x.selectedCategory),
       selectedCategories: any[] = category.map(x => this.categories.categories.find(y => y.id === x.id));
     this.recipeForm.value.category = selectedCategories;
 
+    // add courses to recipe object before it is send to backend
     const course: any[] = <any[]>this.recipeForm.value.courses.filter(x => x.selectedCourse),
       selectedCourses: any[] = course.map(x => this.courses.courses.find(y => y.id === x.id));
     this.recipeForm.value.courses = selectedCourses;
@@ -197,18 +199,19 @@ export class EditRecipeComponent implements OnInit {
       this.isImage = false;
     }
 
+    // calculate total cook time and add to recipe object
     this.recipeForm.value.total_time = this.recipeForm.value.prep_time + this.recipeForm.value.cook_time;
 
     this.submitted = true;
     if (this.recipeForm.valid && this.recipeForm.value.category.length > 0 && this.recipeForm.value.courses.length > 0) {
       this.recipeService.editRecipe(this.recipeForm.value).subscribe(res => {
         this.toastr.success('Recipe edited successfully');
-         this.router.navigate(['/recipe/' + this.recipe.id]);
+        this.router.navigate(['/recipe/' + this.recipe.id]);
       });
     }
   }
 
-
+  // upload a recipe image
   onFileUpload(event) {
     if (event.target.files && event.target.files[0]) {
       this.isImage = true;
@@ -261,6 +264,7 @@ export class EditRecipeComponent implements OnInit {
     }
   }
 
+  //adding form group to form array
   addIngredientFG() {
     return this.fb.group({
       'id': [null],
@@ -270,6 +274,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+  //adding form group to form array
   addStepFG() {
     return this.fb.group({
       'id': [null],
@@ -277,6 +282,8 @@ export class EditRecipeComponent implements OnInit {
       'instructions': ['', Validators.required]
     });
   }
+
+  //adding or removing form fields in form group
 
   addIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(this.addIngredientFG())
@@ -294,7 +301,7 @@ export class EditRecipeComponent implements OnInit {
     (<FormArray>this.recipeForm.get('steps')).removeAt(index)
   }
 
-
+// open bootstrap modal and pass data to the modal
   openAddAllergen() {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
       size: "sm"
@@ -309,6 +316,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openDeleteAllergen(allergen) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -324,6 +332,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openEditAllergen(allergen) {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
       size: "sm"
@@ -339,6 +348,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openAddCategory() {
     const modalRef = this.modalService.open(CategoryModalComponent, {
       size: "sm"
@@ -353,6 +363,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openDeleteCategory(category) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -368,6 +379,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openEditCategory(category) {
     const modalRef = this.modalService.open(CategoryModalComponent, {
       size: "sm"
@@ -383,6 +395,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openAddCourse() {
     const modalRef = this.modalService.open(CoursesModalComponent, {
       size: "sm"
@@ -397,6 +410,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+// open bootstrap modal and pass data to the modal
   openDeleteCourses(course) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
       size: "sm"
@@ -412,6 +426,7 @@ export class EditRecipeComponent implements OnInit {
     });
   }
 
+  // open bootstrap modal and pass data to the modal
   openEditCourse(course) {
     const modalRef = this.modalService.open(CoursesModalComponent, {
       size: "sm"

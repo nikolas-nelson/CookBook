@@ -160,6 +160,7 @@ export class RecipeDetailComponent implements OnInit {
     }
   }
 
+  // saving rating and adding cookies to not allow rate 2x
   saveRating() {
     this.rating = {
       "id": null,

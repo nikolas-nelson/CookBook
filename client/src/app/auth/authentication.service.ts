@@ -10,7 +10,6 @@ import {map} from "rxjs/operators";
 })
 export class AuthenticationService {
 
-  url = 'http://127.0.0.1:5000';
 
    private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
