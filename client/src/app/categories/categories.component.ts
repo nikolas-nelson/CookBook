@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {RecipeService} from "../recipe.service";
+import {RecipeService} from '../recipe.service';
 
 @Component({
   selector: 'app-categories',
@@ -17,7 +17,7 @@ export class CategoriesComponent implements OnInit {
     this.recipeService.getCategories().subscribe(categories => {
       this.categories = categories;
       this.loading = false;
-    })
+    });
   }
 
 }

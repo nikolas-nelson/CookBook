@@ -5,3 +5,4 @@ PyMySQL
 werkzeug
 flask_cors
 simplejson
+pyOpenSSL

@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormGroup, FormControl, FormBuilder, Validators} from '@angular/forms';
-import {RecipeService} from "../../../recipe.service";
-import {ToastrService} from "ngx-toastr";
-import {Allergen} from "../../../models/allergen";
+import {RecipeService} from '../../../recipe.service';
+import {ToastrService} from 'ngx-toastr';
+import {Allergen} from '../../../models/allergen';
 
 
 @Component({
@@ -23,32 +23,34 @@ export class AddAllergenModalComponent implements OnInit {
   constructor(public activeModal: NgbActiveModal,
               private fb: FormBuilder,
               private recipeService: RecipeService,
-              private toastr: ToastrService) {}
+              private toastr: ToastrService) {
+  }
 
 
   ngOnInit() {
-  if (this.allergen) {
+    if (this.allergen) {
       this.allergenForm = this.fb.group({
-        'id': [this.allergen.id],
-        'name': [this.allergen.name, Validators.required]
+        id: [this.allergen.id],
+        name: [this.allergen.name, Validators.required]
       });
-    } else
+    } else {
       this.allergenForm = this.fb.group({
-        'id': [null],
-        'name': ['', Validators.required]
+        id: [null],
+        name: ['', Validators.required]
       });
+    }
   }
 
   onSubmit() {
     if (this.allergen) {
       this.recipeService.editAllergen(this.allergenForm.value).subscribe(res => {
-        this.activeModal.close(res)
+        this.activeModal.close(res);
       }, (error) => {
         this.toastr.error(error.message, 'Ohh NO! Something went wrong');
       });
     } else {
       this.recipeService.addAllergen(this.allergenForm.value).subscribe(res => {
-        this.activeModal.close(res)
+        this.activeModal.close(res);
       }, (error) => {
         this.toastr.error(error.message, 'Ohh NO! Something went wrong');
       });

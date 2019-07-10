@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeService} from "../recipe.service";
+import {RecipeService} from '../recipe.service';
 
 @Component({
   selector: 'app-courses',
@@ -19,7 +19,7 @@ export class CoursesComponent implements OnInit {
     this.recipeService.getCourses().subscribe(courses => {
       this.courses = courses;
       this.loading = false;
-    })
+    });
   }
 
 }

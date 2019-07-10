@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeService} from "../recipe.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ToastrService} from "ngx-toastr";
-import {FormArray, FormBuilder, FormGroup, Validators,} from "@angular/forms";
-import {AddAllergenModalComponent} from "./allergens/add-allergen-modal/add-allergen-modal.component";
-import {DeleteModalComponent} from "./delete-modal/delete-modal.component";
-import {CategoryModalComponent} from "./categories/category-modal/category-modal.component";
-import {CoursesModalComponent} from "./courses/courses-modal/courses-modal.component";
-import {AuthenticationService} from "@app/auth/authentication.service";
-import {User} from "@app/models/user";
-import {Router} from "@angular/router";
+import {RecipeService} from '../recipe.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AddAllergenModalComponent} from './allergens/add-allergen-modal/add-allergen-modal.component';
+import {DeleteModalComponent} from './delete-modal/delete-modal.component';
+import {CategoryModalComponent} from './categories/category-modal/category-modal.component';
+import {CoursesModalComponent} from './courses/courses-modal/courses-modal.component';
+import {AuthenticationService} from '@app/auth/authentication.service';
+import {User} from '@app/models/user';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-new-recipe',
@@ -26,7 +26,7 @@ export class NewRecipeComponent implements OnInit {
 
   public imageSrc: any;
 
-  public isImage: boolean = false;
+  public isImage = false;
 
   public loading = true;
   public loadingCategory = true;
@@ -75,17 +75,17 @@ export class NewRecipeComponent implements OnInit {
     });
 
     this.recipeForm = this.fb.group({
-      'id': [null],
-      'user_id': [this.currentUser.id],
-      'name': ['', Validators.required],
-      'image_path': ['',],
-      'description': ['', Validators.required],
-      'source': [''],
-      'prep_time': [null, Validators.required],
-      'cook_time': [null, Validators.required],
-      'total_time': [null],
-      'level': ['', Validators.required],
-      'cuisine_id': ['', Validators.required],
+      id: [null],
+      user_id: [this.currentUser.id],
+      name: ['', Validators.required],
+      image_path: [''],
+      description: ['', Validators.required],
+      source: [''],
+      prep_time: [null, Validators.required],
+      cook_time: [null, Validators.required],
+      total_time: [null],
+      level: ['', Validators.required],
+      cuisine_id: ['', Validators.required],
       ingredients: this.fb.array([
         this.addIngredientFG()
       ]),
@@ -104,25 +104,25 @@ export class NewRecipeComponent implements OnInit {
     return this.recipeForm.controls;
   }
 
-    //on check adding category to the form array
+    // on check adding category to the form array
   onChangeAllergen(allergen: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.allergens.push(
-        {'id': allergen.id, 'name': allergen.name});
+        {id: allergen.id, name: allergen.name});
     } else {
-      let index = this.recipeForm.value.allergens.indexOf(allergen);
+      const index = this.recipeForm.value.allergens.indexOf(allergen);
       this.recipeForm.value.allergens.splice(index, 1);
     }
 
   }
 
-    //on check adding category to the form array
+    // on check adding category to the form array
   onChangeCourse(course: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.courses.push(
-        {'id': course.id, 'name': course.name});
+        {id: course.id, name: course.name});
     } else {
-      let index = this.recipeForm.value.courses.indexOf(course);
+      const index = this.recipeForm.value.courses.indexOf(course);
       this.recipeForm.value.courses.splice(index, 1);
     }
 
@@ -131,50 +131,50 @@ export class NewRecipeComponent implements OnInit {
   onChangeCategory(category: any, isChecked: boolean) {
     if (isChecked) {
       this.recipeForm.value.category.push(
-        {'id': category.id, 'name': category.name, 'description': category.description});
+        {id: category.id, name: category.name, description: category.description});
     } else if (!isChecked) {
       this.recipeForm.value.category.push();
     } else {
-      let index = this.recipeForm.value.category.indexOf(category);
+      const index = this.recipeForm.value.category.indexOf(category);
       this.recipeForm.value.category.splice(index, 1);
     }
 
   }
 
-  //adding form group to form array
+  // adding form group to form array
   addIngredientFG() {
     return this.fb.group({
-      'id': [null],
-      'amount': [null, Validators.required],
-      'measurement': ['', Validators.required],
-      'ingredient': ['', Validators.required],
+      id: [null],
+      amount: [null, Validators.required],
+      measurement: ['', Validators.required],
+      ingredient: ['', Validators.required],
     });
   }
 
-  //adding form group to form array
+  // adding form group to form array
   addStepFG() {
     return this.fb.group({
-      'id': [null],
-      'step_number': [1,],
-      'instructions': ['', Validators.required]
+      id: [null],
+      step_number: [1],
+      instructions: ['', Validators.required]
     });
   }
 
-  //adding or removing form fields in form group
+  // adding or removing form fields in form group
   addIngredient() {
-    (<FormArray>this.recipeForm.get('ingredients')).push(this.addIngredientFG())
+    (<FormArray> this.recipeForm.get('ingredients')).push(this.addIngredientFG());
   }
 
   removeIngredient(index: number) {
-    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index)
+    (<FormArray> this.recipeForm.get('ingredients')).removeAt(index);
   }
 
   addStep() {
-    (<FormArray>this.recipeForm.get('steps')).push(this.addStepFG())
+    (<FormArray> this.recipeForm.get('steps')).push(this.addStepFG());
   }
 
   removeStep(index: number) {
-    (<FormArray>this.recipeForm.get('steps')).removeAt(index)
+    (<FormArray> this.recipeForm.get('steps')).removeAt(index);
   }
 
 
@@ -182,7 +182,7 @@ export class NewRecipeComponent implements OnInit {
   onFileUpload(event) {
     if (event.target.files && event.target.files[0]) {
       this.isImage = true;
-      this.selectedImage = <File>event.target.files[0];
+      this.selectedImage = <File> event.target.files[0];
 
       const reader = new FileReader();
       reader.onload = e => this.imageSrc = reader.result;
@@ -195,7 +195,7 @@ export class NewRecipeComponent implements OnInit {
       this.isImage = true;
       this.recipeForm.value.image_path = this.selectedImage.name;
       this.recipeService.uploadImage(this.selectedImage).subscribe(res => {
-      })
+      });
     } else {
       this.isImage = false;
     }
@@ -215,12 +215,12 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openAddAllergen() {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -229,13 +229,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openDeleteAllergen(allergen) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.data = {data: allergen, type: 'allergen'};
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -244,13 +244,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openEditAllergen(allergen) {
     const modalRef = this.modalService.open(AddAllergenModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.allergen = allergen;
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -259,12 +259,12 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openAddCategory() {
     const modalRef = this.modalService.open(CategoryModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -273,13 +273,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openDeleteCategory(category) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.data = {data: category, type: 'category'};
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -288,13 +288,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openEditCategory(category) {
     const modalRef = this.modalService.open(CategoryModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.category = category;
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -303,12 +303,12 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openAddCourse() {
     const modalRef = this.modalService.open(CoursesModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -317,13 +317,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openDeleteCourses(course) {
     const modalRef = this.modalService.open(DeleteModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.data = {data: course, type: 'course'};
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });
@@ -332,13 +332,13 @@ export class NewRecipeComponent implements OnInit {
   // open bootstrap modal and pass data to the modal
   openEditCourse(course) {
     const modalRef = this.modalService.open(CoursesModalComponent, {
-      size: "sm"
+      size: 'sm'
     });
     modalRef.componentInstance.course = course;
     modalRef.result.then((result) => {
       if (result) {
         this.toastr.success(result.message, 'Success!');
-        this.ngOnInit()
+        this.ngOnInit();
       }
     }).catch((res) => {
     });

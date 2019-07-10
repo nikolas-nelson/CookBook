@@ -1,6 +1,6 @@
-import {Component, OnInit,} from '@angular/core';
-import {RecipeService} from "../recipe.service";
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {RecipeService} from '../recipe.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
@@ -12,7 +12,7 @@ export class RecipesComponent implements OnInit {
   public recipes: any;
   public recipe: any;
   public loading = true;
-  p: number = 1;
+  p = 1;
   public sort = 'name';
   public order = false;
 
@@ -31,26 +31,26 @@ export class RecipesComponent implements OnInit {
 
 
   constructor(private recipeService: RecipeService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       if (params.get('name') === 'cuisine') {
-        let name = params.get('filter');
-        this.recipeService.getRecipesCuisine({"filter": name}).subscribe(res => {
+        const name = params.get('filter');
+        this.recipeService.getRecipesCuisine({filter: name}).subscribe(res => {
           this.recipes = res;
           this.loading = false;
         });
       } else if (params.get('name') === 'category') {
-        let name = params.get('filter');
-        this.recipeService.getRecipesCategory({"filter": name}).subscribe(res => {
+        const name = params.get('filter');
+        this.recipeService.getRecipesCategory({filter: name}).subscribe(res => {
           this.recipes = res;
           this.loading = false;
         });
       } else if (params.get('name') === 'courses') {
-        let name = params.get('filter');
-        this.recipeService.getRecipesCourses({"filter": name}).subscribe(res => {
+        const name = params.get('filter');
+        this.recipeService.getRecipesCourses({filter: name}).subscribe(res => {
           this.recipes = res;
           this.loading = false;
         });
@@ -84,7 +84,7 @@ export class RecipesComponent implements OnInit {
     this.recipeService.getRecipesBySearch(this.search).subscribe(res => {
       this.recipes = res;
       this.loading = false;
-    })
+    });
   }
 
 

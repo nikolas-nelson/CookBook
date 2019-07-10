@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../auth/authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {User} from "@app/models/user";
+import {AuthenticationService} from '../auth/authentication.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {User} from '@app/models/user';
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +15,7 @@ export class NavigationComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
-              private router: Router,) {
+              private router: Router) {
             this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
 
   }

@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {User} from "@app/models/user";
-import {environment} from "@environments/environment";
-import {map} from "rxjs/operators";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {User} from '@app/models/user';
+import {environment} from '@environments/environment';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
      this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+     this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): User {

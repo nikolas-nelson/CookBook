@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient,} from '@angular/common/http';
-import {environment} from "../environments/environment";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -107,11 +107,11 @@ export class RecipeService {
   }
 
   addRating(rating) {
-    return this.http.post(`${environment.apiUrl}/upvote`, rating)
+    return this.http.post(`${environment.apiUrl}/upvote`, rating);
   }
 
   addComment(comment) {
-    return this.http.post(`${environment.apiUrl}/comment`, comment)
+    return this.http.post(`${environment.apiUrl}/comment`, comment);
   }
 
   editComment(comment) {
@@ -123,12 +123,12 @@ export class RecipeService {
   }
 
   register(user) {
-    return this.http.post(`${environment.apiUrl}/register`, user)
+    return this.http.post(`${environment.apiUrl}/register`, user);
   }
 
   uploadImage(image) {
     const uploadData = new FormData();
     uploadData.append('image', image, image.name);
-    return this.http.post(`${environment.apiUrl}/img_upload`, uploadData)
+    return this.http.post(`${environment.apiUrl}/img_upload`, uploadData);
   }
 }

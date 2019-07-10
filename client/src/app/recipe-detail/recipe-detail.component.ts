@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {RecipeService} from "../recipe.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from '@angular/router';
+import {RecipeService} from '../recipe.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CookieService} from 'ngx-cookie-service';
-import {AuthenticationService} from "@app/auth/authentication.service";
-import {User} from "@app/models/user";
-import {ToastrService} from "ngx-toastr";
+import {AuthenticationService} from '@app/auth/authentication.service';
+import {User} from '@app/models/user';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-recipe-datail',
@@ -20,7 +20,7 @@ export class RecipeDetailComponent implements OnInit {
   public courses: any;
   public loading = true;
   public cookieValue = '';
-  public isVoted: boolean = false;
+  public isVoted = false;
 
   rating = {};
 
@@ -28,7 +28,7 @@ export class RecipeDetailComponent implements OnInit {
 
   commentForm: FormGroup;
   public submitted = false;
-  public isComment: boolean = false;
+  public isComment = false;
   public isEdit = false;
 
   currentUser: User;
@@ -50,19 +50,19 @@ export class RecipeDetailComponent implements OnInit {
         this.loading = false;
         if (this.currentUser) {
           this.commentForm = this.fb.group({
-            'comment': ['', Validators.required],
-            'name': ['', Validators.required],
-            'email': ['', Validators.required],
-            'recipes_id': [this.recipe.id],
-            'user_id': [this.currentUser.id]
+            comment: ['', Validators.required],
+            name: ['', Validators.required],
+            email: ['', Validators.required],
+            recipes_id: [this.recipe.id],
+            user_id: [this.currentUser.id]
           });
         }
         this.cookieValue = this.cookieService.get('recipeId');
-        if (this.cookieValue == String(this.recipe.id)) {
+        if (this.cookieValue === String(this.recipe.id)) {
           this.isVoted = true;
           this.ctrl.disable();
         }
-      })
+      });
     });
     this.recipeService.getCategories().subscribe(categories => {
       this.categories = categories;
@@ -71,7 +71,7 @@ export class RecipeDetailComponent implements OnInit {
       this.cuisines = cuisines;
     });
     this.recipeService.getCourses().subscribe(courses => {
-      this.courses = courses
+      this.courses = courses;
     });
 
 
@@ -87,11 +87,11 @@ export class RecipeDetailComponent implements OnInit {
       this.isEdit = false;
       this.isComment = !this.isComment;
       this.commentForm = this.fb.group({
-        'comment': ['', Validators.required],
-        'name': ['', Validators.required],
-        'email': ['', Validators.required],
-        'recipes_id': [this.recipe.id],
-        'user_id': [this.currentUser.id]
+        comment: ['', Validators.required],
+        name: ['', Validators.required],
+        email: ['', Validators.required],
+        recipes_id: [this.recipe.id],
+        user_id: [this.currentUser.id]
       });
     } else {
       this.router.navigate(['/login']);
@@ -104,12 +104,12 @@ export class RecipeDetailComponent implements OnInit {
         this.isComment = true;
         this.isEdit = true;
         this.commentForm = this.fb.group({
-          'id': [comment.id],
-          'comment': [comment.comment, Validators.required],
-          'name': [comment.name, Validators.required],
-          'email': [comment.email, Validators.required],
-          'recipes_id': [this.recipe.id],
-          'user_id': [this.currentUser.id]
+          id: [comment.id],
+          comment: [comment.comment, Validators.required],
+          name: [comment.name, Validators.required],
+          email: [comment.email, Validators.required],
+          recipes_id: [this.recipe.id],
+          user_id: [this.currentUser.id]
         });
       }
     } else {
@@ -121,10 +121,10 @@ export class RecipeDetailComponent implements OnInit {
   deleteComment(commentId) {
     this.recipeService.deleteComment(commentId).subscribe(() => {
       this.toastr.success('Your comment was successfully deleted!');
-      this.ngOnInit()
+      this.ngOnInit();
     }, (error) => {
       this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
-    })
+    });
   }
 
   addComment() {
@@ -134,10 +134,10 @@ export class RecipeDetailComponent implements OnInit {
         this.isComment = false;
         this.submitted = false;
         this.toastr.success('Your comment was successfully added!');
-        this.ngOnInit()
+        this.ngOnInit();
       }, (error) => {
         this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
-      })
+      });
     } else {
       this.submitted = true;
     }
@@ -151,10 +151,10 @@ export class RecipeDetailComponent implements OnInit {
         this.isComment = false;
         this.submitted = false;
         this.toastr.success('Your comment was successfully added!');
-        this.ngOnInit()
+        this.ngOnInit();
       }, (error) => {
         this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
-      })
+      });
     } else {
       this.submitted = true;
     }
@@ -163,9 +163,9 @@ export class RecipeDetailComponent implements OnInit {
   // saving rating and adding cookies to not allow rate 2x
   saveRating() {
     this.rating = {
-      "id": null,
-      "recipes_id": this.recipe.id,
-      "vote_score": this.ctrl.value
+      id: null,
+      recipes_id: this.recipe.id,
+      vote_score: this.ctrl.value
     };
     this.recipeService.addRating(this.rating).subscribe(res => {
       this.toastr.success('Your rating was successfully added!');
@@ -173,7 +173,7 @@ export class RecipeDetailComponent implements OnInit {
       this.isVoted = true;
     }, (error) => {
       this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
-    })
+    });
 
   }
 

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeService} from "../../recipe.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
-import {CookieService} from "ngx-cookie-service";
-import {AuthenticationService} from "../../auth/authentication.service";
-import {first} from "rxjs/operators";
-import {User} from "@app/models/user";
+import {RecipeService} from '../../recipe.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {AuthenticationService} from '../../auth/authentication.service';
+import {first} from 'rxjs/operators';
+import {User} from '@app/models/user';
 
 @Component({
   selector: 'app-hero',
@@ -36,7 +36,7 @@ export class HeroComponent implements OnInit {
     this.loginForm = this.fb.group({
       name: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
 
   }
 

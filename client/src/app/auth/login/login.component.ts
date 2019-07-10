@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../authentication.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {first} from "rxjs/operators";
-import {ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthenticationService} from '../authentication.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private toastr: ToastrService,
               private router: Router,
-              private authenticationService: AuthenticationService,) {
+              private authenticationService: AuthenticationService) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       name: ['', Validators.required],
       password: ['', Validators.required]
-    })
+    });
   }
 
   ngOnInit() {

@@ -3,6 +3,8 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 
+from OpenSSL import SSL
+
 from blacklist import BLACKLIST
 
 from resources.recipes import RecipesList, Recipe, TopRecipesList, RecipesByCuisine, RecipesByCategory, RecipesByCourses
@@ -22,6 +24,10 @@ from image import Image
 from dbconfig import dbConfig, secretKey
 
 from db import db
+
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
+context.use_certificate_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem')
 
 app = Flask(__name__)
 
@@ -103,6 +109,7 @@ def revoked_token_callback():
 
 # JWT configuration ends
 cors = CORS(app, resources={r"/*": {"origins": "*"}})   # allowing Cross-Origin Resource Sharing
+CORS(app)
 
 # endpoints
 api.add_resource(RecipesList, '/recipes')
@@ -137,4 +144,5 @@ api.add_resource(RecipesByCourses, '/recipecourses')
 
 db.init_app(app)
 if __name__ == '__main__':
-    app.run()
+    context = ('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem', '/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
+    app.run(host='0.0.0.0', port=5005, threaded=True, debug=True, ssl_context=context)

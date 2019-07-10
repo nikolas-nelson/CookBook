@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource
 from flask import request
 import os
 
@@ -16,7 +16,8 @@ def allowed_file(filename):
 class Image(Resource):
     @classmethod
     def post(cls):
-        target = os.path.join(APP_ROOT, 'client/src/assets/img/')
+        target = os.path.join(APP_ROOT, 'client/assets/img/')
+        print(target)
         if not os.path.isdir(target):
             os.mkdir(target)
 

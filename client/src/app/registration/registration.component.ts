@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeService} from "../recipe.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import {RecipeService} from '../recipe.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -29,10 +29,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-    let pass = group.controls.password.value;
-    let confirmPass = group.controls.confirmPassword.value;
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
 
-    return pass === confirmPass ? null : {notSame: true}
+    return pass === confirmPass ? null : {notSame: true};
   }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
         console.log(error);
         this.toastr.error(error.error.message, 'Ohh NO! Something went wrong');
       }, () => {
-      })
+      });
     }
   }
 
