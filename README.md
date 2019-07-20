@@ -8,7 +8,7 @@ and add your favourite recipes. Any time you can edit or delete your recipe. Wat
 _This project was created as simple as possible on the course recommendation and to show underspending of learned knowledge in the course module._
 
 
-##UX
+## UX
 
 Design for this project is simple and clear to do not distract users from the main purpose of the website. The main goal
  is that any user can quickly find recipe what they looking for or add or edit their recipes. 
