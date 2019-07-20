@@ -5,8 +5,6 @@ This project/website is a web application that allows users to store and easily 
 Find top-rated or new recipes, comment and rate them! Do you have your favourite recipes? Share them with others! Register, Login
 and add your favourite recipes. Any time you can edit or delete your recipe. Watch comments and how others rate your recipes!
 
-_This project was created as simple as possible on the course recommendation and to show underspending of learned knowledge in the course module._
-
 
 ## UX
 
@@ -189,3 +187,7 @@ secretKey = 'yourSicretKey'
 [Stackoverflow](https://stackoverflow.com)
 
 [images, recipes and inspiration](www.eat-vegan.rock)
+
+
+
+_This project was created as simple as possible on the course recommendation and to show underspending of learned knowledge in the course module._
