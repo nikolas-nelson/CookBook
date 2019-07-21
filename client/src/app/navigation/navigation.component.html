@@ -33,7 +33,7 @@
           <div class="navbar-text">
             <a class="btn btn-link mr-2 text-right" routerLink="/login" *ngIf="!currentUser">Login</a>
             <a class="btn btn-link mr-2 text-right" (click)="logout()" *ngIf="currentUser">Logout</a>
-            <a routerLink="/registration" class="btn btn-outline-primary text-right">Register</a>
+            <a routerLink="/registration" class="btn btn-outline-primary text-right" *ngIf="!currentUser">Register</a>
           </div>
         </span>
     </div>

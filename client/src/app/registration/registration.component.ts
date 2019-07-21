@@ -22,8 +22,8 @@ export class RegistrationComponent implements OnInit {
               private toastr: ToastrService) {
 
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
-      password: ['', [Validators.required]],
+      name: ['', Validators.minLength(5)],
+      password: ['', [Validators.minLength(5)]],
       confirmPassword: ['']
     }, {validator: this.checkPasswords});
   }
