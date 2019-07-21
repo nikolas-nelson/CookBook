@@ -25,9 +25,9 @@ from dbconfig import dbConfig, secretKey
 
 from db import db
 
-# context = SSL.Context(SSL.SSLv23_METHOD)
-# context.use_privatekey_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
-# context.use_certificate_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem')
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
+context.use_certificate_file('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem')
 
 app = Flask(__name__)
 
@@ -144,5 +144,5 @@ api.add_resource(RecipesByCourses, '/recipecourses')
 
 db.init_app(app)
 if __name__ == '__main__':
-    # context = ('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem', '/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
-    app.run(host='0.0.0.0', port=5005, threaded=True, debug=False, )
+    context = ('/etc/letsencrypt/live/cookbook.nickwebdev.com/fullchain.pem', '/etc/letsencrypt/live/cookbook.nickwebdev.com/privkey.pem')
+    app.run(host='0.0.0.0', port=5005, threaded=True, debug=False, ssl_context=context)
